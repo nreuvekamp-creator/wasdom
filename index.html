@@ -1,0 +1,1785 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>was/dom — gecureerd voor het leven</title>
+<meta name="description" content="Wij selecteren de beste versie van elk product. Jij geniet er de rest van je leven van. Onderhoud inbegrepen.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='15' fill='%231a1a1a'/><line x1='13' y1='24' x2='19' y2='8' stroke='%23f5f5f0' stroke-width='2.5' stroke-linecap='round'/></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,400&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --bg: #fafaf7; --bg2: #f0efe9; --dark: #1a1a1a; --light: #f5f5f0;
+  --muted: #888; --dim: #555; --border: #e0e0e0; --accent: #3a6ea5;
+  --serif: 'Playfair Display', Georgia, serif;
+  --sans: 'DM Sans', -apple-system, sans-serif;
+}
+body { font-family: var(--sans); background: var(--bg); color: var(--dark); -webkit-font-smoothing: antialiased; }
+a { color: inherit; text-decoration: none; }
+::selection { background: var(--dark); color: var(--light); }
+
+/* === NAV === */
+.nav {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 32px; border-bottom: 0.5px solid var(--border);
+  position: sticky; top: 0; background: rgba(250,250,247,0.95);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 100;
+}
+.logo { display: flex; align-items: baseline; cursor: pointer; gap: 1px; }
+.logo-was { font-family: var(--serif); font-weight: 400; font-size: 20px; letter-spacing: 5px; }
+.logo-slash {
+  display: inline-block; width: 2px; height: 16px; background: currentColor;
+  transform: rotate(25deg); margin: 0 4px; vertical-align: middle;
+}
+.logo-dom { font-family: var(--sans); font-weight: 700; font-size: 20px; letter-spacing: 5px; }
+.nav-links { display: flex; gap: 28px; }
+.nav-links a {
+  font-size: 11px; letter-spacing: 2.5px; color: var(--dim); text-transform: uppercase;
+  transition: color 0.15s;
+}
+.nav-links a:hover { color: var(--dark); }
+.kist-btn {
+  background: none; border: 1px solid var(--border); border-radius: 6px;
+  padding: 8px 14px; font-family: var(--sans); font-size: 12px; letter-spacing: 0.5px;
+  cursor: pointer; color: var(--dark); display: flex; align-items: center; gap: 8px;
+  transition: border-color 0.15s;
+}
+.kist-btn:hover { border-color: var(--dark); }
+.kist-btn svg { width: 16px; height: 16px; }
+.kist-count {
+  background: var(--dark); color: var(--light); min-width: 18px; height: 18px;
+  border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 700;
+}
+.kist-count.hidden { display: none; }
+
+/* === HERO === */
+.hero { background: var(--dark); padding: 72px 32px 64px; text-align: center; }
+.hero-pre {
+  font-size: 11px; letter-spacing: 4px; color: #666; text-transform: uppercase; margin-bottom: 28px;
+}
+.hero h1 {
+  font-family: var(--serif); font-weight: 400; font-size: 38px;
+  color: var(--light); letter-spacing: 1px; line-height: 1.35; margin-bottom: 20px;
+}
+.hero-sub {
+  font-size: 15px; color: #888; max-width: 400px; margin: 0 auto 36px; line-height: 1.7;
+}
+.hero-cta {
+  display: inline-block; border: 1px solid rgba(245,245,240,0.3); color: var(--light);
+  font-size: 11px; letter-spacing: 3px; padding: 14px 40px; text-transform: uppercase;
+  transition: all 0.2s;
+}
+.hero-cta:hover { background: var(--light); color: var(--dark); border-color: var(--light); }
+
+/* === SECTIONS === */
+.section { padding: 64px 32px; max-width: 1000px; margin: 0 auto; }
+.section-label {
+  font-size: 11px; letter-spacing: 3px; color: var(--muted);
+  text-transform: uppercase; text-align: center; margin-bottom: 40px;
+}
+
+/* === PRODUCT CATEGORY CARDS === */
+.cat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 16px; }
+.cat-card {
+  border: 0.5px solid var(--border); border-radius: 8px; overflow: hidden;
+  cursor: pointer; transition: box-shadow 0.25s, transform 0.15s; background: #fff;
+}
+.cat-card:hover { box-shadow: 0 8px 30px rgba(0,0,0,0.06); transform: translateY(-2px); }
+
+/* Split photo container */
+.split-wrap {
+  position: relative; background: #ffffff; overflow: hidden;
+}
+.cat-card .split-wrap { height: 200px; }
+.split-photo {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  object-fit: contain; object-position: center;
+}
+.split-photo.left {
+  clip-path: polygon(0 0, 54% 0, 46% 100%, 0 100%);
+}
+.split-photo.right {
+  clip-path: polygon(54% 0, 100% 0, 100% 100%, 46% 100%);
+}
+/* Tapered slash SVG overlay */
+.split-slash-svg {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none; z-index: 2;
+  will-change: transform;
+}
+.split-wrap.returning .split-slash-svg {
+  transition: transform 0.4s ease-out;
+}
+.split-wrap.returning .split-photo {
+  transition: clip-path 0.4s ease-out;
+}
+/* Fallback placeholder when no photo */
+.split-ph {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+}
+.split-ph-side {
+  flex: 1; display: flex; flex-direction: column; align-items: center;
+  justify-content: center; height: 100%; padding: 16px; z-index: 1;
+}
+.split-ph-code { font-size: 36px; font-weight: 700; color: #c8c5bb; letter-spacing: 3px; }
+.split-ph-sub { font-size: 11px; color: #a8a598; margin-top: 4px; }
+.cat-card-body { padding: 18px 20px; }
+.cat-card-cat {
+  font-size: 11px; letter-spacing: 1.5px; color: var(--dark); text-transform: uppercase; margin-bottom: 6px; font-weight: 700;
+}
+.cat-card-tagline {
+  font-family: var(--serif); font-size: 17px; margin-bottom: 14px; line-height: 1.35;
+}
+.cat-card-meta { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.cat-card-bundle {
+  font-size: 11px; color: #5a7a5a; background: #edf3ec; padding: 4px 10px; border-radius: 3px;
+}
+.cat-card-price { font-weight: 700; font-size: 17px; white-space: nowrap; }
+.cat-card-price span { font-size: 11px; font-weight: 400; color: var(--muted); }
+
+/* === QUOTE BANNER === */
+.quote-banner {
+  background: var(--dark); padding: 56px 32px; text-align: center;
+  position: relative; overflow: hidden; min-height: 150px;
+}
+.quote-slide {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 90%; max-width: 560px; opacity: 0; transition: opacity 1.2s ease;
+  pointer-events: none;
+}
+.quote-slide.active { opacity: 1; pointer-events: auto; }
+.quote-text {
+  font-family: var(--serif); font-style: italic; font-size: 20px;
+  color: var(--light); line-height: 1.5; margin-bottom: 12px;
+}
+.quote-attr { font-size: 12px; color: #f5f5f0; letter-spacing: 1px; opacity: 0.75; }
+.quote-dots {
+  position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%);
+  display: flex; gap: 8px;
+}
+.quote-dot {
+  width: 6px; height: 6px; border-radius: 50%; background: #444;
+  cursor: pointer; transition: background 0.3s;
+}
+.quote-dot.active { background: #999; }
+
+/* === HOE HET WERKT === */
+.how-section { background: #fff; border-top: 0.5px solid var(--border); border-bottom: 0.5px solid var(--border); }
+.how-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
+  max-width: 750px; margin: 0 auto;
+}
+.how-step {
+  text-align: center; padding: 32px 20px;
+  border-right: 0.5px solid var(--border);
+}
+.how-step:last-child { border-right: none; }
+.how-num {
+  font-family: var(--serif); font-size: 28px; color: #ddd; margin-bottom: 12px;
+}
+.how-title { font-weight: 700; font-size: 13px; margin-bottom: 6px; letter-spacing: 0.3px; }
+.how-text { font-size: 12px; color: var(--dim); line-height: 1.55; }
+
+/* === BRAND SCROLLER === */
+.brand-scroller { background: var(--dark); padding: 24px 0; overflow: hidden; }
+.brand-track {
+  display: flex; gap: 56px; animation: scroll 45s linear infinite; white-space: nowrap;
+}
+.brand-name {
+  font-family: var(--sans); font-weight: 500; font-size: 13px;
+  color: #f5f5f0; letter-spacing: 2.5px; text-transform: uppercase; flex-shrink: 0;
+}
+@keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+/* === PRODUCT PAGE === */
+.product-page { display: none; }
+.product-page.active { display: block; }
+.home-page.hidden { display: none; }
+.back-btn {
+  font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--muted); cursor: pointer; padding: 16px 0 24px; display: inline-flex;
+  align-items: center; gap: 6px; border: none; background: none; font-family: var(--sans);
+  transition: color 0.15s;
+}
+.back-btn:hover { color: var(--dark); }
+
+.pp-split { border-radius: 10px; margin-bottom: 28px; min-height: 320px; background: #ffffff; }
+
+/* Single product gallery — main + thumbs side by side */
+.pp-gallery {
+  display: flex; gap: 10px; margin-bottom: 28px; height: 320px;
+}
+.pp-gallery-main {
+  flex: 1; border-radius: 10px; background: #fff; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+  height: 100%;
+}
+.pp-gallery-main img {
+  max-width: 100%; max-height: 100%; object-fit: contain; padding: 24px;
+}
+.pp-gallery-thumbs {
+  display: flex; flex-direction: column; gap: 8px; flex-shrink: 0;
+}
+.pp-gallery-thumb {
+  width: 68px; height: 68px; border-radius: 6px; background: #fff;
+  border: 1.5px solid var(--border); overflow: hidden; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: border-color 0.15s;
+}
+.pp-gallery-thumb:hover { border-color: #999; }
+.pp-gallery-thumb.active { border-color: var(--dark); }
+.pp-gallery-thumb img { max-width: 100%; max-height: 100%; object-fit: contain; padding: 4px; }
+.pp-split .split-photo { object-fit: contain; padding: 24px; }
+.pp-split .split-ph-code { font-size: 52px; }
+.pp-split .split-ph-sub { font-size: 12px; }
+
+.pp-selector { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 24px; }
+.pp-brand-btn {
+  padding: 18px; border: 1.5px solid var(--border); border-radius: 8px;
+  background: #fff; cursor: pointer; text-align: center; transition: all 0.15s;
+  font-family: var(--sans);
+}
+.pp-brand-btn:hover { border-color: #999; }
+.pp-brand-btn.sel { border-color: var(--accent); background: #eef4fb; }
+.pp-brand-name { font-weight: 700; font-size: 17px; margin-bottom: 2px; }
+.pp-brand-origin { font-size: 12px; color: var(--muted); }
+
+.pp-detail { max-width: 620px; }
+.pp-header-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; }
+.pp-cat-label {
+  font-size: 10px; letter-spacing: 2.5px; color: var(--muted);
+  text-transform: uppercase; margin-bottom: 2px;
+}
+.pp-cat-sub { font-size: 11px; color: var(--dim); margin-bottom: 16px; font-style: italic; }
+.pp-model { font-family: var(--serif); font-size: 28px; margin-bottom: 4px; line-height: 1.2; }
+.pp-founder { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+.pp-bundle-tag {
+  display: inline-block; font-size: 12px; color: #3a6e3a; background: #edf3ec;
+  padding: 5px 12px; border-radius: 4px; margin-bottom: 12px;
+}
+.pp-price { font-weight: 700; font-size: 34px; margin-bottom: 2px; }
+.pp-per { font-size: 12px; color: var(--muted); margin-bottom: 20px; }
+.pp-desc { font-size: 15px; color: var(--dim); line-height: 1.75; margin-bottom: 20px; }
+.pp-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 24px; }
+.pp-tag { font-size: 11px; padding: 4px 12px; border-radius: 4px; background: var(--bg2); color: var(--dim); }
+
+/* === SPEC BLOCKS === */
+.spec-row { margin-bottom: 20px; }
+.spec-row-label { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+.spec-scroll { display: flex; gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; padding-bottom: 4px; }
+.spec-scroll::-webkit-scrollbar { height: 3px; }
+.spec-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+.spec-block {
+  flex: 0 0 160px; scroll-snap-align: start;
+  background: var(--bg2); border-radius: 8px; padding: 14px 16px;
+}
+.spec-block-icon { font-size: 20px; color: #999; margin-bottom: 6px; }
+.spec-block-title { font-size: 12px; font-weight: 700; margin-bottom: 4px; }
+.spec-block-val { font-size: 12px; color: var(--dim); line-height: 1.5; }
+
+/* === SPEC COMPARE (neutral view) === */
+.spec-compare-row { display: grid; grid-template-columns: 1fr 60px 1fr; gap: 0; margin-bottom: 10px; align-items: stretch; background: var(--bg2); border-radius: 8px; overflow: hidden; }
+.spec-compare-icon { display: flex; align-items: center; justify-content: center; background: #dddcd6; color: #999; font-size: 30px; clip-path: polygon(20% 0%, 100% 0%, 80% 100%, 0% 100%); }
+.spec-compare-block { padding: 16px 18px; }
+.spec-compare-brand { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+
+.pp-optout {
+  display: flex; align-items: center; gap: 10px; padding: 14px 16px;
+  background: var(--bg2); border-radius: 6px; margin-bottom: 16px;
+  font-size: 13px; color: var(--dim); cursor: pointer; transition: background 0.15s;
+}
+.pp-optout:hover { background: #e8e7e1; }
+.pp-optout input { width: 16px; height: 16px; cursor: pointer; accent-color: var(--dark); }
+
+.pp-add {
+  display: block; width: 100%; background: var(--dark); color: var(--light);
+  border: none; padding: 18px; font-family: var(--sans); font-size: 13px;
+  letter-spacing: 2px; text-transform: uppercase; cursor: pointer;
+  border-radius: 6px; transition: all 0.15s;
+}
+.pp-add:hover { background: #333; }
+.pp-add.in { background: #2a5a3a; }
+.pp-del { font-size: 12px; color: var(--muted); margin-top: 10px; text-align: center; }
+
+/* === KIST DRAWER === */
+.kist-overlay {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0,0,0,0.35); z-index: 200; opacity: 0;
+  pointer-events: none; transition: opacity 0.25s;
+}
+.kist-overlay.open { opacity: 1; pointer-events: auto; }
+.kist-drawer {
+  position: fixed; top: 0; right: -420px; width: 400px; max-width: 92vw;
+  height: 100%; background: var(--bg); z-index: 201;
+  transition: right 0.3s ease; display: flex; flex-direction: column;
+  box-shadow: -4px 0 24px rgba(0,0,0,0.08);
+}
+.kist-drawer.open { right: 0; }
+.kist-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 20px 24px; border-bottom: 0.5px solid var(--border);
+}
+.kist-header h3 {
+  font-family: var(--serif); font-size: 20px; font-weight: 400;
+  display: flex; align-items: center; gap: 10px;
+}
+.kist-header h3 svg { width: 20px; height: 20px; }
+.kist-close {
+  background: none; border: none; font-size: 20px; cursor: pointer;
+  color: var(--muted); padding: 4px; transition: color 0.15s;
+}
+.kist-close:hover { color: var(--dark); }
+.kist-items { flex: 1; overflow-y: auto; padding: 8px 24px; }
+.kist-empty {
+  text-align: center; padding: 56px 0; color: var(--muted); font-size: 14px; line-height: 1.6;
+}
+.kist-item {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 16px 0; border-bottom: 0.5px solid var(--border);
+}
+.ki-name { font-size: 14px; font-weight: 500; margin-bottom: 2px; }
+.ki-cat { font-size: 11px; color: var(--muted); }
+.ki-optout { font-size: 10px; color: var(--accent); margin-top: 2px; }
+.ki-price { font-weight: 700; font-size: 15px; margin-left: 16px; }
+.ki-remove {
+  background: none; border: none; color: #ccc; cursor: pointer;
+  font-size: 16px; margin-left: 12px; transition: color 0.15s;
+}
+.ki-remove:hover { color: #c00; }
+.kist-footer { padding: 20px 24px; border-top: 0.5px solid var(--border); }
+.kist-total { display: flex; justify-content: space-between; font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+.kist-ship { font-size: 12px; color: var(--muted); margin-bottom: 16px; }
+.kist-pay {
+  display: block; width: 100%; background: var(--dark); color: var(--light);
+  border: none; padding: 16px; font-family: var(--sans); font-size: 12px;
+  letter-spacing: 2px; text-transform: uppercase; cursor: pointer; border-radius: 4px;
+  transition: background 0.15s;
+}
+.kist-pay:hover { background: #333; }
+.kist-pay:disabled { opacity: 0.3; cursor: not-allowed; }
+
+/* === CHECKOUT MODAL === */
+.modal-overlay {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0,0,0,0.5); z-index: 300; display: none;
+  align-items: center; justify-content: center;
+}
+.modal-overlay.open { display: flex; }
+.modal { background: var(--bg); border-radius: 10px; max-width: 440px; width: 92%; overflow: hidden; }
+.modal-top { background: var(--dark); padding: 28px 28px 24px; text-align: center; }
+.modal-top h3 { font-family: var(--serif); font-weight: 400; font-size: 20px; color: var(--light); margin: 14px 0 6px; }
+.modal-top p { font-size: 13px; color: #888; }
+.modal-body { padding: 24px; }
+.modal-ideal {
+  display: flex; align-items: center; gap: 12px; padding: 14px;
+  border: 1.5px solid var(--border); border-radius: 8px; margin-bottom: 16px;
+  background: #fff; cursor: pointer; transition: border-color 0.15s;
+}
+.modal-ideal.sel { border-color: #CC0066; }
+.modal-ideal-logo {
+  width: 40px; height: 26px; border-radius: 4px; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.modal-ideal-logo svg { display: block; width: 40px; height: 26px; }
+.modal-ideal-text { font-size: 13px; flex: 1; }
+.modal-ideal-text b { font-weight: 500; }
+.modal-ideal-check { font-size: 16px; color: #CC0066; opacity: 0.15; transition: opacity 0.15s; }
+.modal-ideal.sel .modal-ideal-check { opacity: 1; }
+.modal-pay-btn {
+  display: block; width: 100%; background: var(--dark); color: var(--light);
+  border: none; padding: 14px; font-family: var(--sans); font-size: 12px;
+  letter-spacing: 2px; text-transform: uppercase; cursor: pointer; border-radius: 4px;
+}
+.modal-pay-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+.modal-signup {
+  background: var(--bg2); border-radius: 8px; padding: 28px; text-align: center;
+}
+.modal-signup-title { font-family: var(--serif); font-size: 20px; margin-bottom: 8px; }
+.modal-signup p { font-size: 13px; color: var(--dim); margin-bottom: 16px; line-height: 1.55; }
+.modal-email-form { display: flex; gap: 8px; max-width: 340px; margin: 0 auto; }
+.modal-email-input {
+  flex: 1; padding: 12px 14px; border: 1.5px solid var(--border); border-radius: 4px;
+  font-family: var(--sans); font-size: 14px; background: #fff; outline: none;
+  transition: border-color 0.15s;
+}
+.modal-email-input:focus { border-color: var(--dark); }
+.modal-email-btn {
+  background: var(--dark); color: var(--light); border: none;
+  padding: 12px 18px; border-radius: 4px; font-family: var(--sans); font-size: 11px;
+  letter-spacing: 1px; text-transform: uppercase; cursor: pointer; white-space: nowrap;
+}
+.modal-email-btn:hover { background: #333; }
+.modal-email-thanks { display: none; font-family: var(--serif); font-size: 18px; padding: 12px 0; }
+.modal-close-btn {
+  display: block; width: 100%; background: none; border: none;
+  padding: 12px; font-size: 12px; color: var(--muted); cursor: pointer; margin-top: 8px;
+}
+.step { display: none; }
+.step.active { display: block; }
+
+/* === TIMELINE === */
+.tl-row { display: grid; grid-template-columns: 1fr 20px 1fr; gap: 0; }
+.tl-month {
+  font-size: 12px; color: var(--muted); letter-spacing: 1.5px; text-align: center;
+  padding: 14px 0 6px; font-weight: 500; text-transform: uppercase;
+}
+.tl-mid { background: var(--bg2); display: flex; justify-content: center; }
+.tl-line { width: 1px; background: var(--border); }
+.tl-dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 22px; flex-shrink: 0; }
+.tl-dot-bad { background: #cc9999; }
+.tl-dot-good { background: #99cc99; }
+.tl-dot-n { background: var(--border); }
+.tl-ev {
+  padding: 28px 28px; border-bottom: 0.5px solid var(--border); min-height: 60px;
+}
+.tl-ev-empty { padding: 28px 28px; border-bottom: 0.5px solid var(--border); min-height: 60px; }
+.tl-ev i { font-size: 22px; display: block; margin-bottom: 8px; }
+.tl-ev-t { font-size: 17px; font-weight: 500; margin-bottom: 5px; }
+.tl-ev-d { font-size: 15px; color: var(--dim); line-height: 1.6; }
+.tl-cost {
+  display: inline-block; font-size: 12px; font-weight: 700; padding: 3px 10px;
+  border-radius: 3px; margin-top: 6px; margin-right: 4px;
+}
+.tl-c-money { background: #fce8e8; color: #993333; }
+.tl-c-time { background: #fff3e0; color: #996633; }
+.tl-c-good { background: #e8f5e8; color: #336633; }
+.tl-total {
+  padding: 16px; text-align: center; font-size: 13px; font-weight: 700;
+}
+.tl-total-bad { background: #f5f0f0; color: #993333; border-radius: 0 0 0 8px; }
+.tl-total-good { background: #f0f5f0; color: #336633; border-radius: 0 0 8px 0; }
+.tl-total-num { font-size: 20px; display: block; margin-bottom: 2px; }
+.tl-total-label { font-size: 10px; font-weight: 400; color: var(--dim); text-transform: uppercase; letter-spacing: 1px; }
+
+/* Fade in animation */
+.tl-row { opacity: 0; transform: translateY(12px); transition: opacity 0.5s ease, transform 0.5s ease; scroll-snap-align: start; }
+.tl-row.visible { opacity: 1; transform: translateY(0); }
+#tlContent { scroll-snap-type: y proximity; }
+
+/* Running totals bar */
+.tl-running {
+  position: sticky; bottom: 0; z-index: 10;
+  display: grid; grid-template-columns: 1fr 20px 1fr; gap: 0;
+  border-top: 1px solid var(--border); backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+.tl-run-side { padding: 12px 16px; display: flex; gap: 12px; justify-content: center; align-items: center; }
+.tl-run-bad { background: rgba(245,240,240,0.9); }
+.tl-run-good { background: rgba(240,245,240,0.9); }
+.tl-run-mid { background: rgba(240,239,233,0.9); }
+.tl-run-item { text-align: center; }
+.tl-run-num { font-size: 18px; font-weight: 700; display: block; transition: all 0.4s ease; }
+.tl-run-num.bump { transform: scale(1.2); }
+.tl-run-label { font-size: 9px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.5px; }
+
+/* === BUNDLE EXAMPLES === */
+.bundle-card {
+  background: var(--bg2); border-radius: 8px; padding: 20px;
+}
+.bundle-cat { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+.bundle-brand { font-family: var(--serif); font-size: 16px; margin-bottom: 10px; }
+.bundle-items { list-style: none; padding: 0; margin: 0; }
+.bundle-items li {
+  font-size: 12px; color: var(--dim); padding: 4px 0; line-height: 1.4;
+  display: flex; align-items: center; gap: 8px;
+}
+.bundle-items li::before { content: '✓'; color: var(--dark); font-weight: 700; font-size: 11px; flex-shrink: 0; }
+
+/* === FOOTER === */
+.footer {
+  border-top: 0.5px solid var(--border); padding: 28px 32px;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 12px; color: var(--muted);
+}
+.footer-badges { display: flex; gap: 10px; }
+.footer-badge {
+  border: 0.5px solid var(--border); padding: 3px 10px; border-radius: 3px;
+  font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase;
+}
+
+/* === HAMBURGER MENU === */
+.hamburger {
+  display: none; background: none; border: none; cursor: pointer;
+  width: 44px; height: 44px; align-items: center; justify-content: center;
+  padding: 0; flex-shrink: 0;
+}
+.hamburger span {
+  display: block; width: 20px; height: 1.5px; background: var(--dark);
+  position: relative; transition: all 0.3s;
+}
+.hamburger span::before, .hamburger span::after {
+  content: ''; position: absolute; width: 20px; height: 1.5px;
+  background: var(--dark); left: 0; transition: all 0.3s;
+}
+.hamburger span::before { top: -6px; }
+.hamburger span::after { top: 6px; }
+.hamburger.open span { background: transparent; }
+.hamburger.open span::before { transform: rotate(45deg); top: 0; }
+.hamburger.open span::after { transform: rotate(-45deg); top: 0; }
+
+.mobile-menu {
+  display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(250,250,247,0.98); backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px); z-index: 99;
+  flex-direction: column; align-items: center; justify-content: center; gap: 32px;
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu a {
+  font-size: 18px; letter-spacing: 3px; color: var(--dark);
+  text-transform: uppercase; font-weight: 500; padding: 12px 24px;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 700px) {
+  /* Nav */
+  .nav { padding: 14px 16px; }
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+
+  /* Hero */
+  .hero { padding: 48px 20px 0 !important; }
+  .hero h1 { font-size: 26px; }
+  .hero-pre { font-size: 10px; letter-spacing: 3px; margin-bottom: 20px; }
+  .hero-sub { font-size: 14px; margin-bottom: 28px; }
+  .hero-cta { padding: 16px 32px; font-size: 12px; min-height: 48px; }
+
+  /* Sections */
+  .section { padding: 44px 16px; }
+  .section-label { font-size: 10px; margin-bottom: 28px; }
+
+  /* Category cards */
+  .cat-grid { grid-template-columns: 1fr; }
+  .cat-card-tagline { font-size: 16px; }
+  .cat-card-body { padding: 16px; }
+
+  /* Quote banner */
+  .quote-banner { padding: 44px 20px; min-height: 130px; }
+  .quote-text { font-size: 17px; }
+  .quote-attr { font-size: 11px; }
+
+  /* Hoe het werkt */
+  .how-grid { grid-template-columns: 1fr; }
+  .how-step { border-right: none; border-bottom: 0.5px solid var(--border); padding: 28px 24px; }
+  .how-step:last-child { border-bottom: none; }
+
+  /* Product page */
+  .pp-gallery { flex-direction: column; height: auto; }
+  .pp-gallery-main { height: 240px; }
+  .pp-gallery-thumbs { flex-direction: row; justify-content: center; }
+  .pp-gallery-thumb { width: 56px; height: 56px; }
+  .pp-split { min-height: 220px; }
+  .pp-selector { gap: 8px; }
+  .pp-brand-btn { padding: 14px 10px; min-height: 48px; }
+  .pp-brand-name { font-size: 15px; }
+  .pp-model { font-size: 22px; }
+  .pp-price { font-size: 28px; }
+  .pp-desc { font-size: 14px; }
+  .pp-header-row { flex-direction: column; gap: 16px; }
+  .pp-add { min-height: 52px; font-size: 12px; }
+
+  /* Spec compare: keep side-by-side but shrink icon column */
+  .spec-compare-row {
+    grid-template-columns: 1fr 36px 1fr !important;
+  }
+  .spec-compare-icon {
+    font-size: 18px;
+    clip-path: polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%) !important;
+  }
+  .spec-compare-block { padding: 10px 12px; }
+  .spec-compare-brand { margin-bottom: 6px; font-size: 9px; }
+  .spec-block-title { font-size: 11px; }
+  .spec-block-val { font-size: 11px; }
+
+  /* Spec scroll blocks */
+  .spec-block { flex: 0 0 140px; padding: 12px 14px; }
+
+  /* Kist */
+  .kist-label { display: none; }
+  .kist-drawer { width: 100%; max-width: 100vw; right: -100%; }
+  .kist-btn { padding: 8px 10px; font-size: 11px; }
+
+  /* Checkout modal */
+  .modal { width: 96%; border-radius: 8px; }
+  .modal-body { padding: 20px 16px; }
+  .modal-email-form { flex-direction: column; }
+  .modal-email-btn { padding: 14px; text-align: center; }
+  .modal-ideal { padding: 12px; }
+  .modal-pay-btn { min-height: 48px; }
+
+  /* Timeline / Duurzaam page */
+  #tlGrid { grid-template-columns: 1fr !important; }
+  #tlGrid > div:nth-child(2) { display: none; }
+  .tl-row { grid-template-columns: 1fr !important; }
+  .tl-mid { display: none !important; }
+  .tl-ev, .tl-ev-empty { padding: 16px; }
+  .tl-ev-empty { display: none; }
+  .tl-ev i { font-size: 18px; }
+  .tl-ev-t { font-size: 15px; }
+  .tl-ev-d { font-size: 13px; }
+  .tl-month { font-size: 11px; padding: 10px 0 4px; }
+  .tl-running {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0;
+  }
+  .tl-running .tl-run-mid { display: none; }
+  .tl-run-side { padding: 10px 8px; }
+  .tl-run-num { font-size: 14px; }
+  .tl-run-label { font-size: 8px; }
+  .tl-total { padding: 12px; }
+  .tl-total-num { font-size: 16px; }
+  .tl-total-label { font-size: 9px; }
+  #tlTotals > div { grid-template-columns: 1fr 1fr !important; }
+  #tlTotals > div > div:nth-child(2) { display: none; }
+  #duurzaamPage .section { padding: 32px 12px; }
+  #duurzaamPage h2 { font-size: 22px !important; }
+
+  /* Back button */
+  .back-btn { min-height: 44px; padding: 12px 0 16px; font-size: 13px; }
+
+  /* Footer */
+  .footer {
+    flex-direction: column !important;
+    display: flex !important;
+    grid-template-columns: unset !important;
+    gap: 16px; padding: 24px 16px;
+    text-align: center;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- SVG ICONS (hidden) -->
+<svg style="display:none;">
+  <symbol id="ic-kist" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 10h18v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V10z"/><path d="M3 10l2-6h14l2 6"/><line x1="12" y1="10" x2="12" y2="21"/><line x1="3" y1="15" x2="21" y2="15"/>
+  </symbol>
+  <symbol id="ic-slash" viewBox="0 0 10 22" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round">
+    <line x1="3" y1="18" x2="6.5" y2="7"/>
+  </symbol>
+</svg>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="logo" onclick="goHome()">
+    <span class="logo-was">was</span>
+    <span class="logo-slash"></span>
+    <span class="logo-dom">dom</span>
+  </div>
+  <div class="nav-links">
+    <a href="#" onclick="goHome();return false;">Collectie</a>
+    <a href="#hoe" onclick="goHoe();return false;">Hoe het werkt</a>
+    <a href="#" onclick="openDuurzaam();return false;">Duurzaam</a>
+  </div>
+  <div style="display:flex;align-items:center;gap:8px;">
+    <button class="kist-btn" onclick="toggleKist()">
+      <svg><use href="#ic-kist"/></svg>
+      <span class="kist-label">Mijn kist</span>
+      <span class="kist-count hidden" id="kistCount">0</span>
+    </button>
+    <button class="hamburger" onclick="toggleMobileMenu()" aria-label="Menu">
+      <span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#" onclick="mobileNav('home')">Collectie</a>
+  <a href="#hoe" onclick="mobileNav('hoe')">Hoe het werkt</a>
+  <a href="#" onclick="mobileNav('duurzaam')">Duurzaam</a>
+</div>
+
+<!-- ==================== HOME ==================== -->
+<div class="home-page" id="homePage">
+
+<section class="hero" style="padding:64px 32px 0;">
+  <div style="text-align:center;margin-bottom:0;">
+    <div class="hero-pre">Gecureerd voor het leven</div>
+    <h1>Twee iconen. Eén voorkeur.</h1>
+    <p class="hero-sub">Eén goede keuze. De rest van je leven. Onderhoud inbegrepen.</p>
+  </div>
+  <div style="width:92%;max-width:960px;margin:32px auto 0;border-radius:12px 12px 0 0;overflow:hidden;position:relative;">
+    <img src="img/hero.jpg" alt="De collectie" style="width:100%;display:block;margin-top:-10%;">
+    <div style="position:absolute;bottom:40px;left:50%;transform:translateX(-50%);z-index:2;">
+      <a href="#collectie" class="hero-cta" style="border-color:var(--dark);color:var(--dark);background:rgba(250,250,247,0.85);backdrop-filter:blur(4px);" onclick="event.preventDefault();document.getElementById('collectie').scrollIntoView({behavior:'smooth'})">Bekijk de collectie</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="collectie">
+  <div class="section-label">De zorgvuldig gecureerde collectie</div>
+  <div class="cat-grid" id="catGridTop"></div>
+</section>
+
+<div class="brand-scroller">
+  <div class="brand-track" id="brandTrack"></div>
+</div>
+
+<section class="section" style="padding-top:32px;">
+  <div class="cat-grid" id="catGridBottom"></div>
+</section>
+
+<section class="quote-banner">
+  <div class="quote-slide active" data-q="0">
+    <div class="quote-text">"Hoe meer krassen het heeft, hoe beter het is."</div>
+    <div class="quote-attr">Sam Gorski — Corridor Digital</div>
+  </div>
+  <div class="quote-slide" data-q="1">
+    <div class="quote-text">"The poor man pays more. A good pair of boots lasts ten years."</div>
+    <div class="quote-attr">Terry Pratchett — Men at Arms, 1993</div>
+  </div>
+  <div class="quote-slide" data-q="2">
+    <div class="quote-text">"Have nothing in your houses that you do not know to be useful or believe to be beautiful."</div>
+    <div class="quote-attr">William Morris, 1880</div>
+  </div>
+  <div class="quote-dots">
+    <div class="quote-dot active" onclick="goToQuote(0)"></div>
+    <div class="quote-dot" onclick="goToQuote(1)"></div>
+    <div class="quote-dot" onclick="goToQuote(2)"></div>
+  </div>
+</section>
+
+<section class="how-section" id="hoe">
+  <div style="padding:48px 32px 12px;text-align:center;">
+    <div class="section-label">Hoe was/dom werkt</div>
+  </div>
+  <div class="how-grid">
+    <div class="how-step">
+      <i class="ti ti-arrows-split" style="font-size:28px;color:#bbb;display:block;margin-bottom:10px;"></i>
+      <div class="how-title">Kies je stijl</div>
+      <div class="how-text">Twee opties. Pure degelijkheid. Jij kiest welke de komende jaren met je meegaat.</div>
+    </div>
+    <div class="how-step">
+      <i class="ti ti-tools" style="font-size:28px;color:#bbb;display:block;margin-bottom:10px;"></i>
+      <div class="how-title">Onderhoud inbegrepen</div>
+      <div class="how-text">Bij elk product zit precies het onderhoud dat het nodig heeft. Jij hoeft er niet over na te denken. Binnen 3 dagen bezorgd.</div>
+    </div>
+    <div class="how-step">
+      <i class="ti ti-heart-handshake" style="font-size:28px;color:#bbb;display:block;margin-bottom:10px;"></i>
+      <div class="how-title">We blijven bij je</div>
+      <div class="how-text">Na 6 maanden een belletje, elk jaar een kaartje. Wij vieren mee dat het meegaat.</div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer" style="display:grid;grid-template-columns:1fr auto 1fr;align-items:center;">
+  <div style="font-size:11px;color:var(--muted);line-height:1.6;">
+    Nieuwstraat 26, 6511 PT Nijmegen<br>
+    KVK 94827361 · © 2026
+  </div>
+  <div style="text-align:center;">
+    <span class="logo-was" style="font-size:16px;">was</span><span class="logo-slash" style="height:13px;"></span><span class="logo-dom" style="font-size:16px;">dom</span>
+    <div style="font-size:10px;color:var(--muted);margin-top:6px;line-height:1.5;max-width:280px;margin-left:auto;margin-right:auto;">Gecureerd huisraad dat generaties meegaat, met de zorg om dat ook echt waar te maken.</div>
+  </div>
+  <div></div>
+</footer>
+
+</div><!-- /home-page -->
+
+<!-- ==================== PRODUCT PAGE ==================== -->
+<div class="product-page" id="productPage">
+  <div class="section" style="max-width:680px;">
+    <button class="back-btn" onclick="goHome()">← Terug</button>
+    <div id="ppContent"></div>
+  </div>
+</div>
+
+<!-- ==================== DUURZAAM PAGE ==================== -->
+<div class="product-page" id="duurzaamPage">
+  <div class="section" style="max-width:1100px;">
+    <button class="back-btn" onclick="goHome()">← Terug</button>
+    <div style="text-align:center;margin-bottom:40px;">
+      <div style="font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:8px;">Niet goedkoop — een goede koop</div>
+      <h2 style="font-family:var(--serif);font-size:26px;font-weight:400;margin-bottom:6px;">Twee tijdlijnen. Eén keuze.</h2>
+      <p style="font-size:14px;color:var(--dim);">Beyerdynamic DT 770 Pro vs. het alternatief. Vanaf vandaag.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 20px 1fr;gap:0;" id="tlGrid">
+      <!-- Headers -->
+      <div style="padding:12px 16px;font-size:11px;letter-spacing:2px;text-transform:uppercase;text-align:center;font-weight:700;background:#f5f0f0;color:#993333;border-radius:8px 0 0 0;">Het alternatief</div>
+      <div style="background:var(--bg2);"></div>
+      <div style="padding:12px 16px;font-size:11px;letter-spacing:2px;text-transform:uppercase;text-align:center;font-weight:700;background:#f0f5f0;color:#336633;border-radius:0 8px 0 0;">was/dom</div>
+    </div>
+    <div id="tlContent"></div>
+    <div id="tlTotals" style="display:none;"></div>
+
+    <!-- Running totals sticky bar -->
+    <div class="tl-running" id="tlRunning">
+      <div class="tl-run-side tl-run-bad" style="flex-direction:column;gap:4px;">
+        <div style="display:flex;gap:16px;justify-content:center;">
+          <div class="tl-run-item"><span class="tl-run-num" id="runBadMoney" style="color:#993333;">€0</span><span class="tl-run-label">Geld</span></div>
+          <div class="tl-run-item"><span class="tl-run-num" id="runBadTime" style="color:#996633;">0 min</span><span class="tl-run-label">Tijd</span></div>
+          <div class="tl-run-item"><span class="tl-run-num" id="runBadZorgen" style="color:#993333;">0</span><span class="tl-run-label">Zorgen</span></div>
+        </div>
+        <div id="runBadList" style="font-size:10px;color:#993333;line-height:1.6;text-align:center;"></div>
+      </div>
+      <div class="tl-run-side tl-run-mid"></div>
+      <div class="tl-run-side tl-run-good">
+        <div class="tl-run-item"><span class="tl-run-num" id="runGoodMoney" style="color:#336633;">€0</span><span class="tl-run-label">Geld</span></div>
+        <div class="tl-run-item"><span class="tl-run-num" id="runGoodTime" style="color:#336633;">0 min</span><span class="tl-run-label">Tijd</span></div>
+        <div class="tl-run-item"><span class="tl-run-num" id="runGoodZorgen" style="color:#336633;">0</span><span class="tl-run-label">Zorgen</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== KIST DRAWER ==================== -->
+<div class="kist-overlay" id="kistOverlay" onclick="toggleKist()"></div>
+<div class="kist-drawer" id="kistDrawer">
+  <div class="kist-header">
+    <h3><svg><use href="#ic-kist"/></svg> Mijn kist</h3>
+    <button class="kist-close" onclick="toggleKist()">×</button>
+  </div>
+  <div class="kist-items" id="kistItems"><div class="kist-empty">Je kist is nog leeg.<br>Met welke producten ga jij door het leven?</div></div>
+  <div class="kist-footer">
+    <div class="kist-total"><span>Totaal</span><span id="kistTotal">€0</span></div>
+    <div class="kist-ship">Verzending €4,95 · PostNL · binnen 3 werkdagen · track & trace</div>
+    <button class="kist-pay" id="checkoutBtn" onclick="openCheckout()" disabled>Keuze definitief</button>
+  </div>
+</div>
+
+<!-- ==================== CHECKOUT ==================== -->
+<div class="modal-overlay" id="checkoutModal">
+  <div class="modal">
+    <div class="step active" id="stepShip">
+      <div class="modal-top">
+        <div><span class="logo-was" style="color:var(--light);font-size:16px;">was</span><span class="logo-slash" style="background:var(--light);height:14px;"></span><span class="logo-dom" style="color:var(--light);font-size:16px;">dom</span></div>
+        <h3>Bezorging</h3>
+        <p>Hoe wil je je bestelling ontvangen?</p>
+      </div>
+      <div class="modal-body">
+        <div class="modal-ideal sel" data-ship="thuis" onclick="selectShip(this)">
+          <div class="modal-ideal-logo"><svg width="26" height="18" viewBox="0 0 26 18"><rect width="26" height="18" rx="3" fill="#ff6600"/><path d="M6 13V6h8v7M14 6l4 3v4h2V9l-4-3" fill="none" stroke="#fff" stroke-width="1.2" stroke-linejoin="round"/><circle cx="9" cy="13" r="1.5" fill="#fff"/><circle cx="18" cy="13" r="1.5" fill="#fff"/></svg></div>
+          <div class="modal-ideal-text"><b>PostNL — thuisbezorgd</b><br><span style="font-size:11px;color:var(--muted);">Binnen 3 werkdagen aan je deur</span></div>
+          <div class="modal-ideal-check">●</div>
+        </div>
+        <div class="modal-ideal" data-ship="afhaalpunt" onclick="selectShip(this)">
+          <div class="modal-ideal-logo"><svg width="26" height="18" viewBox="0 0 26 18"><rect width="26" height="18" rx="3" fill="#ff6600"/><path d="M13 3C9.5 3 7 6 7 9c0 4 6 7 6 7s6-3 6-7c0-3-2.5-6-6-6z" fill="none" stroke="#fff" stroke-width="1.2"/><circle cx="13" cy="8.5" r="2" fill="#fff"/></svg></div>
+          <div class="modal-ideal-text"><b>PostNL — afhaalpunt</b><br><span style="font-size:11px;color:var(--muted);">Kies een punt bij jou in de buurt</span></div>
+          <div class="modal-ideal-check">●</div>
+        </div>
+        <div style="font-size:11px;color:var(--muted);padding:8px 0 4px;line-height:1.5;">Verzendkosten: €4,95 · Alles in één keer bezorgd · Altijd met track & trace</div>
+        <button class="modal-pay-btn" id="shipBtn" onclick="goToPayment()">Verder naar betalen</button>
+        <button class="modal-close-btn" onclick="closeCheckout()">Annuleren</button>
+      </div>
+    </div>
+    <div class="step" id="step1">
+      <div class="modal-top">
+        <div><span class="logo-was" style="color:var(--light);font-size:16px;">was</span><span class="logo-slash" style="background:var(--light);height:14px;"></span><span class="logo-dom" style="color:var(--light);font-size:16px;">dom</span></div>
+        <h3>Betalen</h3>
+        <p>Kies je betaalmethode</p>
+      </div>
+      <div class="modal-body">
+        <div class="modal-ideal" data-method="ideal" onclick="selectPayment(this)">
+          <div class="modal-ideal-logo"><svg width="26" height="18" viewBox="0 0 26 18"><rect width="26" height="18" rx="3" fill="#CC0066"/><circle cx="10" cy="9" r="4" fill="none" stroke="#fff" stroke-width="1.5"/><path d="M14 5 L20 5 M14 9 L20 9 M14 13 L18 13" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/></svg></div>
+          <div class="modal-ideal-text"><b>iDEAL</b><br><span style="font-size:11px;color:var(--muted);">Betaal via je eigen bank</span></div>
+          <div class="modal-ideal-check">●</div>
+        </div>
+        <div class="modal-ideal" data-method="creditcard" onclick="selectPayment(this)">
+          <div class="modal-ideal-logo"><svg width="26" height="18" viewBox="0 0 26 18"><rect width="26" height="18" rx="3" fill="#1a1f71"/><circle cx="10" cy="9" r="5" fill="#eb001b" opacity="0.9"/><circle cx="16" cy="9" r="5" fill="#f79e1b" opacity="0.9"/><path d="M13 5.5a5 5 0 0 1 0 7" fill="#ff5f00"/></svg></div>
+          <div class="modal-ideal-text"><b>Creditcard</b><br><span style="font-size:11px;color:var(--muted);">Visa, Mastercard, Amex</span></div>
+          <div class="modal-ideal-check">●</div>
+        </div>
+        <div class="modal-ideal" data-method="debit" onclick="selectPayment(this)">
+          <div class="modal-ideal-logo"><svg width="26" height="18" viewBox="0 0 26 18"><rect width="26" height="18" rx="3" fill="#0061a8"/><rect x="3" y="4" width="20" height="2.5" rx="1" fill="#fff" opacity="0.9"/><rect x="3" y="8" width="12" height="2" rx="0.5" fill="#fff" opacity="0.5"/><rect x="3" y="12" width="8" height="2" rx="0.5" fill="#fff" opacity="0.5"/></svg></div>
+          <div class="modal-ideal-text"><b>Debit card</b><br><span style="font-size:11px;color:var(--muted);">Maestro, V Pay, Bancontact</span></div>
+          <div class="modal-ideal-check">●</div>
+        </div>
+        <div class="modal-ideal" data-method="paypal" onclick="selectPayment(this)">
+          <div class="modal-ideal-logo"><svg width="26" height="18" viewBox="0 0 26 18"><rect width="26" height="18" rx="3" fill="#003087"/><text x="13" y="12.5" text-anchor="middle" fill="#fff" font-family="Arial,sans-serif" font-size="8" font-weight="700" font-style="italic">P</text><text x="16.5" y="12.5" text-anchor="middle" fill="#009cde" font-family="Arial,sans-serif" font-size="8" font-weight="700" font-style="italic">P</text></svg></div>
+          <div class="modal-ideal-text"><b>PayPal</b><br><span style="font-size:11px;color:var(--muted);">Betaal met je PayPal-account</span></div>
+          <div class="modal-ideal-check">●</div>
+        </div>
+        <div class="modal-ideal" data-method="applepay" onclick="selectPayment(this)">
+          <div class="modal-ideal-logo"><svg width="26" height="18" viewBox="0 0 26 18"><rect width="26" height="18" rx="3" fill="#000"/><text x="13" y="12.5" text-anchor="middle" fill="#fff" font-family="system-ui,-apple-system,sans-serif" font-size="9" font-weight="500"> Pay</text></svg></div>
+          <div class="modal-ideal-text"><b>Apple Pay</b><br><span style="font-size:11px;color:var(--muted);">Betaal met Face ID of Touch ID</span></div>
+          <div class="modal-ideal-check">●</div>
+        </div>
+        <button class="modal-pay-btn" id="payBtn" onclick="showSignup()" disabled>Betaal <span id="payAmount"></span></button>
+        <button class="modal-close-btn" onclick="closeCheckout()">Annuleren</button>
+      </div>
+    </div>
+    <div class="step" id="step2">
+      <div class="modal-top">
+        <div><span class="logo-was" style="color:var(--light);font-size:16px;">was</span><span class="logo-slash" style="background:var(--light);height:14px;"></span><span class="logo-dom" style="color:var(--light);font-size:16px;">dom</span></div>
+        <h3>We zijn er bijna.</h3>
+        <p>was/dom is nog niet live. Jouw interesse betekent alles.</p>
+      </div>
+      <div class="modal-body">
+        <div class="modal-signup">
+          <div class="modal-signup-title">Houd me op de hoogte.</div>
+          <p>Laat je e-mail achter. Wanneer we live gaan ben jij de eerste die er van hoort.</p>
+          <form class="modal-email-form" id="signupForm" onsubmit="submitEmail(event)">
+            <input type="email" class="modal-email-input" id="emailInput" placeholder="je@email.nl" required>
+            <button type="submit" class="modal-email-btn">Aanmelden</button>
+          </form>
+          <div class="modal-email-thanks" id="emailThanks">Je staat op de lijst.</div>
+        </div>
+        <button class="modal-close-btn" onclick="closeCheckout()">Sluiten</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// === DATA — copy aangescherpt in TOV ===
+// Tapered slash SVG — zelfde slash als het logo icoon
+function taperedSlash(){
+  return '<svg class="split-slash-svg" viewBox="0 0 200 400" preserveAspectRatio="none">' +
+    '<line x1="107" y1="24" x2="93" y2="376" stroke="#1a1a1a" stroke-width="2.5"/>' +
+    '</svg>';
+}
+
+// Icon mapping per spec naam
+var specIcons = {
+  'Materiaal':'ti-cube','Gewicht':'ti-scale','Vaatwasmachine':'ti-wash-machine',
+  'Snijdikte':'ti-adjustments-horizontal','Stijl':'ti-palette','Aantal tools':'ti-tool',
+  'Vergrendeling':'ti-lock','Garantie':'ti-shield-check','Type':'ti-category',
+  'Impedantie':'ti-bolt','Oorkussens':'ti-ear','Frequentiebereik':'ti-wave-sine',
+  'Mechanisme':'ti-settings','Wasbaar':'ti-wash','Scheersysteem':'ti-razor',
+  'Batterijduur':'ti-battery-charging','Waterdicht':'ti-droplet','Technologie':'ti-cpu',
+  'Reiniging':'ti-wash','Mestype':'ti-knife','Meslengte':'ti-ruler',
+  'Meswisseling':'ti-refresh','Bevestiging':'ti-plug-connected','Inhoud':'ti-dimensions',
+  'Laptopvak':'ti-device-laptop','Onderhoud':'ti-tools','Rugsysteem':'ti-spine',
+  'Haartype':'ti-feather','Kussen':'ti-ripple','Handgemaakt':'ti-hand-finger',
+  'Geschikt voor':'ti-user','Vermogen':'ti-bolt','Motorgarantie':'ti-shield-check',
+  'Geluidsdruk':'ti-volume'
+};
+// Gewicht altijd als 2e tonen
+function getSpecOrder(specs){
+  var o=[];for(var i=0;i<specs.length;i++) o.push(i);
+  var g=-1;for(var i=0;i<specs.length;i++){if(specs[i]==='Gewicht'){g=i;break;}}
+  if(g>1){o.splice(g,1);o.splice(1,0,g);}
+  return o;
+}
+
+var cats = [
+  { id:'kaasschaaf', name:'Kaasschaaf', sub:'Eens kopen, altijd schaven',
+    tagline:'Nederlandse warmte of Scandinavisch strak',
+    L:'NL', Ll:'Gouda-gevoel', R:'NO', Rl:'Scandinavisch strak',
+    specs:['Materiaal','Gewicht','Vaatwasmachine','Snijdikte','Stijl'],
+    items:[
+      { brand:'Boska', origin:'Nederland', model:'Boska Copenhagen', founder:'Albert Boska, 1896, Gouda',
+        desc:'Eikenhout handvat, RVS mes. Gemaakt in Gouda sinds 1896. Het type schaaf waarmee je bent opgegroeid. Warm, vertrouwd, en over 20 jaar nog steeds op je aanrecht.',
+        bundle:'Slijpsteen + microvezel doek', price:40, tags:['Nederlands','RVS','Eikenhout'], life:20,
+        img:'img/boska.png',
+        specVals:['RVS mes met eikenhout handvat. Het hout wordt mooier naarmate je het vaker gebruikt.','180 gram — stevig in de hand, kantelt niet bij harde kaas.','Nee — het eikenhout moet met de hand worden afgespoeld en gedroogd.','Verstelbare schaafdikte. Dun voor oude kaas, dikker voor jong.','Warm en ambachtelijk. De schaaf waarmee je bent opgegroeid.'] },
+      { brand:'Bjørklund', origin:'Noorwegen', model:'Bjørklund Original', founder:'Thor Bjørklund, 1925, Noorwegen',
+        desc:'Vol RVS. Strak Scandinavisch. De originele kaasschaaf — uitgevonden door Thor Bjørklund zelf. Functioneel, onverwoestbaar, tijdloos.',
+        bundle:'Slijpsteen', price:30, tags:['Noors','Vol RVS','Scandinavisch design'], life:30,
+        img:'img/bjorklund.png',
+        specVals:['Volledig roestvrij staal. Geen apart handvat — uit één stuk gesmeed.','120 gram — licht en wendbaar, perfect voor dagelijks gebruik.','Ja — volledig vaatwasserbestendig, geen extra zorg nodig.','Vaste schaafdikte. Consistent resultaat, elke keer.','Minimalistisch Scandinavisch. Functie boven decoratie.'] }
+    ]},
+  { id:'multitool', name:'Multitool', sub:'21 tools in je broekzak',
+    tagline:'Amerikaanse degelijkheid of Zwitserse precisie',
+    L:'US', Ll:'Portland, robuust', R:'CH', Rl:'Ibach, precies',
+    specs:['Aantal tools','Gewicht','Materiaal','Vergrendeling','Garantie'],
+    items:[
+      { brand:'Leatherman', origin:'Amerika', model:'Leatherman Surge', founder:'Tim Leatherman, 1983, Portland',
+        desc:'Het zwaarste model. 21 tools, vervangbare draadknippers, 25 jaar garantie. Voor handen die werken.',
+        bundle:'Scharnierolie + slijpset + poetsdoek', price:145, tags:['Amerikaans','21 tools','RVS'], life:25,
+        img:'img/leatherman.png',
+        specVals:['21 tools inclusief vervangbare draadknippers en zaagblad.','335 gram — het zwaarste model. Je voelt het gewicht, maar ook de mogelijkheden.','420HC roestvrij staal. Hard genoeg om scherp te blijven, zacht genoeg om te slijpen.','Alle tools toegankelijk zonder het mes open te klappen. Eén hand bediening.','25 jaar fabrieksgarantie op materiaal- en productiefouten.'] },
+      { brand:'Victorinox', origin:'Zwitserland', model:'Victorinox SwissTool Spirit X', founder:'Karl Elsener, 1884, Ibach',
+        desc:'Zwitserse precisie sinds 1884. Eleganter, net zo capabel. Lifetime garantie.',
+        bundle:'Scharnierolie + slijpset + poetsdoek', price:135, tags:['Zwitsers','RVS','Lifetime garantie'], life:30,
+        img:'img/victorinox.png',
+        specVals:['27 tools — meer opties, iets compacter ingepakt dan de Surge.','295 gram — merkbaar lichter. Fijner voor dagelijks dragen.','Zwitsers roestvast staal. Iets harder, houdt langer zijn scherpte.','Interne veerbeveiliging. Alles vergrendelt automatisch in open positie.','Lifetime garantie. Onvoorwaardelijk, zonder bon.'] }
+    ]},
+  { id:'koptelefoon', name:'Koptelefoon', sub:'Studiokwaliteit, thuis',
+    tagline:'Alles buitensluiten of alles binnenlaten',
+    L:'DE', Ll:'Gesloten, isolerend', R:'DE', Rl:'Open, ruimtelijk',
+    specs:['Type','Impedantie','Gewicht','Oorkussens','Frequentiebereik'],
+    items:[
+      { brand:'Beyerdynamic', origin:'Duitsland', model:'Beyerdynamic DT 770 Pro', founder:'Eugen Beyer, 1924, Heilbronn',
+        desc:'80 Ohm. De kop die geluidstechnici al 40 jaar vertrouwen. Gesloten: de wereld verdwijnt.',
+        bundle:'Extra set velour oorkussens', price:175, tags:['Duits','80 Ohm','Gesloten','Velour'], life:15,
+        img:'img/beyerdynamic.png',
+        specVals:['Gesloten. Isoleert omgevingsgeluid volledig. Ideaal voor concentratie of luide omgevingen.','80 Ohm. Werkt direct op elke laptop, telefoon of interface. Geen versterker nodig.','270 gram. Stevig maar comfortabel, ook bij lange sessies.','Velour oorkussens, vervangbaar. Ademen goed, geen zweet bij langdurig gebruik.','5 Hz – 35 kHz. Diepe bas, scherpe hoge tonen. Studiostandaard.'] },
+      { brand:'Sennheiser', origin:'Duitsland', model:'Sennheiser HD 560S', founder:'Fritz Sennheiser, 1945, Wedemark',
+        desc:'Open design. Muziek klinkt zoals de artiest het bedoelde. Ruimtelijk, eerlijk, gedetailleerd.',
+        bundle:'Extra set oorkussens', price:160, tags:['Duits','Open design','Natuurlijk geluid'], life:15,
+        img:'img/sennheiser.png',
+        specVals:['Open. Laat omgevingsgeluid door. Muziek klinkt ruimtelijker en natuurlijker.','120 Ohm. Werkt op de meeste apparaten, maar klinkt beter met een koptelefoonversterker.','240 gram. Licht op het hoofd, merk je nauwelijks na uren luisteren.','Velour oorkussens, vervangbaar. Zacht en ademend voor langdurig comfort.','6 Hz – 38 kHz. Breed bereik, bijzonder gedetailleerd in de middentonen.'] }
+    ]},
+  { id:'pen', name:'Pen', sub:'Schrijven als ambacht',
+    tagline:'Technische precisie of Bauhaus-elegantie',
+    L:'DE', Ll:'Hamburg, 0.5mm', R:'DE', Rl:'Heidelberg, 1966',
+    specs:['Type','Materiaal','Gewicht','Mechanisme','Stijl'],
+    items:[
+      { brand:'Rotring', origin:'Duitsland', model:'Rotring 600 (0.5mm)', founder:'Rotring, 1928, Hamburg',
+        desc:'Messing behuizing. Precisiemechanisme. De pen die architecten kiezen. Voelt als een instrument.',
+        bundle:'3x navulkoker stiften + gum', price:40, tags:['Duits','Messing','0.5mm precisie'], life:20,
+        specVals:['Vulpotlood, 0.5mm. Technisch tekenen of dagelijks schrijven — altijd scherp.','Volledig messing. Zwaar in de hand, voelt als een instrument. Zal na jaren een patina krijgen.','22 gram. Compact en precies. Past in elk borstzakje.','Drukknop met vergrendeling. De stift trekt niet in bij schrijfdruk.','Technisch, precies. De pen die architecten en ingenieurs kiezen.'] },
+      { brand:'Lamy', origin:'Duitsland', model:'Lamy 2000', founder:'Josef Lamy, 1930, Heidelberg',
+        desc:'Makrolon en RVS. Ontworpen in 1966, onveranderd sindsdien. Bauhaus in je binnenzak.',
+        bundle:'3x M16 vullingen + poetsdoekje', price:100, tags:['Duits','Makrolon','RVS','Sinds 1966'], life:30,
+        specVals:['Vulpen met zuigsysteem. Schrijft met inkt — elke letter heeft karakter.','Makrolon (glasvezelversterkt) en geborsteld RVS. Licht, krasbestendig, warm in de hand.','26 gram. Perfecte balans tussen licht en substantieel.','Piston filler — zuigt inkt direct uit een potje. Geen cartridges, geen afval.','Bauhaus, tijdloos. Ontworpen in 1966 door Gerd A. Müller. Sindsdien onveranderd.'] }
+    ]},
+  { id:'sokken', name:'Sokken', sub:'De basis onder alles',
+    tagline:'Duitse merino of Amerikaanse lifetime garantie',
+    L:'DE', Ll:'Schmallenberg, merino', R:'US', Rl:'Vermont, garantie',
+    specs:['Materiaal','Gewicht','Wasbaar','Garantie','Stijl'],
+    items:[
+      { brand:'Falke', origin:'Duitsland', model:'Falke Airport', founder:'Franz Falke-Rohen, 1895, Schmallenberg',
+        desc:'Merinowol binnen, katoen buiten. De sok die je vergeet dat je draagt. Al 130 jaar.',
+        bundle:'Wasadvieskaart', price:25, tags:['Duits','Merinowol','Katoen','Sinds 1895'], life:5,
+        specVals:['Merinowol binnenin, katoen buitenkant. Warmte zonder kriebel, netjes genoeg voor op kantoor.','45 gram per paar. Dunner dan je verwacht van een wollen sok.','40°C machinewasbaar. Geen speciale behandeling nodig.','2 jaar fabrieksgarantie. Bij normaal gebruik gaan ze veel langer mee.','Zakelijk en subtiel. Onzichtbaar onder een pak, voelbaar comfortabel.'] },
+      { brand:'Darn Tough', origin:'Amerika', model:'Darn Tough Hiker Micro Crew', founder:'Ric & Marc Cabot, 2004, Vermont',
+        desc:'Lifetime garantie. Gaat kapot? Nieuw paar. Geen vragen. Geen bon nodig.',
+        bundle:'Lifetime garantie-informatie', price:30, tags:['Amerikaans','Vermont merino','Lifetime garantie'], life:99,
+        specVals:['Vermont merino, nylon versterkt op slijtpunten. Gemaakt voor bergen, werkt overal.','55 gram per paar. Iets dikker, meer demping op hiel en bal.','40°C machinewasbaar. Mag niet in de droger.','Lifetime garantie. Onvoorwaardelijk. Gaat kapot? Nieuw paar. Geen bon nodig.','Outdoor en robuust. Zichtbaar dikker, voelbaar steviger. Gemaakt om te presteren.'] }
+    ]},
+  { id:'scheerapparaat', name:'Scheerapparaat', sub:'Eén keer goed scheren',
+    tagline:'Nederlandse innovatie of Duitse precisie',
+    L:'NL', Ll:'Eindhoven, nano-tech', R:'DE', Rl:'Frankfurt, Smart Sense',
+    specs:['Scheersysteem','Batterijduur','Waterdicht','Technologie','Reiniging'],
+    items:[
+      { brand:'Philips', origin:'Nederland', model:'Philips S9000 Prestige', founder:'Gerard Philips, 1891, Eindhoven',
+        desc:'Nano-tech mesjes. Draadloos laden. Uit dezelfde stad als de gloeilamp.',
+        bundle:'Extra scheerkoppen (SH91)', price:280, tags:['Nederlands','Nano-tech','Draadloos laden'], life:10,
+        specVals:['3 roterende koppen die meebuigen met je kaak. Volgt elke contour.','60 minuten scheren op één lading. Draadloos laden via Qi-pad.','Ja — nat en droog. Onder de douche of met scheerschuim, beide werken.','Nano-tech mesjes. Zelfscherpend. Snijden haar af op huidniveau.','Quick Clean Pod. Reinigt, smeert en droogt automatisch.'] },
+      { brand:'Braun', origin:'Duitsland', model:'Braun Series 9 Pro+', founder:'Max Braun, 1921, Frankfurt',
+        desc:'Smart Sense past zich aan aan je baard. Dieter Rams zou het goedkeuren.',
+        bundle:'Extra scheerkoppen', price:265, tags:['Duits','Smart Sense','Rams-erfgoed'], life:10,
+        specVals:['Lineaire foil met 4 scheerelementen. Vangt meer haar in één beweging.','60 minuten scheren op één lading. 5 minuten snelladen voor één scheersessie.','Ja — nat en droog. Volledig waterdicht tot op de motor.','Smart Sense. Leest 13x per seconde je baarddichtheid en past de kracht aan.','Clean & Charge station. Reinigt met alcohol, laadt op, en droogt in één stap.'] }
+    ]},
+  { id:'stanleymes', name:'Stanleymes', sub:'Het mes dat alles opent',
+    tagline:'Amerikaans origineel of Japanse uitvinding',
+    L:'US', Ll:'Connecticut, 1843', R:'JP', Rl:'Osaka, het afbreekmes',
+    specs:['Mestype','Meslengte','Materiaal','Vergrendeling','Meswisseling'],
+    items:[
+      { brand:'Stanley', origin:'Amerika', model:'Stanley Interlock 10-018', founder:'Frederick Stanley, 1843, Connecticut',
+        desc:'Het oer-retractable mes. Metalen behuizing, vast mechanisme. Je opa had er ook een.',
+        bundle:'10x reservemesjes', price:25, tags:['Amerikaans','Metaal','Sinds 1843'], life:20,
+        specVals:['Retractable met vast trapeziumlemmet. Intrekbaar, geen afbreeksegmenten.','19mm breed trapeziummes. Standaardmaat, overal verkrijgbaar.','Volledig metaal behuizing. Voelt onverwoestbaar, is het ook.','Schuifvergrendeling. Simpel, betrouwbaar, geen bewegende onderdelen die slijten.','Intern mesopslag in het handvat. Wisselen zonder gereedschap.'] },
+      { brand:'OLFA', origin:'Japan', model:'OLFA MXP-AL (18mm)', founder:'Yoshio Okada, 1956, Osaka',
+        desc:'Yoshio Okada vond het afbreekmes uit. Dit is het beste model van zijn eigen merk.',
+        bundle:'10x reservemesjes (OLFA LB-10)', price:30, tags:['Japans','18mm','Aluminium'], life:20,
+        specVals:['Afbreekmes met segmenten. Breek een stomp stuk af, daaronder zit een nieuw scherp lemmet.','18mm snap-off segmenten. Japanse staalkwaliteit, scherper dan de meeste vaste lemmeten.','Aluminium behuizing met rubber grip. Licht, stevig, roest niet.','Auto-lock ratchet. Het mes vergrendelt automatisch op elke uitgeklapte lengte.','Achterlader. Nieuw messenblok invoeren met één hand, zonder het mes neer te leggen.'] }
+    ]},
+  { id:'camera', name:'Camera-accessoire', sub:'Nooit meer fummelen',
+    tagline:'Riem of clip. Altijd bereikbaar.',
+    L:'US', Ll:'Schouderriem', R:'US', Rl:'Rugzakclip',
+    specs:['Type','Materiaal','Gewicht','Bevestiging','Garantie'],
+    items:[
+      { brand:'Peak Design', origin:'Amerika', model:'Peak Design Slide Lite', founder:'Peter Dering, 2011, San Francisco',
+        desc:'Camerariem. Eén hand verstellen. Aluminium ankers, Hypalon. Lifetime garantie.',
+        bundle:'Geen nodig — lifetime garantie', price:60, tags:['Amerikaans','Aluminium','Hypalon','Lifetime garantie'], life:15,
+        specVals:['Schouderriem. Verstelbaar van schouder tot sling met één hand, zonder te stoppen.','Aluminium ankers met Hypalon riem. Slijtvast, waterbestendig, wordt zachter met gebruik.','85 gram. Je vergeet dat je hem draagt totdat je hem nodig hebt.','Quick-connector ankers. Klik je camera in seconden los of vast.','Lifetime garantie. Onvoorwaardelijk, geen bon of registratie nodig.'] },
+      { brand:'Peak Design', origin:'Amerika', model:'Peak Design Capture V3', founder:'Peter Dering, 2011, San Francisco',
+        desc:'Klik je camera op je rugzak of riem. Handen vrij. Arca Swiss compatibel.',
+        bundle:'Geen nodig — lifetime garantie', price:75, tags:['Amerikaans','Aluminium','Arca Swiss','Lifetime garantie'], life:15,
+        specVals:['Rugzak- of riemclip. Klik je camera op je schouderband. Handen vrij, camera bereikbaar.','Geanodiseerd aluminium. Krasvast, lichtgewicht, industriële uitstraling.','90 gram inclusief plaat. Nauwelijks merkbaar aan je rugzak.','Arca Swiss plaat. Past op vrijwel elk professioneel statief ter wereld.','Lifetime garantie. Onvoorwaardelijk, geen bon of registratie nodig.'] }
+    ]},
+  { id:'rugzak-stad', name:'Rugzak (stad)', sub:'Elke dag, elk weer',
+    tagline:'Amerikaanse stoerheid of Zweeds vakmanschap',
+    L:'US', Ll:'28L, technisch', R:'SE', Rl:'16L, waxbaar',
+    specs:['Inhoud','Materiaal','Gewicht','Laptopvak','Onderhoud'],
+    items:[
+      { brand:'The North Face', origin:'Amerika', model:'The North Face Borealis', founder:'Douglas & Susie Tompkins, 1966, San Francisco',
+        desc:'28 liter. Laptopvak, comfortabel rugpaneel. Elke woon-werkrit sinds 1966.',
+        bundle:'Impregneer spray + ritsensmeer', price:110, tags:['Amerikaans','28 liter','Laptopvak'], life:10,
+        specVals:['28 liter. Genoeg voor laptop, lunch, gymkleren en een extra laag.','600D polyester met ripstop versterking. Waterafstotend, krasvast.','1.160 gram. Stevig maar niet zwaar. Comfortabel rugpaneel voor dagelijks woon-werkverkeer.','15 inch laptopvak, gewatteerd en verhoogd. Je laptop raakt de grond niet als je de tas neerzet.','Impregneer elke 6 maanden. Wij sturen de spray mee.'] },
+      { brand:'Fjällräven', origin:'Zweden', model:'Fjällräven Kånken No.2', founder:'Åke Nordin, 1960, Örnsköldsvik',
+        desc:'16 liter. G-1000 stof, leren details. Waxbaar, repareerbaar. Zweeds en tijdloos.',
+        bundle:'Greenland Wax + impregneer', price:105, tags:['Zweeds','G-1000 stof','Waxbaar','Leer'], life:15,
+        specVals:['16 liter. Compact genoeg voor dagelijks, groot genoeg voor een weekendtas.','G-1000 stof: mix van katoen en polyester. Wordt waterafstotend na waxen, mooier na jaren.','460 gram. Opvallend licht voor zijn stevigheid. Vouwt bijna plat als hij leeg is.','13 inch laptopvak via het zijvak. Niet gewatteerd — een sleeve erbij is slim.','Greenland Wax aanbrengen met een strijkijzer. Maakt de tas waterbestendig en donkerder.'] }
+    ]},
+  { id:'rugzak-outdoor', name:'Rugzak (outdoor)', sub:'Berg of bos',
+    tagline:'Amerikaans all mighty of Duits aircomfort',
+    L:'US', Ll:'36L, alles gerepareerd', R:'DE', Rl:'27L, Augsburg',
+    specs:['Inhoud','Materiaal','Gewicht','Rugsysteem','Garantie'],
+    items:[
+      { brand:'Osprey', origin:'Amerika', model:'Osprey Stratos 36', founder:'Mike Pfotenhauer, 1974, Santa Cruz',
+        desc:'36 liter. All Mighty Guarantee: Osprey repareert elke schade. Geen vragen.',
+        bundle:'Impregneer + ritsensmeer', price:145, tags:['Amerikaans','36 liter','All Mighty garantie'], life:15,
+        specVals:['36 liter. Ideaal voor meerdaagse hikes of een lang weekend in de bergen.','500D Cordura nylon. Militaire kwaliteit stof. Bestand tegen rotsen, takken en regen.','1.480 gram. Middengewicht. De ruimte voor zijn gewicht is uitzonderlijk goed.','AirSpeed meshpaneel. Gecurved frame houdt de tas van je rug. Ventileert ook bij 30°C.','All Mighty Guarantee. Osprey repareert elke schade, ongeacht oorzaak. Geen kosten.'] },
+      { brand:'Deuter', origin:'Duitsland', model:'Deuter Futura 27', founder:'Deuter, 1898, Augsburg',
+        desc:'27 liter. Aircomfort rugpaneel. 126 jaar vakmanschap uit Augsburg.',
+        bundle:'Impregneer + ritsensmeer', price:130, tags:['Duits','27 liter','Aircomfort'], life:12,
+        specVals:['27 liter. Compacter, genoeg voor daghikes en korte overnachtingen.','Ripstop nylon 210D. Lichter dan Cordura, nog steeds scheurbestendig.','1.200 gram. Merkbaar lichter — fijn op lange afstanden.','Aircomfort ventilatie. Mesh rug met 3D-frame. Zweet wordt afgevoerd.','10 jaar fabrieksgarantie op materiaal- en constructiefouten.'] }
+    ]},
+  { id:'haarborstel', name:'Haarborstel', sub:'Eén borstel, voor altijd',
+    tagline:'Brits vakmanschap of Britse traditie',
+    L:'UK', Ll:'Londen, 1885, handgemaakt', R:'UK', Rl:'Kent, 1777, oudste ter wereld',
+    specs:['Haartype','Materiaal','Kussen','Handgemaakt','Geschikt voor'],
+    items:[
+      { brand:'Mason Pearson', origin:'Engeland', model:'Mason Pearson BN3', founder:'Mason Pearson, 1885, Londen',
+        desc:'Handgemaakt. Everzwijnhaar en nylon. De borstel die kappers kiezen. 140 jaar onveranderd.',
+        bundle:'Reinigingsborstel + poetsdoek', price:120, tags:['Engels','Everzwijnhaar','Nylon','Handgemaakt'], life:40,
+        specVals:['Mix van everzwijnhaar en nylon. De haren verdelen talg van hoofdhuid naar punten — natuurlijke conditioner.','Rubber luchtkussen. Veert mee met je hoofd, voorkomt trekken aan klitten.','Pneumatisch kussen — veerkrachtig, past zich aan aan je schedelcontour.','Ja — handgemaakt in Londen. Elke borstel wordt individueel geassembleerd.','Alle haartypes. De mix van haar en nylon werkt bij fijn tot dik haar.'] },
+      { brand:'Kent', origin:'Engeland', model:'Kent OG1 Finest', founder:'Kent Brushes, 1777, Hertfordshire',
+        desc:'Het oudste borstelmerk ter wereld. Sinds 1777. Satijnhout en zuiver everzwijnhaar. Royaal hofleverancier sinds George III.',
+        bundle:'Reinigingsborstel', price:85, tags:['Engels','Satijnhout','Everzwijnhaar','Sinds 1777'], life:30,
+        specVals:['Zuiver everzwijnhaar. Zachter dan de mix-variant, extra glans door natuurlijke oliën.','Satijnhout handvat. Glad, lichtgewicht, wordt mooier met de jaren.','Vast kussen — steviger borstelen, meer controle over dikker haar.','Ja — handgemaakt in Hertfordshire sinds 1777. Koninklijk hofleverancier.','Normaal tot dik haar. De stevigere haren geven meer grip op dik of krullend haar.'] }
+    ]},
+  { id:'fohn', name:'Föhn', sub:'Dagelijks, professioneel',
+    tagline:'Franse salontechniek of Britse motorgarantie',
+    L:'FR', Ll:'Parijs, salonmotor', R:'UK', Rl:'Leeds, 2000 uur',
+    specs:['Vermogen','Gewicht','Technologie','Motorgarantie','Geluidsdruk'],
+    items:[
+      { brand:'BaBylissPRO', origin:'Frankrijk', model:'BaBylissPRO Nano Titanium', founder:'Babyliss, 1961, Parijs',
+        desc:'Professionele salonmotor. Licht en krachtig. Gebouwd voor dagelijks gebruik.',
+        bundle:'Schoonmaakadvies', price:75, tags:['Frans','Nano Titanium','Salonmotor'], life:8,
+        specVals:['2000 watt. Genoeg kracht voor dik haar, snel genoeg voor een ochtendhaast.','580 gram. Licht voor een professioneel model. Arm wordt niet moe bij lang drogen.','Nano Titanium ionisch. Vermindert pluis, versnelt droogtijd, beschermt tegen hitteschade.','2 jaar fabrieksgarantie. Bij professioneel salongebruik gaan ze gemiddeld 4-5 jaar mee.','75 dB — vergelijkbaar met een stofzuiger. Niet fluisterstil, wel ochtendvriendelijk.'] },
+      { brand:'ghd', origin:'Engeland', model:'ghd Helios', founder:'Martin Penny e.a., 2001, Leeds',
+        desc:'2000 uur motorgarantie. Aeroprecis-technologie. Sneller drogen, minder hitte.',
+        bundle:'2000 uur motorgarantie', price:160, tags:['Engels','Aeroprecis','2000 uur garantie'], life:10,
+        specVals:['2200 watt. Meer kracht, kortere droogtijd. Minder hitteblootstelling voor je haar.','582 gram. Vergelijkbaar gewicht, iets meer power per gram.','Aeroprecis borstelloze motor. Geen slijtdelen, consistent vermogen over de hele levensduur.','2000 uur motorgarantie. Dat is circa 10 jaar dagelijks gebruik van 10 minuten.','70 dB — iets stiller dan gemiddeld. Merk je vooral bij vroeg opstaan.'] }
+    ]}
+];
+
+// === RENDER CATEGORY CARDS ===
+var cgTop = document.getElementById('catGridTop');
+var cgBottom = document.getElementById('catGridBottom');
+var catIdx = 0;
+cats.forEach(function(c){
+  var mp = Math.min.apply(null, c.items.map(function(i){return i.price}));
+  var bl = c.items[0].bundle.split('+')[0].trim();
+  if (bl.length > 24) bl = bl.substring(0,22) + '…';
+  var two = c.items.length > 1;
+  var imgL = c.items[0].img || '';
+  var imgR = two ? (c.items[1].img || '') : '';
+  var hasPhotos = imgL && imgR;
+
+  var h = '<div class="cat-card" onclick="openProduct(\''+c.id+'\')">';
+  h += '<div class="split-wrap cat-card">';
+  if(hasPhotos){
+    h += '<img class="split-photo left" src="'+imgL+'" alt="'+c.items[0].brand+'">';
+    h += '<img class="split-photo right" src="'+imgR+'" alt="'+c.items[1].brand+'">';
+    h += taperedSlash();
+  } else {
+    h += '<div class="split-ph">';
+    h += '<div class="split-ph-side"><div class="split-ph-code">'+c.L+'</div><div class="split-ph-sub">'+c.Ll+'</div></div>';
+    if(two){
+      h += taperedSlash();
+      h += '<div class="split-ph-side"><div class="split-ph-code">'+c.R+'</div><div class="split-ph-sub">'+c.Rl+'</div></div>';
+    }
+    h += '</div>';
+  }
+  var lifeMin = Math.min.apply(null, c.items.map(function(x){return x.life||10;}));
+  var lifeLabel = lifeMin >= 99 ? 'Lifetime aan onderhoud geregeld' : lifeMin+'+ jaar aan onderhoud geregeld';
+
+  h += '</div><div class="cat-card-body">';
+  h += '<div class="cat-card-cat">'+c.name+'</div>';
+  h += '<div class="cat-card-tagline">'+c.tagline+'</div>';
+  h += '<div class="cat-card-meta">';
+  h += '<div class="cat-card-bundle">'+lifeLabel+'</div>';
+  h += '<div class="cat-card-price">€'+mp+'</div>';
+  h += '</div></div></div>';
+  if(catIdx < 9){ cgTop.innerHTML += h; } else { cgBottom.innerHTML += h; }
+  catIdx++;
+});
+
+// === BRAND SCROLLER (linked to best product per brand) ===
+var brandMap = {};
+cats.forEach(function(c){
+  c.items.forEach(function(it, idx){
+    var b = it.brand;
+    if(!brandMap[b] || it.life > brandMap[b].life){
+      brandMap[b] = { catId: c.id, idx: idx, life: it.life };
+    }
+  });
+});
+function openBrand(catId, idx){
+  curCat = cats.find(function(c){return c.id===catId;});
+  selIdx = idx; activePhoto = 0; renderPP();
+  document.getElementById('homePage').classList.add('hidden');
+  document.getElementById('productPage').classList.add('active');
+  window.scrollTo(0,0);
+}
+var bn = Object.keys(brandMap);
+var th = '';
+for(var r=0;r<2;r++) bn.forEach(function(b){
+  th+='<span class="brand-name" style="cursor:pointer;" onclick="openBrand(\''+brandMap[b].catId+'\','+brandMap[b].idx+')">'+b+'</span>';
+});
+document.getElementById('brandTrack').innerHTML = th;
+
+// === QUOTES ===
+var cq = 0, qt;
+function goToQuote(n){
+  cq = n;
+  document.querySelectorAll('.quote-slide').forEach(function(s,i){s.classList.toggle('active',i===n);});
+  document.querySelectorAll('.quote-dot').forEach(function(d,i){d.classList.toggle('active',i===n);});
+  clearInterval(qt); startQt();
+}
+function startQt(){qt=setInterval(function(){goToQuote((cq+1)%3);},15000);}
+startQt();
+
+// === PRODUCT PAGE ===
+var curCat = null, selIdx = -1, activePhoto = 0;
+
+function openProduct(id){
+  curCat = cats.find(function(c){return c.id===id;});
+  selIdx = -1; activePhoto = 0; renderPP();
+  document.getElementById('homePage').classList.add('hidden');
+  document.getElementById('productPage').classList.add('active');
+  window.scrollTo(0,0);
+}
+function goHome(){
+  document.getElementById('homePage').classList.remove('hidden');
+  document.getElementById('productPage').classList.remove('active');
+  document.getElementById('duurzaamPage').classList.remove('active');
+  window.scrollTo(0,0);
+}
+function goHoe(){
+  document.getElementById('homePage').classList.remove('hidden');
+  document.getElementById('productPage').classList.remove('active');
+  document.getElementById('duurzaamPage').classList.remove('active');
+  setTimeout(function(){ document.getElementById('hoe').scrollIntoView({behavior:'smooth'}); }, 50);
+}
+function selectP(i){
+  if(selIdx === i) { selIdx = -1; } // toggle terug naar split
+  else { selIdx = i; }
+  activePhoto = 0;
+  renderPP();
+}
+function setPhoto(i){ activePhoto = i; renderPP(); }
+function toggleOptout(){
+  var hint = document.getElementById('optHint');
+  var checked = document.getElementById('optC').checked;
+  hint.style.display = checked ? 'none' : 'block';
+}
+
+function renderPP(){
+  var c = curCat, two = c.items.length > 1;
+  var neutral = selIdx === -1;
+  var it = neutral ? c.items[0] : c.items[selIdx];
+  var imgL = c.items[0].img || '';
+  var imgR = two ? (c.items[1].img || '') : '';
+  var hasP = imgL && (two ? imgR : true);
+
+  var h = '';
+
+  if(neutral && two){
+    // === SPLIT VIEW — geen keuze gemaakt ===
+    h += '<div class="split-wrap pp-split">';
+    if(hasP){
+      h += '<img class="split-photo left" src="'+imgL+'" alt="'+c.items[0].brand+'">';
+      h += '<img class="split-photo right" src="'+imgR+'" alt="'+c.items[1].brand+'">';
+      h += taperedSlash();
+    } else {
+      h += '<div class="split-ph">';
+      h += '<div class="split-ph-side"><div class="split-ph-code">'+c.L+'</div><div class="split-ph-sub">'+c.Ll+'</div></div>';
+      h += taperedSlash();
+      h += '<div class="split-ph-side"><div class="split-ph-code">'+c.R+'</div><div class="split-ph-sub">'+c.Rl+'</div></div>';
+      h += '</div>';
+    }
+    h += '</div>';
+
+    // Brand keuze knoppen
+    h += '<div class="pp-selector">';
+    c.items.forEach(function(x,i){
+      h += '<div class="pp-brand-btn" onclick="selectP('+i+')">';
+      h += '<div class="pp-brand-name">'+x.brand+'</div><div class="pp-brand-origin">'+x.origin+'</div></div>';
+    });
+    h += '</div>';
+
+    // Neutrale info — categorie level
+    h += '<div class="pp-detail">';
+    h += '<div class="pp-cat-label">'+c.name+'</div>';
+    h += '<div style="font-family:var(--serif);font-size:24px;margin-bottom:8px;">'+c.tagline+'</div>';
+    h += '<div style="font-size:14px;color:var(--dim);line-height:1.7;margin-bottom:16px;">Kies een versie om het product te bekijken en toe te voegen aan je kist.</div>';
+    h += '<div style="font-weight:700;font-size:20px;">€'+Math.min.apply(null,c.items.map(function(x){return x.price}))+'</div>';
+    h += '</div>';
+
+    // Spec-blokken: twee kolommen met icon ertussen
+    if(c.specs){
+      var specOrd = getSpecOrder(c.specs);
+      h += '<div style="margin-top:24px;">';
+      specOrd.forEach(function(oi,ri){
+        var sp = c.specs[oi];
+        var ico = specIcons[sp] || '';
+        h += '<div class="spec-compare-row">';
+        // Linker blok
+        var valL = c.items[0].specVals && c.items[0].specVals[oi] ? c.items[0].specVals[oi] : '—';
+        h += '<div class="spec-compare-block">';
+        if(ri === 0) h += '<div class="spec-compare-brand">'+c.items[0].brand+'</div>';
+        h += '<div class="spec-block-title">'+sp+'</div>';
+        h += '<div class="spec-block-val">'+valL+'</div>';
+        h += '</div>';
+        // Icon midden
+        h += '<div class="spec-compare-icon">'+(ico?'<i class="ti '+ico+'"></i>':'')+'</div>';
+        // Rechter blok
+        if(c.items.length > 1){
+          var valR = c.items[1].specVals && c.items[1].specVals[oi] ? c.items[1].specVals[oi] : '—';
+          h += '<div class="spec-compare-block">';
+          if(ri === 0) h += '<div class="spec-compare-brand">'+c.items[1].brand+'</div>';
+          h += '<div class="spec-block-title">'+sp+'</div>';
+          h += '<div class="spec-block-val">'+valR+'</div>';
+          h += '</div>';
+        }
+        h += '</div>';
+      });
+      h += '</div>';
+    }
+
+  } else {
+    // === SINGLE PRODUCT VIEW — keuze gemaakt ===
+    var selItem = neutral ? c.items[0] : c.items[selIdx];
+    var inK = kist.some(function(k){return k.model===selItem.model;});
+    var img = selItem.img || '';
+
+    // Foto gallery (3 foto's, voorlopig dezelfde)
+    var photos = [img, img, img]; // Later: selItem.photos array
+    if(img){
+      h += '<div class="pp-gallery">';
+      h += '<div class="pp-gallery-main"><img src="'+photos[activePhoto]+'" alt="'+selItem.brand+'"></div>';
+      h += '<div class="pp-gallery-thumbs">';
+      photos.forEach(function(p,i){
+        h += '<div class="pp-gallery-thumb'+(i===activePhoto?' active':'')+'" onclick="setPhoto('+i+')">';
+        h += '<img src="'+p+'" alt="Foto '+(i+1)+'">';
+        h += '</div>';
+      });
+      h += '</div></div>';
+    } else {
+      h += '<div class="split-wrap pp-split"><div class="split-ph">';
+      h += '<div class="split-ph-side"><div class="split-ph-code" style="font-size:40px;">'+selItem.brand.substring(0,2).toUpperCase()+'</div>';
+      h += '<div class="split-ph-sub">'+selItem.origin+'</div></div></div></div>';
+    }
+
+    // Brand keuze knoppen (toggle)
+    if(two){
+      h += '<div class="pp-selector">';
+      c.items.forEach(function(x,i){
+        h += '<div class="pp-brand-btn'+(i===selIdx?' sel':'')+'" onclick="selectP('+i+')">';
+        h += '<div class="pp-brand-name">'+x.brand+'</div><div class="pp-brand-origin">'+x.origin+'</div></div>';
+      });
+      h += '</div>';
+    }
+
+    // Product detail
+    h += '<div class="pp-detail">';
+    h += '<div class="pp-cat-label">'+c.name+'</div>';
+    h += '<div class="pp-header-row">';
+    // Left: naam + founder
+    h += '<div>';
+    h += '<div class="pp-model">'+selItem.model+'</div>';
+    h += '<div class="pp-founder">'+selItem.founder+'</div>';
+    h += '</div>';
+    // Right: levensduur mini chart
+    if(selItem.life){
+      var yrs = selItem.life;
+      var rounded = yrs >= 99 ? 40 : Math.round(yrs / 10) * 10;
+      if(rounded < 10) rounded = 10;
+      var ticks = [10,20,30,40];
+      h += '<div style="text-align:center;flex-shrink:0;">';
+      h += '<div style="font-size:9px;letter-spacing:1px;color:var(--muted);text-transform:uppercase;margin-bottom:6px;">Levensduur'+(yrs>=99?' · lifetime':'')+'</div>';
+      h += '<div style="display:flex;gap:3px;align-items:flex-end;height:36px;justify-content:center;" title="'+(yrs>=99?'Lifetime garantie':yrs+' jaar')+'">';
+      ticks.forEach(function(t){
+        var active = t <= rounded;
+        var barH = (t / 40) * 100;
+        h += '<div style="width:22px;height:'+barH+'%;border-radius:2px;background:'+(active?'var(--dark)':'var(--bg2)')+';cursor:default;" title="'+t+' jaar"></div>';
+      });
+      h += '</div>';
+      h += '<div style="display:flex;gap:3px;justify-content:center;margin-top:3px;">';
+      ticks.forEach(function(t){
+        var active = t <= rounded;
+        h += '<div style="width:22px;font-size:8px;color:'+(active?'var(--dark)':'var(--muted)')+';text-align:center;">'+t+'</div>';
+      });
+      h += '</div>';
+      h += '</div>';
+    }
+    h += '</div>'; // end flex row
+    h += '<div class="pp-price">€'+selItem.price+'</div>';
+    h += '<div class="pp-desc">'+selItem.desc+'</div>';
+    h += '<div class="pp-tags">';
+    selItem.tags.forEach(function(t){h+='<span class="pp-tag">'+t+'</span>';});
+    h += '</div>';
+
+    // Spec-blokken (horizontaal scrollbaar, met icon Decathlon-stijl)
+    if(c.specs && selItem.specVals){
+      var specOrd = getSpecOrder(c.specs);
+      h += '<div class="spec-scroll" style="margin-bottom:20px;">';
+      specOrd.forEach(function(oi){
+        var sp = c.specs[oi];
+        var val = selItem.specVals[oi] || '—';
+        var ico = specIcons[sp] || '';
+        h += '<div class="spec-block">';
+        if(ico) h += '<div style="display:flex;gap:8px;align-items:flex-start;">';
+        if(ico) h += '<i class="ti '+ico+'" style="font-size:18px;color:#999;margin-top:1px;flex-shrink:0;"></i>';
+        h += '<div><div class="spec-block-title">'+sp+'</div><div class="spec-block-val">'+val+'</div></div>';
+        if(ico) h += '</div>';
+        h += '</div>';
+      });
+      h += '</div>';
+    }
+
+    // Onderhoud bundel — positief framen
+    var bundleParts = selItem.bundle.split('+').map(function(s){return s.trim();});
+    var isLifetime = selItem.bundle.toLowerCase().indexOf('lifetime') > -1 || selItem.bundle.toLowerCase().indexOf('geen nodig') > -1;
+    h += '<div style="background:var(--bg2);border-radius:8px 8px 0 0;padding:16px 20px;margin-top:16px;">';
+    h += '<div style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;">Onderhoud inbegrepen</div>';
+    if(isLifetime){
+      h += '<div style="font-size:13px;color:var(--dim);line-height:1.6;">Dit product heeft lifetime garantie. Onderhoud is niet nodig — als er iets kapot gaat, wordt het vervangen.</div>';
+    } else {
+      h += '<div style="font-size:13px;color:var(--dim);line-height:1.6;">Inclusief: '+bundleParts.join(', ')+'</div>';
+    }
+    h += '</div>';
+    h += '<div style="background:var(--bg2);border-radius:0 0 8px 8px;padding:6px 20px 8px;">';
+    h += '<div style="border-top:0.5px solid var(--border);margin:0 12px;"></div>';
+    h += '<div id="optLabel" style="display:flex;align-items:center;gap:6px;padding:6px 0;font-size:11px;color:var(--muted);"><input type="checkbox" id="optC" onchange="toggleOptout()" style="width:12px;height:12px;cursor:pointer;accent-color:var(--dark);"><span>Ik heb al eigen onderhoudsspullen</span></div>';
+    h += '</div>';
+
+    h += '<button class="pp-add'+(inK?' in':'')+'" id="ppAdd" onclick="addPP()">'+
+      '<svg style="width:16px;height:16px;vertical-align:-2px;margin-right:6px;"><use href="#ic-kist"/></svg>'+
+      (inK?'Goede keuze.':'Voeg toe aan mijn kist')+'</button>';
+    h += '<div class="pp-del" style="display:flex;align-items:center;gap:6px;justify-content:center;"><svg width="16" height="12" viewBox="0 0 26 18" style="flex-shrink:0;"><rect width="26" height="18" rx="3" fill="#ff6600"/><path d="M6 13V6h8v7M14 6l4 3v4h2V9l-4-3" fill="none" stroke="#fff" stroke-width="1.2" stroke-linejoin="round"/><circle cx="9" cy="13" r="1.5" fill="#fff"/><circle cx="18" cy="13" r="1.5" fill="#fff"/></svg> PostNL · binnen 3 werkdagen · thuis of afhaalpunt · track & trace</div>';
+
+
+    h += '</div>';
+  }
+
+  document.getElementById('ppContent').innerHTML = h;
+}
+
+// === KIST ===
+var kist = [];
+
+function addPP(){
+  var it = curCat.items[selIdx === -1 ? 0 : selIdx];
+  var ex=kist.findIndex(function(k){return k.model===it.model;});
+  var oo=document.getElementById('optC')&&document.getElementById('optC').checked;
+  if(ex>-1) kist.splice(ex,1);
+  else kist.push({model:it.model,brand:it.brand,cat:curCat.name,price:it.price,bundle:it.bundle,optout:oo});
+  updK(); renderPP();
+}
+function rmK(i){kist.splice(i,1);updK();}
+
+function updK(){
+  var ce=document.getElementById('kistCount'),ie=document.getElementById('kistItems');
+  var te=document.getElementById('kistTotal'),cb=document.getElementById('checkoutBtn');
+  ce.textContent=kist.length; ce.classList.toggle('hidden',kist.length===0);
+  if(!kist.length){
+    ie.innerHTML='<div class="kist-empty">Je kist is nog leeg.<br>Met welke producten ga jij door het leven?</div>';
+    te.textContent='€0'; cb.disabled=true; return;
+  }
+  var t=0,h='';
+  kist.forEach(function(k,i){
+    t+=k.price;
+    h+='<div class="kist-item"><div style="flex:1"><div class="ki-name">'+k.brand+'</div><div class="ki-cat">'+k.cat+'</div>';
+    if(k.optout){
+      h+='<div class="ki-optout">Zonder onderhoudset</div>';
+    } else if(k.bundle){
+      h+='<div style="font-size:10px;color:var(--muted);margin-top:2px;">✓ '+k.bundle+'</div>';
+    }
+    h+='</div><div class="ki-price">€'+k.price+'</div>';
+    h+='<button class="ki-remove" onclick="rmK('+i+')">×</button></div>';
+  });
+  ie.innerHTML=h; te.textContent='€'+t; cb.disabled=false;
+}
+
+function toggleKist(){
+  document.getElementById('kistOverlay').classList.toggle('open');
+  document.getElementById('kistDrawer').classList.toggle('open');
+}
+
+// === CHECKOUT ===
+function openCheckout(){
+  toggleKist();
+  var t=kist.reduce(function(s,i){return s+i.price;},0)+4.95;
+  document.getElementById('payAmount').textContent='€'+t.toFixed(2).replace('.',',');
+  document.getElementById('stepShip').classList.add('active');
+  document.getElementById('step1').classList.remove('active');
+  document.getElementById('step2').classList.remove('active');
+  document.querySelectorAll('#step1 .modal-ideal').forEach(function(m){ m.classList.remove('sel'); });
+  document.getElementById('payBtn').disabled=true;
+  document.getElementById('checkoutModal').classList.add('open');
+}
+function selectShip(el){
+  document.querySelectorAll('#stepShip .modal-ideal').forEach(function(m){ m.classList.remove('sel'); });
+  el.classList.add('sel');
+}
+function goToPayment(){
+  document.getElementById('stepShip').classList.remove('active');
+  document.getElementById('step1').classList.add('active');
+}
+function selectPayment(el){
+  document.querySelectorAll('#step1 .modal-ideal').forEach(function(m){ m.classList.remove('sel'); });
+  el.classList.add('sel');
+  document.getElementById('payBtn').disabled=false;
+}
+function showSignup(){
+  document.getElementById('step1').classList.remove('active');
+  document.getElementById('step2').classList.add('active');
+}
+function closeCheckout(){document.getElementById('checkoutModal').classList.remove('open');}
+
+function submitEmail(e){
+  e.preventDefault();
+  var em=document.getElementById('emailInput').value;
+  var items=kist.map(function(k){return k.brand+' '+k.cat+' (€'+k.price+')'+(k.optout?' [zonder onderhoud]':'');}).join(', ');
+  // Formspree — vervang YOUR_FORM_ID
+  fetch('https://formspree.io/f/YOUR_FORM_ID',{
+    method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({email:em,interesse:items})
+  }).then(function(){}).catch(function(){});
+  document.getElementById('signupForm').style.display='none';
+  document.getElementById('emailThanks').style.display='block';
+}
+
+document.getElementById('checkoutModal').addEventListener('click',function(e){if(e.target===this)closeCheckout();});
+
+// === DUURZAAM PAGE ===
+function openDuurzaam(){
+  document.getElementById('homePage').classList.add('hidden');
+  document.getElementById('productPage').classList.remove('active');
+  document.getElementById('duurzaamPage').classList.add('active');
+  renderTimeline();
+  window.scrollTo(0,0);
+}
+// Override goHome to also close duurzaam
+var _goHome = goHome;
+goHome = function(){
+  document.getElementById('duurzaamPage').classList.remove('active');
+  _goHome();
+};
+
+function fmtDate(d){
+  var maanden = ['jan','feb','mrt','apr','mei','jun','jul','aug','sep','okt','nov','dec'];
+  return maanden[d.getMonth()] + ' ' + d.getFullYear();
+}
+function addMonths(d, n){
+  var r = new Date(d);
+  r.setMonth(r.getMonth() + n);
+  return r;
+}
+
+function renderTimeline(){
+  var now = new Date();
+  var steps = [
+    { m:0, bm:0,bt:45,bz:1,bzl:'Keuzestress', gm:0,gt:15,gz:0,
+           bad:{icon:'ti-search',t:'Online zoeken',d:'45 minuten scrollen. 200+ opties op Bol. Reviews lezen. Twijfelen. Welke is de beste? Niemand weet het.',c:['45 min|time','1 zorg|money']},
+           good:{icon:'ti-arrows-split',t:'Twee opties. Een overwogen keuze.',d:'was/dom heeft al gekozen. Jij kiest alleen je stijl. Beyerdynamic DT 770 Pro.',c:['15 min|good']} },
+    { m:0, label:false, bm:40,bt:0,bz:0, gm:175,gt:0,gz:0,
+           bad:{icon:'ti-shopping-cart',t:'Kopen: €40',d:'Goedkoopste met goede reviews. Plastic verpakking. Geen extra\'s.',c:['€40|money']},
+           good:{icon:'ti-package',t:'Kopen: €175',d:'Onderhoud inbegrepen. Velour oorkussens erbij. Kraft verpakking, met de hand verwerkt.',c:['€175|money']} },
+    { m:3, bm:0,bt:0,bz:1,bzl:'Kabel kraakt', gm:0,gt:0,gz:0,
+           bad:{icon:'ti-headphones-off',t:'Kabel kraakt',d:'Links valt soms weg. Moet je de kabel op een bepaalde manier houden. Irritant tijdens meetings.',c:['1 zorg|money']},
+           good:{icon:'ti-music',t:'Elke dag dezelfde kwaliteit',d:'Je zet ze op en vergeet dat je ze draagt. Muziek klinkt zoals het bedoeld is.'} },
+    { m:6, bm:0,bt:0,bz:1,bzl:'Oorkussen pelt af', gm:0,gt:0,gz:0,
+           bad:{icon:'ti-trash',t:'Oorkussen pelt af',d:'Zwarte vlokjes op je oren en bureau. Plakkerig. Tijd voor een nieuwe.',c:['1 zorg|money']},
+           good:{icon:'ti-phone-call',t:'Wij bellen je',d:'Zorg je goed voor ze? En zij voor jou? Een korte onderhoudstip. Velour nog perfect.',c:['Persoonlijk|good']} },
+    { m:7, bm:0,bt:45,bz:1,bzl:'Weer zoeken', gm:0,gt:0,gz:0,
+           bad:{icon:'ti-search',t:'Weer zoeken',d:'Opnieuw 45 minuten. Dezelfde reviews. "Deze keer koop ik iets beters." Dezelfde twijfel.',c:['45 min|time','1 zorg|money']},
+           good:null },
+    { m:8, bm:55,bt:0,bz:0, gm:0,gt:0,gz:0,
+           bad:{icon:'ti-shopping-cart',t:'Opnieuw kopen: €55',d:'"Iets duurder dit keer, dan gaat ie vast langer mee." Spoiler: nee.',c:['€55|money']},
+           good:null },
+    { m:12, bm:0,bt:0,bz:1,bzl:'Hoofdband kraakt', gm:0,gt:0,gz:0,
+            bad:{icon:'ti-alert-triangle',t:'Hoofdband kraakt',d:'Het scharnier maakt een knarsend geluid. Het plastic wordt bros. Bekend gevoel.',c:['1 zorg|money']},
+            good:{icon:'ti-cake',t:'Jubileum',d:'Een kaartje in de bus. 1 jaar samen. Eerste gebruikssporen op de beugel. Mooier geworden.',c:['Patina|good']} },
+    { m:16, bm:50,bt:60,bz:1,bzl:'Kapot #3', gm:0,gt:0,gz:0,
+            bad:{icon:'ti-trash',t:'Kapot. Nummer 3.',d:'De hoofdband breekt. Weer naar de prullenbak. Weer opnieuw beginnen.',c:['€50|money','1 uur|time','1 zorg|money']},
+            good:null },
+    { m:24, bm:45,bt:30,bz:1,bzl:'Nog steeds niet tevreden', gm:0,gt:0,gz:0,
+            bad:{icon:'ti-repeat',t:'En weer...',d:'Nummer 4 inmiddels. De motivatie om te zoeken is weg. Je koopt gewoon de eerste de beste.',c:['€45|money','30 min|time','1 zorg|money']},
+            good:{icon:'ti-heart',t:'Je leent ze uit',d:'"Probeer deze eens." Ze zetten hem op. Stilte. Dan: "Wow." Die blik. Dat geluid. Trots.'} },
+    { m:36, bm:0,bt:0,bz:0, gm:0,gt:0,gz:0,
+            bad:null,
+            good:{icon:'ti-trophy',t:'3 jaar. Dezelfde koptelefoon.',d:'Nieuwe oorkussens erop (zaten erbij). Klinkt als dag één. De beugel heeft karakter gekregen.'} }
+  ];
+
+  var html = '';
+  steps.forEach(function(s, i){
+    var showMonth = (s.label !== false) && (i === 0 || steps[i-1].m !== s.m);
+    if(showMonth){
+      var d = addMonths(now, s.m);
+      var label = s.m === 0 ? 'Vandaag' : fmtDate(d);
+      html += '<div class="tl-row">';
+      html += '<div class="tl-month">' + label + '</div>';
+      html += '<div class="tl-mid"><div class="tl-line"></div></div>';
+      html += '<div class="tl-month">' + (s.good || s.m === 0 ? label : '') + '</div>';
+      html += '</div>';
+    }
+    html += '<div class="tl-row" data-bad-money="'+(s.bm||0)+'" data-bad-time="'+(s.bt||0)+'" data-bad-zorgen="'+(s.bz||0)+'" data-good-money="'+(s.gm||0)+'" data-good-time="'+(s.gt||0)+'" data-good-zorgen="'+(s.gz||0)+'">';
+    // Left (bad)
+    if(s.bad){
+      html += '<div class="tl-ev"><i class="ti ' + s.bad.icon + '" style="color:#cc9999;"></i>';
+      html += '<div class="tl-ev-t">' + s.bad.t + '</div>';
+      html += '<div class="tl-ev-d">' + s.bad.d + '</div>';
+      if(s.bad.c) s.bad.c.forEach(function(c){
+        var parts = c.split('|');
+        html += '<span class="tl-cost tl-c-' + parts[1] + '">' + parts[0] + '</span>';
+      });
+      html += '</div>';
+    } else {
+      html += '<div class="tl-ev-empty"></div>';
+    }
+    // Mid dot
+    var dot = s.good ? 'tl-dot-good' : s.bad ? 'tl-dot-bad' : 'tl-dot-n';
+    html += '<div class="tl-mid"><div class="tl-dot ' + dot + '"></div></div>';
+    // Right (good)
+    if(s.good){
+      html += '<div class="tl-ev"><i class="ti ' + s.good.icon + '" style="color:#99cc99;"></i>';
+      html += '<div class="tl-ev-t">' + s.good.t + '</div>';
+      html += '<div class="tl-ev-d">' + s.good.d + '</div>';
+      if(s.good.c) s.good.c.forEach(function(c){
+        var parts = c.split('|');
+        html += '<span class="tl-cost tl-c-' + parts[1] + '">' + parts[0] + '</span>';
+      });
+      html += '</div>';
+    } else {
+      html += '<div class="tl-ev-empty"></div>';
+    }
+    html += '</div>';
+  });
+
+  document.getElementById('tlContent').innerHTML = html;
+
+  // Final totals
+  document.getElementById('tlTotals').innerHTML =
+    '<div style="display:grid;grid-template-columns:1fr 20px 1fr;gap:0;">' +
+    '<div class="tl-total tl-total-bad"><span class="tl-total-num">€190 + 4 uur</span><span class="tl-total-label">4 koptelefoons · 4x zoeken · 4x teleurstelling</span></div>' +
+    '<div style="background:var(--bg2);"></div>' +
+    '<div class="tl-total tl-total-good"><span class="tl-total-num">€175 + 2 min</span><span class="tl-total-label">1 koptelefoon · 1 belletje · 3 jubileums · 0 stress</span></div></div>';
+
+  // Fade-in + bidirectional running totals
+  var rows = document.querySelectorAll('#tlContent .tl-row[data-bad-money]');
+  var zorgenLabels = [];
+
+  // Add bzl data to rows
+  steps.forEach(function(s, i){
+    var eventRows = document.querySelectorAll('#tlContent .tl-row[data-bad-money]');
+    if(eventRows[i] && s.bzl) eventRows[i].dataset.bzl = s.bzl;
+  });
+
+  // Fade-in observer (visual only)
+  var fadeObs = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, {threshold:0.3});
+  document.querySelectorAll('#tlContent .tl-row').forEach(function(row){ fadeObs.observe(row); });
+
+  // Scroll-based totals: count rows whose top is above viewport bottom
+  var allDataRows = Array.from(rows);
+  var lastScrollY = 0;
+
+  function recalcOnScroll(){
+    var viewBottom = window.scrollY + window.innerHeight;
+    var bm=0, bt=0, bz=0, gm=0, gt=0, gz=0;
+    var zList = [];
+
+    allDataRows.forEach(function(row){
+      var rowTop = row.getBoundingClientRect().top + window.scrollY;
+      var counted = rowTop < viewBottom - 60;
+
+      if(counted){
+        bm += parseInt(row.dataset.badMoney||'0');
+        bt += parseInt(row.dataset.badTime||'0');
+        var bzi = parseInt(row.dataset.badZorgen||'0');
+        bz += bzi;
+        gm += parseInt(row.dataset.goodMoney||'0');
+        gt += parseInt(row.dataset.goodTime||'0');
+        gz += parseInt(row.dataset.goodZorgen||'0');
+        if(bzi > 0 && row.dataset.bzl) zList.push(row.dataset.bzl);
+      }
+    });
+
+    document.getElementById('runBadMoney').textContent = '€'+bm;
+    document.getElementById('runBadTime').textContent = bt>=60?Math.round(bt/60)+' uur':bt+' min';
+    document.getElementById('runBadZorgen').textContent = bz;
+    document.getElementById('runGoodMoney').textContent = '€'+gm;
+    document.getElementById('runGoodTime').textContent = gt>=60?Math.round(gt/60)+' uur':gt+' min';
+    document.getElementById('runGoodZorgen').textContent = gz;
+    document.getElementById('runBadList').textContent = zList.join(' · ');
+  }
+
+  window.addEventListener('scroll', recalcOnScroll);
+  recalcOnScroll();
+}
+
+// === MOBILE MENU ===
+function toggleMobileMenu(){
+  var menu = document.getElementById('mobileMenu');
+  var btn = document.querySelector('.hamburger');
+  menu.classList.toggle('open');
+  btn.classList.toggle('open');
+  document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
+}
+function mobileNav(target){
+  toggleMobileMenu();
+  if(target === 'home') goHome();
+  else if(target === 'hoe') goHoe();
+  else if(target === 'duurzaam') openDuurzaam();
+}
+
+// === SLASH + CLIP-PATH FOLLOWS POINTER (mouse + touch) ===
+function moveSlash(clientX, clientY){
+  document.querySelectorAll('.split-wrap').forEach(function(wrap){
+    var svg = wrap.querySelector('.split-slash-svg');
+    if(!svg) return;
+    var left = wrap.querySelector('.split-photo.left');
+    var right = wrap.querySelector('.split-photo.right');
+    var rect = wrap.getBoundingClientRect();
+    var inside = clientX >= rect.left && clientX <= rect.right &&
+                 clientY >= rect.top && clientY <= rect.bottom;
+    if(!inside){
+      wrap.classList.add('returning');
+      svg.style.transform = 'translateX(0px)';
+      if(left) left.style.clipPath = 'polygon(0 0, 54% 0, 46% 100%, 0 100%)';
+      if(right) right.style.clipPath = 'polygon(54% 0, 100% 0, 100% 100%, 46% 100%)';
+      return;
+    }
+    wrap.classList.remove('returning');
+    var xPct = (clientX - rect.left) / rect.width;
+    xPct = Math.max(0.1, Math.min(0.9, xPct));
+    var offset = (xPct - 0.5) * rect.width;
+    svg.style.transform = 'translateX(' + offset + 'px)';
+    var topPct = (xPct * 100 + 4).toFixed(1);
+    var botPct = (xPct * 100 - 4).toFixed(1);
+    if(left) left.style.clipPath = 'polygon(0 0, '+topPct+'% 0, '+botPct+'% 100%, 0 100%)';
+    if(right) right.style.clipPath = 'polygon('+topPct+'% 0, 100% 0, 100% 100%, '+botPct+'% 100%)';
+  });
+}
+function resetSlash(){
+  document.querySelectorAll('.split-wrap').forEach(function(wrap){
+    var svg = wrap.querySelector('.split-slash-svg');
+    if(!svg) return;
+    var left = wrap.querySelector('.split-photo.left');
+    var right = wrap.querySelector('.split-photo.right');
+    wrap.classList.add('returning');
+    svg.style.transform = 'translateX(0px)';
+    if(left) left.style.clipPath = 'polygon(0 0, 54% 0, 46% 100%, 0 100%)';
+    if(right) right.style.clipPath = 'polygon(54% 0, 100% 0, 100% 100%, 46% 100%)';
+  });
+}
+
+// Mouse
+document.addEventListener('mousemove', function(e){ moveSlash(e.clientX, e.clientY); });
+
+// Touch — vinger op de preview heen en weer slepen
+var touchActiveWrap = null;
+document.addEventListener('touchstart', function(e){
+  var t = e.touches[0];
+  var wraps = document.querySelectorAll('.split-wrap');
+  for(var i=0; i<wraps.length; i++){
+    var rect = wraps[i].getBoundingClientRect();
+    if(t.clientX >= rect.left && t.clientX <= rect.right &&
+       t.clientY >= rect.top && t.clientY <= rect.bottom){
+      touchActiveWrap = wraps[i];
+      moveSlash(t.clientX, t.clientY);
+      break;
+    }
+  }
+}, {passive: true});
+document.addEventListener('touchmove', function(e){
+  if(!touchActiveWrap) return;
+  var t = e.touches[0];
+  moveSlash(t.clientX, t.clientY);
+}, {passive: true});
+document.addEventListener('touchend', function(){
+  touchActiveWrap = null;
+  resetSlash();
+}, {passive: true});
+</script>
+</body>
+</html>
