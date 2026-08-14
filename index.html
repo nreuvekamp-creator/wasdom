@@ -502,6 +502,17 @@ a { color: inherit; text-decoration: none; }
   font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase;
 }
 
+/* === LANGUAGE TOGGLE === */
+.lang-toggle {
+  display: flex; align-items: center; border: 1px solid var(--border); border-radius: 4px; overflow: hidden;
+}
+.lang-btn {
+  background: none; border: none; padding: 5px 9px; cursor: pointer;
+  font-family: var(--sans); font-size: 11px; font-weight: 500;
+  color: var(--muted); transition: all 0.15s; letter-spacing: 1px;
+}
+.lang-btn.active { background: var(--dark); color: var(--light); }
+
 /* === HAMBURGER MENU === */
 .hamburger {
   display: none; background: none; border: none; cursor: pointer;
@@ -677,9 +688,13 @@ a { color: inherit; text-decoration: none; }
     <a href="#" onclick="openDuurzaam();return false;">Duurzaam</a>
   </div>
   <div style="display:flex;align-items:center;gap:8px;">
+    <div class="lang-toggle">
+      <button class="lang-btn active" data-lang="nl" onclick="setLang('nl')">NL</button>
+      <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+    </div>
     <button class="kist-btn" onclick="toggleKist()">
       <svg><use href="#ic-kist"/></svg>
-      <span class="kist-label">Mijn kist</span>
+      <span class="kist-label" id="kistLabel">Mijn kist</span>
       <span class="kist-count hidden" id="kistCount">0</span>
     </button>
     <button class="hamburger" onclick="toggleMobileMenu()" aria-label="Menu">
@@ -693,6 +708,10 @@ a { color: inherit; text-decoration: none; }
   <a href="#" onclick="mobileNav('home')">Collectie</a>
   <a href="#hoe" onclick="mobileNav('hoe')">Hoe het werkt</a>
   <a href="#" onclick="mobileNav('duurzaam')">Duurzaam</a>
+  <div class="lang-toggle" style="margin-top:16px;">
+    <button class="lang-btn active" data-lang="nl" onclick="setLang('nl')">NL</button>
+    <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+  </div>
 </div>
 
 <!-- ==================== HOME ==================== -->
@@ -928,6 +947,159 @@ a { color: inherit; text-decoration: none; }
 </div>
 
 <script>
+// === i18n ===
+var curLang = 'nl';
+var ui = {
+  nl:{
+    pageTitle:'was/dom — gecureerd voor het leven',
+    navCollectie:'Collectie', navHoe:'Hoe het werkt', navDuurzaam:'Duurzaam', mijnKist:'Mijn kist',
+    heroPre:'Gecureerd voor het leven', heroH1:'Twee iconen. Eén voorkeur.',
+    heroSub:'Eén goede keuze. De rest van je leven. Onderhoud inbegrepen.', heroCta:'Bekijk de collectie',
+    sectionLabel:'De zorgvuldig gecureerde collectie', howLabel:'Hoe was/dom werkt',
+    howT1:'Kies je stijl', howD1:'Twee opties. Pure degelijkheid. Jij kiest welke de komende jaren met je meegaat.',
+    howT2:'Onderhoud inbegrepen', howD2:'Bij elk product zit precies het onderhoud dat het nodig heeft. Jij hoeft er niet over na te denken. Binnen 3 dagen bezorgd.',
+    howT3:'We blijven bij je', howD3:'Na 6 maanden een belletje, elk jaar een kaartje. Wij vieren mee dat het meegaat.',
+    terug:'← Terug', kistLeeg:'Je kist is nog leeg.<br>Met welke producten ga jij door het leven?',
+    totaal:'Totaal', shipping:'Verzending €4,95 · PostNL · binnen 3 werkdagen · track & trace',
+    keuzeDefinitief:'Keuze definitief',
+    bezorging:'Bezorging', bezorgingP:'Hoe wil je je bestelling ontvangen?',
+    postThuis:'PostNL — thuisbezorgd', postThuisSub:'Binnen 3 werkdagen aan je deur',
+    postAfhaal:'PostNL — afhaalpunt', postAfhaalSub:'Kies een punt bij jou in de buurt',
+    shipNote:'Verzendkosten: €4,95 · Alles in één keer bezorgd · Altijd met track & trace',
+    verderBetalen:'Verder naar betalen', annuleren:'Annuleren',
+    betalen:'Betalen', kiesBetaal:'Kies je betaalmethode',
+    betaalIdeal:'Betaal via je eigen bank', betaalCC:'Visa, Mastercard, Amex',
+    betaalDebit:'Maestro, V Pay, Bancontact', betaalPaypal:'Betaal met je PayPal-account',
+    betaalApple:'Betaal met Face ID of Touch ID', betaalBtn:'Betaal',
+    bijna:'We zijn er bijna.', nietLive:'was/dom is nog niet live. Jouw interesse betekent alles.',
+    houdOp:'Houd me op de hoogte.', laatEmail:'Laat je e-mail achter. Wanneer we live gaan ben jij de eerste die er van hoort.',
+    emailPh:'je@email.nl', aanmelden:'Aanmelden', opDeLijst:'Je staat op de lijst.', sluiten:'Sluiten',
+    footerTag:'Gecureerd huisraad dat generaties meegaat, met de zorg om dat ook echt waar te maken.',
+    kiesVersie:'Kies een versie om het product te bekijken en toe te voegen aan je kist.',
+    voegToe:'Voeg toe aan mijn kist', goedeKeuze:'Goede keuze.',
+    onderhoudLabel:'Onderhoud inbegrepen',
+    onderhoudLT:'Dit product heeft lifetime garantie. Onderhoud is niet nodig — als er iets kapot gaat, wordt het vervangen.',
+    inclusief:'Inclusief: ', optOut:'Ik heb al eigen onderhoudsspullen',
+    levensduur:'Levensduur', lifetime:'lifetime',
+    postLine:'PostNL · binnen 3 werkdagen · thuis of afhaalpunt · track & trace',
+    zonderOnderhoud:'Zonder onderhoudset',
+    lifeYears:'+ jaar aan onderhoud geregeld', lifeForever:'Lifetime aan onderhoud geregeld',
+    duurPre:'Niet goedkoop — een goede koop', duurH2:'Twee tijdlijnen. Eén keuze.',
+    duurP:'Beyerdynamic DT 770 Pro vs. het alternatief. Vanaf vandaag.',
+    hetAlt:'Het alternatief', vandaag:'Vandaag', geld:'Geld', tijd:'Tijd', zorgen:'Zorgen',
+    quote0:'“Hoe meer krassen het heeft, hoe beter het is.”'
+  },
+  en:{
+    pageTitle:'was/dom — curated for life',
+    navCollectie:'Collection', navHoe:'How it works', navDuurzaam:'Durability', mijnKist:'My chest',
+    heroPre:'Curated for life', heroH1:'Two icons. One preference.',
+    heroSub:'One good choice. The rest of your life. Maintenance included.', heroCta:'View the collection',
+    sectionLabel:'The carefully curated collection', howLabel:'How was/dom works',
+    howT1:'Choose your style', howD1:'Two options. Pure quality. You choose which one will be with you for years.',
+    howT2:'Maintenance included', howD2:'Every product comes with exactly the care it needs. You don’t have to think about it. Delivered within 3 days.',
+    howT3:'We stay with you', howD3:'A call after 6 months, a card every year. We celebrate that it lasts.',
+    terug:'← Back', kistLeeg:'Your chest is empty.<br>Which products will you carry through life?',
+    totaal:'Total', shipping:'Shipping €4.95 · PostNL · within 3 business days · track & trace',
+    keuzeDefinitief:'Confirm selection',
+    bezorging:'Delivery', bezorgingP:'How would you like to receive your order?',
+    postThuis:'PostNL — home delivery', postThuisSub:'At your door within 3 business days',
+    postAfhaal:'PostNL — pickup point', postAfhaalSub:'Choose a location near you',
+    shipNote:'Shipping: €4.95 · All in one delivery · Always with track & trace',
+    verderBetalen:'Continue to payment', annuleren:'Cancel',
+    betalen:'Payment', kiesBetaal:'Choose your payment method',
+    betaalIdeal:'Pay via your bank', betaalCC:'Visa, Mastercard, Amex',
+    betaalDebit:'Maestro, V Pay, Bancontact', betaalPaypal:'Pay with your PayPal account',
+    betaalApple:'Pay with Face ID or Touch ID', betaalBtn:'Pay',
+    bijna:'Almost there.', nietLive:'was/dom is not live yet. Your interest means everything.',
+    houdOp:'Keep me posted.', laatEmail:'Leave your email. When we launch, you’ll be the first to know.',
+    emailPh:'you@email.com', aanmelden:'Sign up', opDeLijst:'You’re on the list.', sluiten:'Close',
+    footerTag:'Curated household goods built to last generations, with the care to make it happen.',
+    kiesVersie:'Choose a version to view the product and add it to your chest.',
+    voegToe:'Add to my chest', goedeKeuze:'Good choice.',
+    onderhoudLabel:'Maintenance included',
+    onderhoudLT:'This product has a lifetime warranty. No maintenance needed — if something breaks, it gets replaced.',
+    inclusief:'Includes: ', optOut:'I already have my own maintenance supplies',
+    levensduur:'Lifespan', lifetime:'lifetime',
+    postLine:'PostNL · within 3 business days · home or pickup · track & trace',
+    zonderOnderhoud:'Without maintenance kit',
+    lifeYears:'+ years of maintenance covered', lifeForever:'Lifetime of maintenance covered',
+    duurPre:'Not cheap — a good buy', duurH2:'Two timelines. One choice.',
+    duurP:'Beyerdynamic DT 770 Pro vs. the alternative. Starting today.',
+    hetAlt:'The alternative', vandaag:'Today', geld:'Money', tijd:'Time', zorgen:'Worries',
+    quote0:'“The more scratches it has, the better it is.”'
+  }
+};
+function t(k){ return ui[curLang][k] || ui.nl[k] || k; }
+
+var specNamesEn = {
+  'Materiaal':'Material','Gewicht':'Weight','Vaatwasmachine':'Dishwasher safe',
+  'Snijdikte':'Slice thickness','Stijl':'Style','Aantal tools':'Tool count',
+  'Vergrendeling':'Locking','Garantie':'Warranty','Type':'Type',
+  'Impedantie':'Impedance','Oorkussens':'Ear cushions','Frequentiebereik':'Frequency range',
+  'Mechanisme':'Mechanism','Wasbaar':'Washable','Scheersysteem':'Shaving system',
+  'Batterijduur':'Battery life','Waterdicht':'Waterproof','Technologie':'Technology',
+  'Reiniging':'Cleaning','Mestype':'Blade type','Meslengte':'Blade length',
+  'Meswisseling':'Blade change','Bevestiging':'Attachment','Inhoud':'Capacity',
+  'Laptopvak':'Laptop compartment','Onderhoud':'Maintenance','Rugsysteem':'Back system',
+  'Haartype':'Hair type','Kussen':'Cushion','Handgemaakt':'Handmade',
+  'Geschikt voor':'Suitable for','Vermogen':'Power','Motorgarantie':'Motor warranty',
+  'Geluidsdruk':'Sound pressure'
+};
+function tSpec(n){ return curLang==='en' && specNamesEn[n] ? specNamesEn[n] : n; }
+
+var catTrans = {
+  kaasschaaf:{name:'Cheese Slicer',sub:'Buy once, slice forever',tagline:'Dutch warmth or Scandinavian sleek',Ll:'Gouda feel',Rl:'Scandinavian sleek',items:[
+    {desc:'Oak handle, stainless steel blade. Made in Gouda since 1896. The kind of slicer you grew up with. Warm, familiar, and still on your counter in 20 years.',bundle:'Sharpening stone + microfiber cloth',tags:['Dutch','Stainless steel','Oak'],specVals:['Stainless steel blade with oak handle. The wood gets more beautiful the more you use it.','180 grams — solid in the hand, doesn’t tip on hard cheese.','No — the oak must be hand-washed and dried.','Adjustable slice thickness. Thin for aged cheese, thicker for young.','Warm and artisanal. The slicer you grew up with.']},
+    {desc:'Full stainless steel. Sleek Scandinavian. The original cheese slicer — invented by Thor Bjørklund himself. Functional, indestructible, timeless.',bundle:'Sharpening stone',tags:['Norwegian','Full stainless steel','Scandinavian design'],specVals:['Full stainless steel. No separate handle — forged from one piece.','120 grams — light and agile, perfect for daily use.','Yes — fully dishwasher safe, no extra care needed.','Fixed slice thickness. Consistent results, every time.','Minimalist Scandinavian. Function over decoration.']}
+  ]},
+  multitool:{name:'Multitool',sub:'21 tools in your pocket',tagline:'American ruggedness or Swiss precision',Ll:'Portland, rugged',Rl:'Ibach, precise',items:[
+    {desc:'The heaviest model. 21 tools, replaceable wire cutters, 25-year warranty. For hands that work.',bundle:'Hinge oil + sharpening set + polishing cloth',tags:['American','21 tools','Stainless steel'],specVals:['21 tools including replaceable wire cutters and saw blade.','335 grams — the heaviest model. You feel the weight, but also the possibilities.','420HC stainless steel. Hard enough to stay sharp, soft enough to sharpen.','All tools accessible without opening the knife. One-hand operation.','25-year factory warranty on material and manufacturing defects.']},
+    {desc:'Swiss precision since 1884. More elegant, just as capable. Lifetime warranty.',bundle:'Hinge oil + sharpening set + polishing cloth',tags:['Swiss','Stainless steel','Lifetime warranty'],specVals:['27 tools — more options, packed slightly more compact than the Surge.','295 grams — noticeably lighter. Better for everyday carry.','Swiss stainless steel. Slightly harder, holds its edge longer.','Internal spring lock. Everything locks automatically in open position.','Lifetime warranty. Unconditional, no receipt needed.']}
+  ]},
+  koptelefoon:{name:'Headphones',sub:'Studio quality, at home',tagline:'Block everything out or let everything in',Ll:'Closed, isolating',Rl:'Open, spatial',items:[
+    {desc:'80 Ohm. The headphones sound engineers have trusted for 40 years. Closed: the world disappears.',bundle:'Extra set of velour ear cushions',tags:['German','80 Ohm','Closed','Velour'],specVals:['Closed. Fully isolates ambient noise. Ideal for focus or loud environments.','80 Ohm. Works directly on any laptop, phone, or interface. No amplifier needed.','270 grams. Solid yet comfortable, even during long sessions.','Velour ear cushions, replaceable. Breathe well, no sweat during extended use.','5 Hz – 35 kHz. Deep bass, crisp highs. Studio standard.']},
+    {desc:'Open design. Music sounds as the artist intended. Spatial, honest, detailed.',bundle:'Extra set of ear cushions',tags:['German','Open design','Natural sound'],specVals:['Open. Lets ambient sound through. Music sounds more spatial and natural.','120 Ohm. Works on most devices, but sounds better with a headphone amplifier.','240 grams. Light on the head, barely noticeable after hours of listening.','Velour ear cushions, replaceable. Soft and breathable for extended comfort.','6 Hz – 38 kHz. Wide range, exceptionally detailed in the midrange.']}
+  ]},
+  pen:{name:'Pen',sub:'Writing as craft',tagline:'Technical precision or Bauhaus elegance',Ll:'Hamburg, 0.5mm',Rl:'Heidelberg, 1966',items:[
+    {desc:'Brass body. Precision mechanism. The pen architects choose. Feels like an instrument.',bundle:'3x lead refill tubes + eraser',tags:['German','Brass','0.5mm precision'],specVals:['Mechanical pencil, 0.5mm. Technical drawing or daily writing — always sharp.','Full brass. Heavy in the hand, feels like an instrument. Will develop a patina over the years.','22 grams. Compact and precise. Fits in any breast pocket.','Push-button with locking mechanism. The lead doesn’t retract under writing pressure.','Technical, precise. The pen architects and engineers choose.']},
+    {desc:'Makrolon and stainless steel. Designed in 1966, unchanged since. Bauhaus in your pocket.',bundle:'3x M16 refills + polishing cloth',tags:['German','Makrolon','Stainless steel','Since 1966'],specVals:['Fountain pen with piston filler. Writes with ink — every letter has character.','Makrolon (fiberglass reinforced) and brushed stainless steel. Light, scratch-resistant, warm in the hand.','26 grams. Perfect balance between light and substantial.','Piston filler — draws ink directly from a bottle. No cartridges, no waste.','Bauhaus, timeless. Designed in 1966 by Gerd A. Müller. Unchanged since.']}
+  ]},
+  sokken:{name:'Socks',sub:'The foundation under everything',tagline:'German merino or American lifetime guarantee',Ll:'Schmallenberg, merino',Rl:'Vermont, guarantee',items:[
+    {desc:'Merino wool inside, cotton outside. The sock you forget you’re wearing. For 130 years.',bundle:'Wash care card',tags:['German','Merino wool','Cotton','Since 1895'],specVals:['Merino wool inside, cotton outside. Warmth without itch, neat enough for the office.','45 grams per pair. Thinner than you’d expect from a wool sock.','Machine washable at 40°C. No special treatment needed.','2-year factory warranty. With normal use they last much longer.','Business and subtle. Invisible under a suit, noticeably comfortable.']},
+    {desc:'Lifetime warranty. Wears out? New pair. No questions. No receipt needed.',bundle:'Lifetime warranty information',tags:['American','Vermont merino','Lifetime warranty'],specVals:['Vermont merino, nylon reinforced at wear points. Made for mountains, works everywhere.','55 grams per pair. Slightly thicker, more cushioning at heel and ball.','Machine washable at 40°C. Do not tumble dry.','Lifetime warranty. Unconditional. Wears out? New pair. No receipt needed.','Outdoor and rugged. Visibly thicker, noticeably sturdier. Made to perform.']}
+  ]},
+  scheerapparaat:{name:'Electric Shaver',sub:'One great shave',tagline:'Dutch innovation or German precision',Ll:'Eindhoven, nano-tech',Rl:'Frankfurt, Smart Sense',items:[
+    {desc:'Nano-tech blades. Wireless charging. From the same city as the light bulb.',bundle:'Extra shaving heads (SH91)',tags:['Dutch','Nano-tech','Wireless charging'],specVals:['3 rotary heads that flex with your jaw. Follows every contour.','60 minutes of shaving on a single charge. Wireless charging via Qi pad.','Yes — wet and dry. In the shower or with foam, both work.','Nano-tech blades. Self-sharpening. Cut hair at skin level.','Quick Clean Pod. Cleans, lubricates, and dries automatically.']},
+    {desc:'Smart Sense adapts to your beard. Dieter Rams would approve.',bundle:'Extra shaving heads',tags:['German','Smart Sense','Rams heritage'],specVals:['Linear foil with 4 cutting elements. Catches more hair in one stroke.','60 minutes of shaving on a single charge. 5-minute quick charge for one session.','Yes — wet and dry. Fully waterproof down to the motor.','Smart Sense. Reads your beard density 13x per second and adjusts power.','Clean & Charge station. Cleans with alcohol, charges, and dries in one step.']}
+  ]},
+  stanleymes:{name:'Utility Knife',sub:'The knife that opens everything',tagline:'American original or Japanese invention',Ll:'Connecticut, 1843',Rl:'Osaka, the snap-off blade',items:[
+    {desc:'The original retractable knife. Metal body, fixed mechanism. Your grandfather had one too.',bundle:'10x replacement blades',tags:['American','Metal','Since 1843'],specVals:['Retractable with fixed trapezoid blade. Retractable, no snap-off segments.','19mm wide trapezoid blade. Standard size, available everywhere.','Full metal body. Feels indestructible, and it is.','Slide lock. Simple, reliable, no moving parts that wear out.','Internal blade storage in the handle. Swap without tools.']},
+    {desc:'Yoshio Okada invented the snap-off blade. This is the best model from his own brand.',bundle:'10x replacement blades (OLFA LB-10)',tags:['Japanese','18mm','Aluminum'],specVals:['Snap-off blade with segments. Break off a dull piece, underneath is a fresh sharp blade.','18mm snap-off segments. Japanese steel quality, sharper than most fixed blades.','Aluminum body with rubber grip. Light, sturdy, won’t rust.','Auto-lock ratchet. The blade locks automatically at any extended length.','Rear-loader. Insert a new blade strip with one hand, without putting the knife down.']}
+  ]},
+  camera:{name:'Camera Accessory',sub:'Never fumble again',tagline:'Strap or clip. Always within reach.',Ll:'Shoulder strap',Rl:'Backpack clip',items:[
+    {desc:'Camera strap. One-hand adjustment. Aluminum anchors, Hypalon. Lifetime warranty.',bundle:'None needed — lifetime warranty',tags:['American','Aluminum','Hypalon','Lifetime warranty'],specVals:['Shoulder strap. Adjustable from shoulder to sling with one hand, without stopping.','Aluminum anchors with Hypalon strap. Wear-resistant, water-resistant, gets softer with use.','85 grams. You forget you’re wearing it until you need it.','Quick-connector anchors. Click your camera on or off in seconds.','Lifetime warranty. Unconditional, no receipt or registration needed.']},
+    {desc:'Clip your camera to your backpack or belt. Hands free. Arca Swiss compatible.',bundle:'None needed — lifetime warranty',tags:['American','Aluminum','Arca Swiss','Lifetime warranty'],specVals:['Backpack or belt clip. Click your camera onto your shoulder strap. Hands free, camera within reach.','Anodized aluminum. Scratch-proof, lightweight, industrial look.','90 grams including plate. Barely noticeable on your backpack.','Arca Swiss plate. Fits virtually any professional tripod in the world.','Lifetime warranty. Unconditional, no receipt or registration needed.']}
+  ]},
+  'rugzak-stad':{name:'Backpack (city)',sub:'Every day, any weather',tagline:'American toughness or Swedish craftsmanship',Ll:'28L, technical',Rl:'16L, waxable',items:[
+    {desc:'28 liters. Laptop compartment, comfortable back panel. Every commute since 1966.',bundle:'Waterproofing spray + zipper lube',tags:['American','28 liters','Laptop compartment'],specVals:['28 liters. Enough for laptop, lunch, gym clothes, and an extra layer.','600D polyester with ripstop reinforcement. Water-repellent, scratch-resistant.','1,160 grams. Solid but not heavy. Comfortable back panel for daily commutes.','15-inch laptop compartment, padded and elevated. Your laptop won’t touch the ground when you set the bag down.','Waterproof every 6 months. We include the spray.']},
+    {desc:'16 liters. G-1000 fabric, leather details. Waxable, repairable. Swedish and timeless.',bundle:'Greenland Wax + waterproofing',tags:['Swedish','G-1000 fabric','Waxable','Leather'],specVals:['16 liters. Compact enough for daily use, big enough for a weekend bag.','G-1000 fabric: cotton and polyester blend. Becomes water-repellent after waxing, more beautiful with years.','460 grams. Remarkably light for its sturdiness. Folds almost flat when empty.','13-inch laptop via the side pocket. Not padded — a sleeve is smart.','Apply Greenland Wax with an iron. Makes the bag water-resistant and darker.']}
+  ]},
+  'rugzak-outdoor':{name:'Backpack (outdoor)',sub:'Mountain or forest',tagline:'American all mighty or German aircomfort',Ll:'36L, everything repaired',Rl:'27L, Augsburg',items:[
+    {desc:'36 liters. All Mighty Guarantee: Osprey repairs any damage. No questions.',bundle:'Waterproofing + zipper lube',tags:['American','36 liters','All Mighty guarantee'],specVals:['36 liters. Ideal for multi-day hikes or a long weekend in the mountains.','500D Cordura nylon. Military-grade fabric. Resistant to rocks, branches, and rain.','1,480 grams. Midweight. The space-to-weight ratio is exceptionally good.','AirSpeed mesh panel. Curved frame keeps the pack off your back. Ventilates even at 30°C.','All Mighty Guarantee. Osprey repairs any damage, regardless of cause. No cost.']},
+    {desc:'27 liters. Aircomfort back panel. 126 years of craftsmanship from Augsburg.',bundle:'Waterproofing + zipper lube',tags:['German','27 liters','Aircomfort'],specVals:['27 liters. More compact, enough for day hikes and short overnights.','Ripstop nylon 210D. Lighter than Cordura, still tear-resistant.','1,200 grams. Noticeably lighter — great for long distances.','Aircomfort ventilation. Mesh back with 3D frame. Sweat is wicked away.','10-year factory warranty on material and construction defects.']}
+  ]},
+  haarborstel:{name:'Hairbrush',sub:'One brush, forever',tagline:'British craftsmanship or British tradition',Ll:'London, 1885, handmade',Rl:'Kent, 1777, world’s oldest',items:[
+    {desc:'Handmade. Boar bristle and nylon. The brush hairdressers choose. Unchanged for 140 years.',bundle:'Cleaning brush + polishing cloth',tags:['English','Boar bristle','Nylon','Handmade'],specVals:['Mix of boar bristle and nylon. The bristles distribute sebum from scalp to tips — natural conditioner.','Rubber air cushion. Springs with your head, prevents tugging at tangles.','Pneumatic cushion — springy, adapts to your skull contour.','Yes — handmade in London. Each brush is individually assembled.','All hair types. The bristle-nylon mix works on fine to thick hair.']},
+    {desc:'The world’s oldest brush brand. Since 1777. Satinwood and pure boar bristle. Royal warrant holder since George III.',bundle:'Cleaning brush',tags:['English','Satinwood','Boar bristle','Since 1777'],specVals:['Pure boar bristle. Softer than the mixed variant, extra shine from natural oils.','Satinwood handle. Smooth, lightweight, gets more beautiful with the years.','Fixed cushion — firmer brushing, more control over thicker hair.','Yes — handmade in Hertfordshire since 1777. Royal warrant holder.','Normal to thick hair. The firmer bristles provide more grip on thick or curly hair.']}
+  ]},
+  fohn:{name:'Hair Dryer',sub:'Daily, professional',tagline:'French salon technology or British motor warranty',Ll:'Paris, salon motor',Rl:'Leeds, 2000 hours',items:[
+    {desc:'Professional salon motor. Light and powerful. Built for daily use.',bundle:'Cleaning advice',tags:['French','Nano Titanium','Salon motor'],specVals:['2000 watts. Enough power for thick hair, fast enough for a morning rush.','580 grams. Light for a professional model. Arm won’t tire during long drying.','Nano Titanium ionic. Reduces frizz, speeds drying time, protects against heat damage.','2-year factory warranty. With professional salon use they average 4-5 years.','75 dB — comparable to a vacuum cleaner. Not whisper quiet, but morning-friendly.']},
+    {desc:'2000-hour motor warranty. Aeroprecis technology. Faster drying, less heat.',bundle:'2000-hour motor warranty',tags:['English','Aeroprecis','2000-hour warranty'],specVals:['2200 watts. More power, shorter drying time. Less heat exposure for your hair.','582 grams. Comparable weight, slightly more power per gram.','Aeroprecis brushless motor. No wearing parts, consistent power over the entire lifespan.','2000-hour motor warranty. That’s about 10 years of daily 10-minute use.','70 dB — slightly quieter than average. You’ll notice especially when getting up early.']}
+  ]}
+};
+function tc(c,f){ var tr=catTrans[c.id]; return curLang==='en'&&tr&&tr[f]!==undefined?tr[f]:c[f]; }
+function ti(c,idx,f){ var tr=catTrans[c.id]; return curLang==='en'&&tr&&tr.items&&tr.items[idx]&&tr.items[idx][f]!==undefined?tr.items[idx][f]:c.items[idx][f]; }
+
 // === DATA — copy aangescherpt in TOV ===
 // Tapered slash SVG — zelfde slash als het logo icoon
 function taperedSlash(){
@@ -1137,46 +1309,48 @@ var cats = [
 ];
 
 // === RENDER CATEGORY CARDS ===
-var cgTop = document.getElementById('catGridTop');
-var cgBottom = document.getElementById('catGridBottom');
-var catIdx = 0;
-cats.forEach(function(c){
-  var mp = Math.min.apply(null, c.items.map(function(i){return i.price}));
-  var bl = c.items[0].bundle.split('+')[0].trim();
-  if (bl.length > 24) bl = bl.substring(0,22) + '…';
-  var two = c.items.length > 1;
-  var imgL = c.items[0].img || '';
-  var imgR = two ? (c.items[1].img || '') : '';
-  var hasPhotos = imgL && imgR;
+function renderCards(){
+  var cgTop = document.getElementById('catGridTop');
+  var cgBottom = document.getElementById('catGridBottom');
+  cgTop.innerHTML = ''; cgBottom.innerHTML = '';
+  var catIdx = 0;
+  cats.forEach(function(c){
+    var mp = Math.min.apply(null, c.items.map(function(i){return i.price}));
+    var two = c.items.length > 1;
+    var imgL = c.items[0].img || '';
+    var imgR = two ? (c.items[1].img || '') : '';
+    var hasPhotos = imgL && imgR;
 
-  var h = '<div class="cat-card" onclick="openProduct(\''+c.id+'\')">';
-  h += '<div class="split-wrap cat-card">';
-  if(hasPhotos){
-    h += '<img class="split-photo left" src="'+imgL+'" alt="'+c.items[0].brand+'">';
-    h += '<img class="split-photo right" src="'+imgR+'" alt="'+c.items[1].brand+'">';
-    h += taperedSlash();
-  } else {
-    h += '<div class="split-ph">';
-    h += '<div class="split-ph-side"><div class="split-ph-code">'+c.L+'</div><div class="split-ph-sub">'+c.Ll+'</div></div>';
-    if(two){
+    var h = '<div class="cat-card" onclick="openProduct(\''+c.id+'\')">';
+    h += '<div class="split-wrap cat-card">';
+    if(hasPhotos){
+      h += '<img class="split-photo left" src="'+imgL+'" alt="'+c.items[0].brand+'">';
+      h += '<img class="split-photo right" src="'+imgR+'" alt="'+c.items[1].brand+'">';
       h += taperedSlash();
-      h += '<div class="split-ph-side"><div class="split-ph-code">'+c.R+'</div><div class="split-ph-sub">'+c.Rl+'</div></div>';
+    } else {
+      h += '<div class="split-ph">';
+      h += '<div class="split-ph-side"><div class="split-ph-code">'+c.L+'</div><div class="split-ph-sub">'+tc(c,'Ll')+'</div></div>';
+      if(two){
+        h += taperedSlash();
+        h += '<div class="split-ph-side"><div class="split-ph-code">'+c.R+'</div><div class="split-ph-sub">'+tc(c,'Rl')+'</div></div>';
+      }
+      h += '</div>';
     }
-    h += '</div>';
-  }
-  var lifeMin = Math.min.apply(null, c.items.map(function(x){return x.life||10;}));
-  var lifeLabel = lifeMin >= 99 ? 'Lifetime aan onderhoud geregeld' : lifeMin+'+ jaar aan onderhoud geregeld';
+    var lifeMin = Math.min.apply(null, c.items.map(function(x){return x.life||10;}));
+    var lifeLabel = lifeMin >= 99 ? t('lifeForever') : lifeMin + t('lifeYears');
 
-  h += '</div><div class="cat-card-body">';
-  h += '<div class="cat-card-cat">'+c.name+'</div>';
-  h += '<div class="cat-card-tagline">'+c.tagline+'</div>';
-  h += '<div class="cat-card-meta">';
-  h += '<div class="cat-card-bundle">'+lifeLabel+'</div>';
-  h += '<div class="cat-card-price">€'+mp+'</div>';
-  h += '</div></div></div>';
-  if(catIdx < 9){ cgTop.innerHTML += h; } else { cgBottom.innerHTML += h; }
-  catIdx++;
-});
+    h += '</div><div class="cat-card-body">';
+    h += '<div class="cat-card-cat">'+tc(c,'name')+'</div>';
+    h += '<div class="cat-card-tagline">'+tc(c,'tagline')+'</div>';
+    h += '<div class="cat-card-meta">';
+    h += '<div class="cat-card-bundle">'+lifeLabel+'</div>';
+    h += '<div class="cat-card-price">€'+mp+'</div>';
+    h += '</div></div></div>';
+    if(catIdx < 9){ cgTop.innerHTML += h; } else { cgBottom.innerHTML += h; }
+    catIdx++;
+  });
+}
+renderCards();
 
 // === BRAND SCROLLER (linked to best product per brand) ===
 var brandMap = {};
@@ -1255,11 +1429,11 @@ function renderPP(){
   var imgL = c.items[0].img || '';
   var imgR = two ? (c.items[1].img || '') : '';
   var hasP = imgL && (two ? imgR : true);
+  var si = selIdx === -1 ? 0 : selIdx;
 
   var h = '';
 
   if(neutral && two){
-    // === SPLIT VIEW — geen keuze gemaakt ===
     h += '<div class="split-wrap pp-split">';
     if(hasP){
       h += '<img class="split-photo left" src="'+imgL+'" alt="'+c.items[0].brand+'">';
@@ -1267,14 +1441,13 @@ function renderPP(){
       h += taperedSlash();
     } else {
       h += '<div class="split-ph">';
-      h += '<div class="split-ph-side"><div class="split-ph-code">'+c.L+'</div><div class="split-ph-sub">'+c.Ll+'</div></div>';
+      h += '<div class="split-ph-side"><div class="split-ph-code">'+c.L+'</div><div class="split-ph-sub">'+tc(c,'Ll')+'</div></div>';
       h += taperedSlash();
-      h += '<div class="split-ph-side"><div class="split-ph-code">'+c.R+'</div><div class="split-ph-sub">'+c.Rl+'</div></div>';
+      h += '<div class="split-ph-side"><div class="split-ph-code">'+c.R+'</div><div class="split-ph-sub">'+tc(c,'Rl')+'</div></div>';
       h += '</div>';
     }
     h += '</div>';
 
-    // Brand keuze knoppen
     h += '<div class="pp-selector">';
     c.items.forEach(function(x,i){
       h += '<div class="pp-brand-btn" onclick="selectP('+i+')">';
@@ -1282,15 +1455,13 @@ function renderPP(){
     });
     h += '</div>';
 
-    // Neutrale info — categorie level
     h += '<div class="pp-detail">';
-    h += '<div class="pp-cat-label">'+c.name+'</div>';
-    h += '<div style="font-family:var(--serif);font-size:24px;margin-bottom:8px;">'+c.tagline+'</div>';
-    h += '<div style="font-size:14px;color:var(--dim);line-height:1.7;margin-bottom:16px;">Kies een versie om het product te bekijken en toe te voegen aan je kist.</div>';
+    h += '<div class="pp-cat-label">'+tc(c,'name')+'</div>';
+    h += '<div style="font-family:var(--serif);font-size:24px;margin-bottom:8px;">'+tc(c,'tagline')+'</div>';
+    h += '<div style="font-size:14px;color:var(--dim);line-height:1.7;margin-bottom:16px;">'+t('kiesVersie')+'</div>';
     h += '<div style="font-weight:700;font-size:20px;">€'+Math.min.apply(null,c.items.map(function(x){return x.price}))+'</div>';
     h += '</div>';
 
-    // Spec-blokken: twee kolommen met icon ertussen
     if(c.specs){
       var specOrd = getSpecOrder(c.specs);
       h += '<div style="margin-top:24px;">';
@@ -1298,21 +1469,18 @@ function renderPP(){
         var sp = c.specs[oi];
         var ico = specIcons[sp] || '';
         h += '<div class="spec-compare-row">';
-        // Linker blok
-        var valL = c.items[0].specVals && c.items[0].specVals[oi] ? c.items[0].specVals[oi] : '—';
+        var valL = ti(c,0,'specVals')[oi] || '—';
         h += '<div class="spec-compare-block">';
         if(ri === 0) h += '<div class="spec-compare-brand">'+c.items[0].brand+'</div>';
-        h += '<div class="spec-block-title">'+sp+'</div>';
+        h += '<div class="spec-block-title">'+tSpec(sp)+'</div>';
         h += '<div class="spec-block-val">'+valL+'</div>';
         h += '</div>';
-        // Icon midden
         h += '<div class="spec-compare-icon">'+(ico?'<i class="ti '+ico+'"></i>':'')+'</div>';
-        // Rechter blok
         if(c.items.length > 1){
-          var valR = c.items[1].specVals && c.items[1].specVals[oi] ? c.items[1].specVals[oi] : '—';
+          var valR = ti(c,1,'specVals')[oi] || '—';
           h += '<div class="spec-compare-block">';
           if(ri === 0) h += '<div class="spec-compare-brand">'+c.items[1].brand+'</div>';
-          h += '<div class="spec-block-title">'+sp+'</div>';
+          h += '<div class="spec-block-title">'+tSpec(sp)+'</div>';
           h += '<div class="spec-block-val">'+valR+'</div>';
           h += '</div>';
         }
@@ -1322,20 +1490,18 @@ function renderPP(){
     }
 
   } else {
-    // === SINGLE PRODUCT VIEW — keuze gemaakt ===
     var selItem = neutral ? c.items[0] : c.items[selIdx];
     var inK = kist.some(function(k){return k.model===selItem.model;});
     var img = selItem.img || '';
 
-    // Foto gallery (3 foto's, voorlopig dezelfde)
-    var photos = [img, img, img]; // Later: selItem.photos array
+    var photos = [img, img, img];
     if(img){
       h += '<div class="pp-gallery">';
       h += '<div class="pp-gallery-main"><img src="'+photos[activePhoto]+'" alt="'+selItem.brand+'"></div>';
       h += '<div class="pp-gallery-thumbs">';
       photos.forEach(function(p,i){
         h += '<div class="pp-gallery-thumb'+(i===activePhoto?' active':'')+'" onclick="setPhoto('+i+')">';
-        h += '<img src="'+p+'" alt="Foto '+(i+1)+'">';
+        h += '<img src="'+p+'" alt="'+(i+1)+'">';
         h += '</div>';
       });
       h += '</div></div>';
@@ -1345,7 +1511,6 @@ function renderPP(){
       h += '<div class="split-ph-sub">'+selItem.origin+'</div></div></div></div>';
     }
 
-    // Brand keuze knoppen (toggle)
     if(two){
       h += '<div class="pp-selector">';
       c.items.forEach(function(x,i){
@@ -1355,84 +1520,81 @@ function renderPP(){
       h += '</div>';
     }
 
-    // Product detail
     h += '<div class="pp-detail">';
-    h += '<div class="pp-cat-label">'+c.name+'</div>';
+    h += '<div class="pp-cat-label">'+tc(c,'name')+'</div>';
     h += '<div class="pp-header-row">';
-    // Left: naam + founder
     h += '<div>';
     h += '<div class="pp-model">'+selItem.model+'</div>';
     h += '<div class="pp-founder">'+selItem.founder+'</div>';
     h += '</div>';
-    // Right: levensduur mini chart
     if(selItem.life){
       var yrs = selItem.life;
       var rounded = yrs >= 99 ? 40 : Math.round(yrs / 10) * 10;
       if(rounded < 10) rounded = 10;
       var ticks = [10,20,30,40];
       h += '<div style="text-align:center;flex-shrink:0;">';
-      h += '<div style="font-size:9px;letter-spacing:1px;color:var(--muted);text-transform:uppercase;margin-bottom:6px;">Levensduur'+(yrs>=99?' · lifetime':'')+'</div>';
-      h += '<div style="display:flex;gap:3px;align-items:flex-end;height:36px;justify-content:center;" title="'+(yrs>=99?'Lifetime garantie':yrs+' jaar')+'">';
-      ticks.forEach(function(t){
-        var active = t <= rounded;
-        var barH = (t / 40) * 100;
-        h += '<div style="width:22px;height:'+barH+'%;border-radius:2px;background:'+(active?'var(--dark)':'var(--bg2)')+';cursor:default;" title="'+t+' jaar"></div>';
+      h += '<div style="font-size:9px;letter-spacing:1px;color:var(--muted);text-transform:uppercase;margin-bottom:6px;">'+t('levensduur')+(yrs>=99?' · '+t('lifetime'):'')+'</div>';
+      h += '<div style="display:flex;gap:3px;align-items:flex-end;height:36px;justify-content:center;" title="'+(yrs>=99?t('lifetime'):yrs+(curLang==='en'?' years':' jaar'))+'">';
+      ticks.forEach(function(tk){
+        var active = tk <= rounded;
+        var barH = (tk / 40) * 100;
+        h += '<div style="width:22px;height:'+barH+'%;border-radius:2px;background:'+(active?'var(--dark)':'var(--bg2)')+';cursor:default;" title="'+tk+(curLang==='en'?' years':' jaar')+'"></div>';
       });
       h += '</div>';
       h += '<div style="display:flex;gap:3px;justify-content:center;margin-top:3px;">';
-      ticks.forEach(function(t){
-        var active = t <= rounded;
-        h += '<div style="width:22px;font-size:8px;color:'+(active?'var(--dark)':'var(--muted)')+';text-align:center;">'+t+'</div>';
+      ticks.forEach(function(tk){
+        var active = tk <= rounded;
+        h += '<div style="width:22px;font-size:8px;color:'+(active?'var(--dark)':'var(--muted)')+';text-align:center;">'+tk+'</div>';
       });
       h += '</div>';
       h += '</div>';
     }
-    h += '</div>'; // end flex row
+    h += '</div>';
     h += '<div class="pp-price">€'+selItem.price+'</div>';
-    h += '<div class="pp-desc">'+selItem.desc+'</div>';
+    h += '<div class="pp-desc">'+ti(c,si,'desc')+'</div>';
     h += '<div class="pp-tags">';
-    selItem.tags.forEach(function(t){h+='<span class="pp-tag">'+t+'</span>';});
+    var tags = ti(c,si,'tags');
+    tags.forEach(function(tg){h+='<span class="pp-tag">'+tg+'</span>';});
     h += '</div>';
 
-    // Spec-blokken (horizontaal scrollbaar, met icon Decathlon-stijl)
     if(c.specs && selItem.specVals){
       var specOrd = getSpecOrder(c.specs);
+      var sVals = ti(c,si,'specVals');
       h += '<div class="spec-scroll" style="margin-bottom:20px;">';
       specOrd.forEach(function(oi){
         var sp = c.specs[oi];
-        var val = selItem.specVals[oi] || '—';
+        var val = sVals[oi] || '—';
         var ico = specIcons[sp] || '';
         h += '<div class="spec-block">';
         if(ico) h += '<div style="display:flex;gap:8px;align-items:flex-start;">';
         if(ico) h += '<i class="ti '+ico+'" style="font-size:18px;color:#999;margin-top:1px;flex-shrink:0;"></i>';
-        h += '<div><div class="spec-block-title">'+sp+'</div><div class="spec-block-val">'+val+'</div></div>';
+        h += '<div><div class="spec-block-title">'+tSpec(sp)+'</div><div class="spec-block-val">'+val+'</div></div>';
         if(ico) h += '</div>';
         h += '</div>';
       });
       h += '</div>';
     }
 
-    // Onderhoud bundel — positief framen
-    var bundleParts = selItem.bundle.split('+').map(function(s){return s.trim();});
-    var isLifetime = selItem.bundle.toLowerCase().indexOf('lifetime') > -1 || selItem.bundle.toLowerCase().indexOf('geen nodig') > -1;
+    var bndl = ti(c,si,'bundle');
+    var bundleParts = bndl.split('+').map(function(s){return s.trim();});
+    var isLifetime = bndl.toLowerCase().indexOf('lifetime') > -1 || bndl.toLowerCase().indexOf('geen nodig') > -1 || bndl.toLowerCase().indexOf('none needed') > -1;
     h += '<div style="background:var(--bg2);border-radius:8px 8px 0 0;padding:16px 20px;margin-top:16px;">';
-    h += '<div style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;">Onderhoud inbegrepen</div>';
+    h += '<div style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;">'+t('onderhoudLabel')+'</div>';
     if(isLifetime){
-      h += '<div style="font-size:13px;color:var(--dim);line-height:1.6;">Dit product heeft lifetime garantie. Onderhoud is niet nodig — als er iets kapot gaat, wordt het vervangen.</div>';
+      h += '<div style="font-size:13px;color:var(--dim);line-height:1.6;">'+t('onderhoudLT')+'</div>';
     } else {
-      h += '<div style="font-size:13px;color:var(--dim);line-height:1.6;">Inclusief: '+bundleParts.join(', ')+'</div>';
+      h += '<div style="font-size:13px;color:var(--dim);line-height:1.6;">'+t('inclusief')+bundleParts.join(', ')+'</div>';
     }
     h += '</div>';
     h += '<div style="background:var(--bg2);border-radius:0 0 8px 8px;padding:6px 20px 8px;">';
     h += '<div style="border-top:0.5px solid var(--border);margin:0 12px;"></div>';
-    h += '<div id="optLabel" style="display:flex;align-items:center;gap:6px;padding:6px 0;font-size:11px;color:var(--muted);"><input type="checkbox" id="optC" onchange="toggleOptout()" style="width:12px;height:12px;cursor:pointer;accent-color:var(--dark);"><span>Ik heb al eigen onderhoudsspullen</span></div>';
+    h += '<div id="optLabel" style="display:flex;align-items:center;gap:6px;padding:6px 0;font-size:11px;color:var(--muted);"><input type="checkbox" id="optC" onchange="toggleOptout()" style="width:12px;height:12px;cursor:pointer;accent-color:var(--dark);"><span>'+t('optOut')+'</span></div>';
     h += '</div>';
 
     h += '<button class="pp-add'+(inK?' in':'')+'" id="ppAdd" onclick="addPP()">'+
       '<svg style="width:16px;height:16px;vertical-align:-2px;margin-right:6px;"><use href="#ic-kist"/></svg>'+
-      (inK?'Goede keuze.':'Voeg toe aan mijn kist')+'</button>';
-    h += '<div class="pp-del" style="display:flex;align-items:center;gap:6px;justify-content:center;"><svg width="16" height="12" viewBox="0 0 26 18" style="flex-shrink:0;"><rect width="26" height="18" rx="3" fill="#ff6600"/><path d="M6 13V6h8v7M14 6l4 3v4h2V9l-4-3" fill="none" stroke="#fff" stroke-width="1.2" stroke-linejoin="round"/><circle cx="9" cy="13" r="1.5" fill="#fff"/><circle cx="18" cy="13" r="1.5" fill="#fff"/></svg> PostNL · binnen 3 werkdagen · thuis of afhaalpunt · track & trace</div>';
-
+      (inK?t('goedeKeuze'):t('voegToe'))+'</button>';
+    h += '<div class="pp-del" style="display:flex;align-items:center;gap:6px;justify-content:center;"><svg width="16" height="12" viewBox="0 0 26 18" style="flex-shrink:0;"><rect width="26" height="18" rx="3" fill="#ff6600"/><path d="M6 13V6h8v7M14 6l4 3v4h2V9l-4-3" fill="none" stroke="#fff" stroke-width="1.2" stroke-linejoin="round"/><circle cx="9" cy="13" r="1.5" fill="#fff"/><circle cx="18" cy="13" r="1.5" fill="#fff"/></svg> '+t('postLine')+'</div>';
 
     h += '</div>';
   }
@@ -1444,11 +1606,12 @@ function renderPP(){
 var kist = [];
 
 function addPP(){
-  var it = curCat.items[selIdx === -1 ? 0 : selIdx];
+  var si = selIdx === -1 ? 0 : selIdx;
+  var it = curCat.items[si];
   var ex=kist.findIndex(function(k){return k.model===it.model;});
   var oo=document.getElementById('optC')&&document.getElementById('optC').checked;
   if(ex>-1) kist.splice(ex,1);
-  else kist.push({model:it.model,brand:it.brand,cat:curCat.name,price:it.price,bundle:it.bundle,optout:oo});
+  else kist.push({model:it.model,brand:it.brand,catId:curCat.id,cat:curCat.name,itemIdx:si,price:it.price,bundle:it.bundle,optout:oo});
   updK(); renderPP();
 }
 function rmK(i){kist.splice(i,1);updK();}
@@ -1458,22 +1621,25 @@ function updK(){
   var te=document.getElementById('kistTotal'),cb=document.getElementById('checkoutBtn');
   ce.textContent=kist.length; ce.classList.toggle('hidden',kist.length===0);
   if(!kist.length){
-    ie.innerHTML='<div class="kist-empty">Je kist is nog leeg.<br>Met welke producten ga jij door het leven?</div>';
+    ie.innerHTML='<div class="kist-empty">'+t('kistLeeg')+'</div>';
     te.textContent='€0'; cb.disabled=true; return;
   }
-  var t=0,h='';
+  var tot=0,h='';
   kist.forEach(function(k,i){
-    t+=k.price;
-    h+='<div class="kist-item"><div style="flex:1"><div class="ki-name">'+k.brand+'</div><div class="ki-cat">'+k.cat+'</div>';
+    tot+=k.price;
+    var catObj=cats.find(function(c){return c.id===k.catId;});
+    var catName=catObj?tc(catObj,'name'):k.cat;
+    var bndl=catObj?ti(catObj,k.itemIdx||0,'bundle'):k.bundle;
+    h+='<div class="kist-item"><div style="flex:1"><div class="ki-name">'+k.brand+'</div><div class="ki-cat">'+catName+'</div>';
     if(k.optout){
-      h+='<div class="ki-optout">Zonder onderhoudset</div>';
-    } else if(k.bundle){
-      h+='<div style="font-size:10px;color:var(--muted);margin-top:2px;">✓ '+k.bundle+'</div>';
+      h+='<div class="ki-optout">'+t('zonderOnderhoud')+'</div>';
+    } else if(bndl){
+      h+='<div style="font-size:10px;color:var(--muted);margin-top:2px;">✓ '+bndl+'</div>';
     }
     h+='</div><div class="ki-price">€'+k.price+'</div>';
     h+='<button class="ki-remove" onclick="rmK('+i+')">×</button></div>';
   });
-  ie.innerHTML=h; te.textContent='€'+t; cb.disabled=false;
+  ie.innerHTML=h; te.textContent='€'+tot; cb.disabled=false;
 }
 
 function toggleKist(){
@@ -1543,7 +1709,9 @@ goHome = function(){
 };
 
 function fmtDate(d){
-  var maanden = ['jan','feb','mrt','apr','mei','jun','jul','aug','sep','okt','nov','dec'];
+  var maanden = curLang==='en'
+    ? ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+    : ['jan','feb','mrt','apr','mei','jun','jul','aug','sep','okt','nov','dec'];
   return maanden[d.getMonth()] + ' ' + d.getFullYear();
 }
 function addMonths(d, n){
@@ -1552,47 +1720,83 @@ function addMonths(d, n){
   return r;
 }
 
+function getTlSteps(){
+  if(curLang==='en') return [
+    {m:0,bm:0,bt:45,bz:1,bzl:'Choice stress',gm:0,gt:15,gz:0,
+      bad:{icon:'ti-search',t:'Searching online',d:'45 minutes scrolling. 200+ options on Amazon. Reading reviews. Doubting. Which is the best? Nobody knows.',c:['45 min|time','1 worry|money']},
+      good:{icon:'ti-arrows-split',t:'Two options. A considered choice.',d:'was/dom already chose. You just pick your style. Beyerdynamic DT 770 Pro.',c:['15 min|good']}},
+    {m:0,label:false,bm:40,bt:0,bz:0,gm:175,gt:0,gz:0,
+      bad:{icon:'ti-shopping-cart',t:'Buy: €40',d:'Cheapest with good reviews. Plastic packaging. No extras.',c:['€40|money']},
+      good:{icon:'ti-package',t:'Buy: €175',d:'Maintenance included. Velour ear cushions included. Kraft packaging, hand-processed.',c:['€175|money']}},
+    {m:3,bm:0,bt:0,bz:1,bzl:'Cable crackles',gm:0,gt:0,gz:0,
+      bad:{icon:'ti-headphones-off',t:'Cable crackles',d:'Left side cuts out sometimes. Have to hold the cable a certain way. Annoying during meetings.',c:['1 worry|money']},
+      good:{icon:'ti-music',t:'Same quality every day',d:'You put them on and forget you\'re wearing them. Music sounds as intended.'}},
+    {m:6,bm:0,bt:0,bz:1,bzl:'Ear cushion peeling',gm:0,gt:0,gz:0,
+      bad:{icon:'ti-trash',t:'Ear cushion peeling',d:'Black flakes on your ears and desk. Sticky. Time for a new one.',c:['1 worry|money']},
+      good:{icon:'ti-phone-call',t:'We call you',d:'Taking good care of them? And they of you? A short maintenance tip. Velour still perfect.',c:['Personal|good']}},
+    {m:7,bm:0,bt:45,bz:1,bzl:'Searching again',gm:0,gt:0,gz:0,
+      bad:{icon:'ti-search',t:'Searching again',d:'Another 45 minutes. Same reviews. "This time I\'ll buy something better." Same doubt.',c:['45 min|time','1 worry|money']},
+      good:null},
+    {m:8,bm:55,bt:0,bz:0,gm:0,gt:0,gz:0,
+      bad:{icon:'ti-shopping-cart',t:'Buy again: €55',d:'"A bit more expensive this time, surely it\'ll last longer." Spoiler: no.',c:['€55|money']},
+      good:null},
+    {m:12,bm:0,bt:0,bz:1,bzl:'Headband creaking',gm:0,gt:0,gz:0,
+      bad:{icon:'ti-alert-triangle',t:'Headband creaking',d:'The hinge makes a grinding sound. The plastic is getting brittle. Familiar feeling.',c:['1 worry|money']},
+      good:{icon:'ti-cake',t:'Anniversary',d:'A card in the mail. 1 year together. First signs of wear on the band. More beautiful.',c:['Patina|good']}},
+    {m:16,bm:50,bt:60,bz:1,bzl:'Broken #3',gm:0,gt:0,gz:0,
+      bad:{icon:'ti-trash',t:'Broken. Number 3.',d:'The headband snaps. Back to the bin. Start over again.',c:['€50|money','1 hr|time','1 worry|money']},
+      good:null},
+    {m:24,bm:45,bt:30,bz:1,bzl:'Still not satisfied',gm:0,gt:0,gz:0,
+      bad:{icon:'ti-repeat',t:'And again...',d:'Number 4 by now. The motivation to search is gone. You just buy the first one you see.',c:['€45|money','30 min|time','1 worry|money']},
+      good:{icon:'ti-heart',t:'You lend them out',d:'"Try these." They put them on. Silence. Then: "Wow." That look. That sound. Pride.'}},
+    {m:36,bm:0,bt:0,bz:0,gm:0,gt:0,gz:0,
+      bad:null,
+      good:{icon:'ti-trophy',t:'3 years. Same headphones.',d:'New ear cushions on (came with it). Sounds like day one. The band has gained character.'}}
+  ];
+  return [
+    {m:0,bm:0,bt:45,bz:1,bzl:'Keuzestress',gm:0,gt:15,gz:0,
+      bad:{icon:'ti-search',t:'Online zoeken',d:'45 minuten scrollen. 200+ opties op Bol. Reviews lezen. Twijfelen. Welke is de beste? Niemand weet het.',c:['45 min|time','1 zorg|money']},
+      good:{icon:'ti-arrows-split',t:'Twee opties. Een overwogen keuze.',d:'was/dom heeft al gekozen. Jij kiest alleen je stijl. Beyerdynamic DT 770 Pro.',c:['15 min|good']}},
+    {m:0,label:false,bm:40,bt:0,bz:0,gm:175,gt:0,gz:0,
+      bad:{icon:'ti-shopping-cart',t:'Kopen: €40',d:'Goedkoopste met goede reviews. Plastic verpakking. Geen extra\'s.',c:['€40|money']},
+      good:{icon:'ti-package',t:'Kopen: €175',d:'Onderhoud inbegrepen. Velour oorkussens erbij. Kraft verpakking, met de hand verwerkt.',c:['€175|money']}},
+    {m:3,bm:0,bt:0,bz:1,bzl:'Kabel kraakt',gm:0,gt:0,gz:0,
+      bad:{icon:'ti-headphones-off',t:'Kabel kraakt',d:'Links valt soms weg. Moet je de kabel op een bepaalde manier houden. Irritant tijdens meetings.',c:['1 zorg|money']},
+      good:{icon:'ti-music',t:'Elke dag dezelfde kwaliteit',d:'Je zet ze op en vergeet dat je ze draagt. Muziek klinkt zoals het bedoeld is.'}},
+    {m:6,bm:0,bt:0,bz:1,bzl:'Oorkussen pelt af',gm:0,gt:0,gz:0,
+      bad:{icon:'ti-trash',t:'Oorkussen pelt af',d:'Zwarte vlokjes op je oren en bureau. Plakkerig. Tijd voor een nieuwe.',c:['1 zorg|money']},
+      good:{icon:'ti-phone-call',t:'Wij bellen je',d:'Zorg je goed voor ze? En zij voor jou? Een korte onderhoudstip. Velour nog perfect.',c:['Persoonlijk|good']}},
+    {m:7,bm:0,bt:45,bz:1,bzl:'Weer zoeken',gm:0,gt:0,gz:0,
+      bad:{icon:'ti-search',t:'Weer zoeken',d:'Opnieuw 45 minuten. Dezelfde reviews. "Deze keer koop ik iets beters." Dezelfde twijfel.',c:['45 min|time','1 zorg|money']},
+      good:null},
+    {m:8,bm:55,bt:0,bz:0,gm:0,gt:0,gz:0,
+      bad:{icon:'ti-shopping-cart',t:'Opnieuw kopen: €55',d:'"Iets duurder dit keer, dan gaat ie vast langer mee." Spoiler: nee.',c:['€55|money']},
+      good:null},
+    {m:12,bm:0,bt:0,bz:1,bzl:'Hoofdband kraakt',gm:0,gt:0,gz:0,
+      bad:{icon:'ti-alert-triangle',t:'Hoofdband kraakt',d:'Het scharnier maakt een knarsend geluid. Het plastic wordt bros. Bekend gevoel.',c:['1 zorg|money']},
+      good:{icon:'ti-cake',t:'Jubileum',d:'Een kaartje in de bus. 1 jaar samen. Eerste gebruikssporen op de beugel. Mooier geworden.',c:['Patina|good']}},
+    {m:16,bm:50,bt:60,bz:1,bzl:'Kapot #3',gm:0,gt:0,gz:0,
+      bad:{icon:'ti-trash',t:'Kapot. Nummer 3.',d:'De hoofdband breekt. Weer naar de prullenbak. Weer opnieuw beginnen.',c:['€50|money','1 uur|time','1 zorg|money']},
+      good:null},
+    {m:24,bm:45,bt:30,bz:1,bzl:'Nog steeds niet tevreden',gm:0,gt:0,gz:0,
+      bad:{icon:'ti-repeat',t:'En weer...',d:'Nummer 4 inmiddels. De motivatie om te zoeken is weg. Je koopt gewoon de eerste de beste.',c:['€45|money','30 min|time','1 zorg|money']},
+      good:{icon:'ti-heart',t:'Je leent ze uit',d:'"Probeer deze eens." Ze zetten hem op. Stilte. Dan: "Wow." Die blik. Dat geluid. Trots.'}},
+    {m:36,bm:0,bt:0,bz:0,gm:0,gt:0,gz:0,
+      bad:null,
+      good:{icon:'ti-trophy',t:'3 jaar. Dezelfde koptelefoon.',d:'Nieuwe oorkussens erop (zaten erbij). Klinkt als dag één. De beugel heeft karakter gekregen.'}}
+  ];
+}
+
 function renderTimeline(){
   var now = new Date();
-  var steps = [
-    { m:0, bm:0,bt:45,bz:1,bzl:'Keuzestress', gm:0,gt:15,gz:0,
-           bad:{icon:'ti-search',t:'Online zoeken',d:'45 minuten scrollen. 200+ opties op Bol. Reviews lezen. Twijfelen. Welke is de beste? Niemand weet het.',c:['45 min|time','1 zorg|money']},
-           good:{icon:'ti-arrows-split',t:'Twee opties. Een overwogen keuze.',d:'was/dom heeft al gekozen. Jij kiest alleen je stijl. Beyerdynamic DT 770 Pro.',c:['15 min|good']} },
-    { m:0, label:false, bm:40,bt:0,bz:0, gm:175,gt:0,gz:0,
-           bad:{icon:'ti-shopping-cart',t:'Kopen: €40',d:'Goedkoopste met goede reviews. Plastic verpakking. Geen extra\'s.',c:['€40|money']},
-           good:{icon:'ti-package',t:'Kopen: €175',d:'Onderhoud inbegrepen. Velour oorkussens erbij. Kraft verpakking, met de hand verwerkt.',c:['€175|money']} },
-    { m:3, bm:0,bt:0,bz:1,bzl:'Kabel kraakt', gm:0,gt:0,gz:0,
-           bad:{icon:'ti-headphones-off',t:'Kabel kraakt',d:'Links valt soms weg. Moet je de kabel op een bepaalde manier houden. Irritant tijdens meetings.',c:['1 zorg|money']},
-           good:{icon:'ti-music',t:'Elke dag dezelfde kwaliteit',d:'Je zet ze op en vergeet dat je ze draagt. Muziek klinkt zoals het bedoeld is.'} },
-    { m:6, bm:0,bt:0,bz:1,bzl:'Oorkussen pelt af', gm:0,gt:0,gz:0,
-           bad:{icon:'ti-trash',t:'Oorkussen pelt af',d:'Zwarte vlokjes op je oren en bureau. Plakkerig. Tijd voor een nieuwe.',c:['1 zorg|money']},
-           good:{icon:'ti-phone-call',t:'Wij bellen je',d:'Zorg je goed voor ze? En zij voor jou? Een korte onderhoudstip. Velour nog perfect.',c:['Persoonlijk|good']} },
-    { m:7, bm:0,bt:45,bz:1,bzl:'Weer zoeken', gm:0,gt:0,gz:0,
-           bad:{icon:'ti-search',t:'Weer zoeken',d:'Opnieuw 45 minuten. Dezelfde reviews. "Deze keer koop ik iets beters." Dezelfde twijfel.',c:['45 min|time','1 zorg|money']},
-           good:null },
-    { m:8, bm:55,bt:0,bz:0, gm:0,gt:0,gz:0,
-           bad:{icon:'ti-shopping-cart',t:'Opnieuw kopen: €55',d:'"Iets duurder dit keer, dan gaat ie vast langer mee." Spoiler: nee.',c:['€55|money']},
-           good:null },
-    { m:12, bm:0,bt:0,bz:1,bzl:'Hoofdband kraakt', gm:0,gt:0,gz:0,
-            bad:{icon:'ti-alert-triangle',t:'Hoofdband kraakt',d:'Het scharnier maakt een knarsend geluid. Het plastic wordt bros. Bekend gevoel.',c:['1 zorg|money']},
-            good:{icon:'ti-cake',t:'Jubileum',d:'Een kaartje in de bus. 1 jaar samen. Eerste gebruikssporen op de beugel. Mooier geworden.',c:['Patina|good']} },
-    { m:16, bm:50,bt:60,bz:1,bzl:'Kapot #3', gm:0,gt:0,gz:0,
-            bad:{icon:'ti-trash',t:'Kapot. Nummer 3.',d:'De hoofdband breekt. Weer naar de prullenbak. Weer opnieuw beginnen.',c:['€50|money','1 uur|time','1 zorg|money']},
-            good:null },
-    { m:24, bm:45,bt:30,bz:1,bzl:'Nog steeds niet tevreden', gm:0,gt:0,gz:0,
-            bad:{icon:'ti-repeat',t:'En weer...',d:'Nummer 4 inmiddels. De motivatie om te zoeken is weg. Je koopt gewoon de eerste de beste.',c:['€45|money','30 min|time','1 zorg|money']},
-            good:{icon:'ti-heart',t:'Je leent ze uit',d:'"Probeer deze eens." Ze zetten hem op. Stilte. Dan: "Wow." Die blik. Dat geluid. Trots.'} },
-    { m:36, bm:0,bt:0,bz:0, gm:0,gt:0,gz:0,
-            bad:null,
-            good:{icon:'ti-trophy',t:'3 jaar. Dezelfde koptelefoon.',d:'Nieuwe oorkussens erop (zaten erbij). Klinkt als dag één. De beugel heeft karakter gekregen.'} }
-  ];
+  var steps = getTlSteps();
 
   var html = '';
   steps.forEach(function(s, i){
     var showMonth = (s.label !== false) && (i === 0 || steps[i-1].m !== s.m);
     if(showMonth){
       var d = addMonths(now, s.m);
-      var label = s.m === 0 ? 'Vandaag' : fmtDate(d);
+      var label = s.m === 0 ? t('vandaag') : fmtDate(d);
       html += '<div class="tl-row">';
       html += '<div class="tl-month">' + label + '</div>';
       html += '<div class="tl-mid"><div class="tl-line"></div></div>';
@@ -1635,11 +1839,14 @@ function renderTimeline(){
   document.getElementById('tlContent').innerHTML = html;
 
   // Final totals
+  var tlBadLabel = curLang==='en' ? '4 headphones · 4x searching · 4x disappointment' : '4 koptelefoons · 4x zoeken · 4x teleurstelling';
+  var tlGoodLabel = curLang==='en' ? '1 headphone · 1 call · 3 anniversaries · 0 stress' : '1 koptelefoon · 1 belletje · 3 jubileums · 0 stress';
+  var tlBadNum = curLang==='en' ? '€190 + 4 hrs' : '€190 + 4 uur';
   document.getElementById('tlTotals').innerHTML =
     '<div style="display:grid;grid-template-columns:1fr 20px 1fr;gap:0;">' +
-    '<div class="tl-total tl-total-bad"><span class="tl-total-num">€190 + 4 uur</span><span class="tl-total-label">4 koptelefoons · 4x zoeken · 4x teleurstelling</span></div>' +
+    '<div class="tl-total tl-total-bad"><span class="tl-total-num">'+tlBadNum+'</span><span class="tl-total-label">'+tlBadLabel+'</span></div>' +
     '<div style="background:var(--bg2);"></div>' +
-    '<div class="tl-total tl-total-good"><span class="tl-total-num">€175 + 2 min</span><span class="tl-total-label">1 koptelefoon · 1 belletje · 3 jubileums · 0 stress</span></div></div>';
+    '<div class="tl-total tl-total-good"><span class="tl-total-num">€175 + 2 min</span><span class="tl-total-label">'+tlGoodLabel+'</span></div></div>';
 
   // Fade-in + bidirectional running totals
   var rows = document.querySelectorAll('#tlContent .tl-row[data-bad-money]');
@@ -1780,6 +1987,111 @@ document.addEventListener('touchend', function(){
   touchActiveWrap = null;
   resetSlash();
 }, {passive: true});
+
+// === LANGUAGE SWITCH ===
+function setLang(lang){
+  curLang = lang;
+  // Toggle buttons
+  document.querySelectorAll('.lang-btn').forEach(function(b){
+    b.classList.toggle('active', b.getAttribute('data-lang')===lang);
+  });
+  // HTML lang + title
+  document.documentElement.lang = lang==='en'?'en':'nl';
+  document.title = t('pageTitle');
+  // Nav links
+  var nl = document.querySelectorAll('.nav-links a');
+  if(nl[0]) nl[0].textContent = t('navCollectie');
+  if(nl[1]) nl[1].textContent = t('navHoe');
+  if(nl[2]) nl[2].textContent = t('navDuurzaam');
+  document.getElementById('kistLabel').textContent = t('mijnKist');
+  // Mobile menu
+  var mm = document.querySelectorAll('#mobileMenu a');
+  if(mm[0]) mm[0].textContent = t('navCollectie');
+  if(mm[1]) mm[1].textContent = t('navHoe');
+  if(mm[2]) mm[2].textContent = t('navDuurzaam');
+  // Hero
+  var hp = document.querySelector('.hero-pre'); if(hp) hp.textContent = t('heroPre');
+  var hh = document.querySelector('.hero h1'); if(hh) hh.textContent = t('heroH1');
+  var hs = document.querySelector('.hero-sub'); if(hs) hs.textContent = t('heroSub');
+  var hc = document.querySelector('.hero-cta'); if(hc) hc.textContent = t('heroCta');
+  // Section label
+  var sl = document.querySelector('#collectie .section-label'); if(sl) sl.textContent = t('sectionLabel');
+  // How it works
+  var hwl = document.querySelector('#hoe .section-label'); if(hwl) hwl.textContent = t('howLabel');
+  var steps = document.querySelectorAll('.how-step');
+  if(steps[0]){ steps[0].querySelector('.how-title').textContent=t('howT1'); steps[0].querySelector('.how-text').textContent=t('howD1'); }
+  if(steps[1]){ steps[1].querySelector('.how-title').textContent=t('howT2'); steps[1].querySelector('.how-text').textContent=t('howD2'); }
+  if(steps[2]){ steps[2].querySelector('.how-title').textContent=t('howT3'); steps[2].querySelector('.how-text').textContent=t('howD3'); }
+  // Quote
+  var q0 = document.querySelectorAll('.quote-text')[0]; if(q0) q0.textContent = t('quote0');
+  // Footer tagline
+  var ftd = document.querySelector('.footer div[style*="text-align:center"] div[style*="font-size:10px"]');
+  if(ftd) ftd.textContent = t('footerTag');
+  // Back buttons
+  document.querySelectorAll('.back-btn').forEach(function(b){ b.textContent = t('terug'); });
+  // Kist drawer
+  var kh = document.querySelector('.kist-header h3');
+  if(kh) kh.innerHTML = '<svg><use href="#ic-kist"/></svg> '+t('mijnKist');
+  var kt = document.querySelector('.kist-total span:first-child');
+  if(kt) kt.textContent = t('totaal');
+  var ks = document.querySelector('.kist-ship'); if(ks) ks.textContent = t('shipping');
+  var kb = document.getElementById('checkoutBtn'); if(kb) kb.textContent = t('keuzeDefinitief');
+  // Checkout modal — shipping step
+  var ss = document.getElementById('stepShip');
+  if(ss){
+    ss.querySelector('.modal-top h3').textContent = t('bezorging');
+    ss.querySelector('.modal-top p').textContent = t('bezorgingP');
+    var si = ss.querySelectorAll('.modal-ideal');
+    if(si[0]){ si[0].querySelector('b').textContent=t('postThuis'); si[0].querySelector('span[style]').textContent=t('postThuisSub'); }
+    if(si[1]){ si[1].querySelector('b').textContent=t('postAfhaal'); si[1].querySelector('span[style]').textContent=t('postAfhaalSub'); }
+    var sn = ss.querySelector('div[style*="font-size:11px"][style*="color:var(--muted)"][style*="padding:8px"]');
+    if(sn) sn.textContent = t('shipNote');
+    document.getElementById('shipBtn').textContent = t('verderBetalen');
+    ss.querySelector('.modal-close-btn').textContent = t('annuleren');
+  }
+  // Payment step
+  var s1 = document.getElementById('step1');
+  if(s1){
+    s1.querySelector('.modal-top h3').textContent = t('betalen');
+    s1.querySelector('.modal-top p').textContent = t('kiesBetaal');
+    var pi = s1.querySelectorAll('.modal-ideal');
+    if(pi[0]) pi[0].querySelector('span[style]').textContent = t('betaalIdeal');
+    if(pi[2]) pi[2].querySelector('span[style]').textContent = t('betaalDebit');
+    if(pi[3]) pi[3].querySelector('span[style]').textContent = t('betaalPaypal');
+    if(pi[4]) pi[4].querySelector('span[style]').textContent = t('betaalApple');
+    var pb = document.getElementById('payBtn');
+    if(pb){ var pa=document.getElementById('payAmount'); pb.firstChild.textContent=t('betaalBtn')+' '; }
+    s1.querySelector('.modal-close-btn').textContent = t('annuleren');
+  }
+  // Signup step
+  var s2 = document.getElementById('step2');
+  if(s2){
+    s2.querySelector('.modal-top h3').textContent = t('bijna');
+    s2.querySelector('.modal-top p').textContent = t('nietLive');
+    s2.querySelector('.modal-signup-title').textContent = t('houdOp');
+    s2.querySelector('.modal-signup p').textContent = t('laatEmail');
+    document.getElementById('emailInput').placeholder = t('emailPh');
+    var eb = s2.querySelector('.modal-email-btn'); if(eb) eb.textContent = t('aanmelden');
+    document.getElementById('emailThanks').textContent = t('opDeLijst');
+    s2.querySelector('.modal-close-btn').textContent = t('sluiten');
+  }
+  // Duurzaam page headers
+  var dp = document.getElementById('duurzaamPage');
+  if(dp){
+    var dpre = dp.querySelector('div[style*="letter-spacing:3px"]'); if(dpre) dpre.textContent = t('duurPre');
+    var dh2 = dp.querySelector('h2'); if(dh2) dh2.textContent = t('duurH2');
+    var dpp = dp.querySelector('p[style*="font-size:14px"]'); if(dpp) dpp.textContent = t('duurP');
+    var dalt = dp.querySelector('div[style*="color:#993333"]'); if(dalt) dalt.textContent = t('hetAlt');
+    // Running totals labels
+    var rl = dp.querySelectorAll('.tl-run-label');
+    if(rl.length>=6){ rl[0].textContent=t('geld'); rl[1].textContent=t('tijd'); rl[2].textContent=t('zorgen'); rl[3].textContent=t('geld'); rl[4].textContent=t('tijd'); rl[5].textContent=t('zorgen'); }
+  }
+  // Re-render dynamic content
+  renderCards();
+  if(curCat) renderPP();
+  updK();
+  if(document.getElementById('duurzaamPage').classList.contains('active')) renderTimeline();
+}
 </script>
 </body>
 </html>
