@@ -661,6 +661,127 @@ a { color: inherit; text-decoration: none; }
     text-align: center;
   }
 }
+
+/* === ANCHOR YEAR (founding year on split slider) === */
+.anchor-year {
+  position: absolute; bottom: 12px; left: 0; width: 100%; text-align: center;
+  font-family: var(--serif); font-style: italic; font-size: 14px;
+  color: var(--dark); opacity: 0; pointer-events: none;
+  transition: opacity 0.2s; z-index: 3;
+}
+.split-wrap.returning .anchor-year { transition: opacity 0.4s ease-out; }
+.cat-card .anchor-year span {
+  background: rgba(250,250,247,0.85); padding: 3px 12px; border-radius: 3px;
+  backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+}
+.pp-split .anchor-year { font-size: 18px; bottom: 16px; }
+
+/* === LIFESPAN BAR === */
+.lifespan-wrap { flex-shrink: 0; min-width: 180px; max-width: 240px; }
+.lifespan-markers {
+  display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 6px;
+}
+.lifespan-marker {
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  font-size: 9px; white-space: nowrap;
+}
+.lifespan-marker i { font-size: 14px; }
+.lifespan-track {
+  width: 100%; height: 4px; background: var(--bg2); border-radius: 2px; position: relative;
+}
+.lifespan-tick {
+  position: absolute; top: -3px; width: 1px; height: 10px; background: var(--muted);
+}
+.lifespan-fill { width: 100%; height: 100%; background: var(--dark); border-radius: 2px; }
+
+/* === REVIEWS === */
+.review-section { margin-top: 20px; margin-bottom: 20px; }
+.review-header { font-family: var(--serif); font-style: italic; font-size: 16px; margin-bottom: 12px; }
+.review-entry { margin-bottom: 10px; }
+.review-text { font-size: 13px; color: var(--dim); line-height: 1.6; margin-bottom: 2px; }
+.review-meta { font-size: 12px; color: var(--muted); }
+.review-meta a { color: var(--dim); }
+
+/* === OPTOUT TOOLTIP === */
+.optout-info {
+  color: var(--muted); font-size: 14px; cursor: help; position: relative;
+  display: inline-flex; align-items: center;
+}
+.optout-tooltip {
+  display: none; position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%);
+  background: #fff; border: 0.5px solid var(--border); border-radius: 6px;
+  padding: 12px 14px; width: 260px; font-size: 12px; color: var(--dim);
+  line-height: 1.55; box-shadow: 0 4px 16px rgba(0,0,0,0.08); z-index: 10;
+}
+.optout-info:hover .optout-tooltip { display: block; }
+
+/* === FOUNDER BLOCK === */
+.founder-block {
+  display: flex; gap: 14px; align-items: flex-start; margin-bottom: 20px;
+}
+.founder-avatar {
+  width: 60px; height: 60px; border-radius: 50%; background: var(--bg2);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; font-size: 20px; color: var(--muted);
+}
+.founder-info { flex: 1; }
+.founder-name { font-weight: 700; font-size: 14px; margin-bottom: 2px; }
+.founder-detail { font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+.founder-quote-text {
+  font-family: var(--serif); font-style: italic; font-size: 13px;
+  color: var(--dim); line-height: 1.5;
+}
+
+/* === STAMPS === */
+.stamps-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
+.stamp {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 11px; color: var(--dim); padding: 4px 10px;
+  background: var(--bg2); border-radius: 4px;
+}
+.stamp i { font-size: 14px; color: var(--muted); }
+
+/* === LANGUAGE SELECTOR === */
+.lang-selector { position: relative; }
+.lang-trigger {
+  background: none; border: 1px solid var(--border); border-radius: 4px;
+  padding: 4px 8px; cursor: pointer; display: flex; align-items: center; gap: 6px;
+  font-family: var(--sans); font-size: 11px; color: var(--dim);
+  transition: border-color 0.15s;
+}
+.lang-trigger:hover { border-color: var(--dark); }
+.flag-wrap {
+  width: 28px; height: 20px; border-radius: 3px; border: 0.5px solid #e0e0e0;
+  overflow: hidden; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.flag-wrap svg { display: block; width: 100%; height: 100%; }
+.lang-dropdown {
+  display: none; position: absolute; top: 100%; right: 0; margin-top: 4px;
+  background: #fff; border: 0.5px solid var(--border); border-radius: 6px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08); z-index: 110; min-width: 160px;
+  overflow: hidden;
+}
+.lang-dropdown.open { display: block; }
+.lang-option {
+  display: flex; align-items: center; gap: 10px; padding: 10px 14px;
+  font-size: 13px; color: var(--dim); cursor: pointer; transition: background 0.1s;
+}
+.lang-option:hover { background: var(--bg2); }
+.lang-option.active { color: var(--dark); font-weight: 500; }
+.lang-option.disabled { opacity: 0.4; cursor: not-allowed; }
+.lang-option.disabled:hover { background: none; }
+.footer-flags { display: none; gap: 8px; justify-content: center; margin-top: 8px; }
+.footer-flag { cursor: pointer; background: none; border: none; padding: 0; }
+.footer-flag .flag-wrap { width: 32px; height: 22px; }
+.footer-flag.disabled { opacity: 0.4; cursor: not-allowed; }
+
+@media (max-width: 700px) {
+  .lang-selector { display: none !important; }
+  .footer-flags { display: flex; }
+  .lifespan-wrap { min-width: 140px; }
+  .founder-avatar { width: 48px; height: 48px; font-size: 18px; }
+  .optout-tooltip { width: 220px; left: 0; transform: none; }
+}
 </style>
 </head>
 <body>
@@ -688,9 +809,16 @@ a { color: inherit; text-decoration: none; }
     <a href="#" onclick="openDuurzaam();return false;">Duurzaam</a>
   </div>
   <div style="display:flex;align-items:center;gap:8px;">
-    <div class="lang-toggle">
-      <button class="lang-btn active" data-lang="nl" onclick="setLang('nl')">NL</button>
-      <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+    <div class="lang-selector" id="langSelector">
+      <button class="lang-trigger" onclick="toggleLangDropdown()">
+        <div class="flag-wrap" id="langTriggerFlag"></div>
+        <i class="ti ti-chevron-down" style="font-size:12px;"></i>
+      </button>
+      <div class="lang-dropdown" id="langDropdown">
+        <div class="lang-option active" data-lang="nl" onclick="setLang('nl')"><div class="flag-wrap" data-flag="nl"></div><span>Nederlands</span></div>
+        <div class="lang-option" data-lang="en" onclick="setLang('en')"><div class="flag-wrap" data-flag="en"></div><span>English</span></div>
+        <div class="lang-option" data-lang="no" onclick="setLang('no')"><div class="flag-wrap" data-flag="no"></div><span>Norsk</span></div>
+      </div>
     </div>
     <button class="kist-btn" onclick="toggleKist()">
       <svg><use href="#ic-kist"/></svg>
@@ -708,10 +836,6 @@ a { color: inherit; text-decoration: none; }
   <a href="#" onclick="mobileNav('home')">Collectie</a>
   <a href="#hoe" onclick="mobileNav('hoe')">Hoe het werkt</a>
   <a href="#" onclick="mobileNav('duurzaam')">Duurzaam</a>
-  <div class="lang-toggle" style="margin-top:16px;">
-    <button class="lang-btn active" data-lang="nl" onclick="setLang('nl')">NL</button>
-    <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
-  </div>
 </div>
 
 <!-- ==================== HOME ==================== -->
@@ -796,7 +920,11 @@ a { color: inherit; text-decoration: none; }
     <span class="logo-was" style="font-size:16px;">was</span><span class="logo-slash" style="height:13px;"></span><span class="logo-dom" style="font-size:16px;">dom</span>
     <div style="font-size:10px;color:var(--muted);margin-top:6px;line-height:1.5;max-width:280px;margin-left:auto;margin-right:auto;">Gecureerd huisraad dat generaties meegaat, met de zorg om dat ook echt waar te maken.</div>
   </div>
-  <div></div>
+  <div class="footer-flags" id="footerFlags">
+    <button class="footer-flag" data-lang="nl" onclick="setLang('nl')"><div class="flag-wrap" data-flag="nl"></div></button>
+    <button class="footer-flag" data-lang="en" onclick="setLang('en')"><div class="flag-wrap" data-flag="en"></div></button>
+    <button class="footer-flag" data-lang="no" onclick="setLang('no')"><div class="flag-wrap" data-flag="no"></div></button>
+  </div>
 </footer>
 
 </div><!-- /home-page -->
@@ -987,7 +1115,11 @@ var ui = {
     duurPre:'Niet goedkoop — een goede koop', duurH2:'Twee tijdlijnen. Eén keuze.',
     duurP:'Beyerdynamic DT 770 Pro vs. het alternatief. Vanaf vandaag.',
     hetAlt:'Het alternatief', vandaag:'Vandaag', geld:'Geld', tijd:'Tijd', zorgen:'Zorgen',
-    quote0:'“Hoe meer krassen het heeft, hoe beter het is.”'
+    gemiddeld:'gemiddeld', jaar:'jr',
+    uitDeKistVan:'Uit de kist van...', schreef:'schreef', viaWord:'via',
+    levensduurKorter:'Levensduur kan korter zijn',
+    maintAdvies:'De fabrikant adviseert: ', maintWaarom:'. Regelmatig onderhoud verlengt de levensduur aanzienlijk.',
+    quote0:'”Hoe meer krassen het heeft, hoe beter het is.”'
   },
   en:{
     pageTitle:'was/dom — curated for life',
@@ -1026,7 +1158,54 @@ var ui = {
     duurPre:'Not cheap — a good buy', duurH2:'Two timelines. One choice.',
     duurP:'Beyerdynamic DT 770 Pro vs. the alternative. Starting today.',
     hetAlt:'The alternative', vandaag:'Today', geld:'Money', tijd:'Time', zorgen:'Worries',
-    quote0:'“The more scratches it has, the better it is.”'
+    gemiddeld:'average', jaar:'yr',
+    uitDeKistVan:'From the chest of...', schreef:'wrote', viaWord:'on',
+    levensduurKorter:'Lifespan may be shorter',
+    maintAdvies:'The manufacturer recommends: ', maintWaarom:'. Regular maintenance significantly extends the product lifespan.',
+    quote0:'”The more scratches it has, the better it is.”'
+  },
+  no:{
+    pageTitle:'was/dom — kuratert for livet',
+    navCollectie:'Kolleksjon', navHoe:'Slik fungerer det', navDuurzaam:'Holdbarhet', mijnKist:'Min kiste',
+    heroPre:'Kuratert for livet', heroH1:'To ikoner. Én preferanse.',
+    heroSub:'Ett godt valg. Resten av livet. Vedlikehold inkludert.', heroCta:'Se kolleksjonen',
+    sectionLabel:'Den nøye kuraterte kolleksjonen', howLabel:'Slik fungerer was/dom',
+    howT1:'Velg din stil', howD1:'To alternativer. Ren kvalitet. Du velger hvilken som følger deg i årene fremover.',
+    howT2:'Vedlikehold inkludert', howD2:'Hvert produkt kommer med nøyaktig den pleien det trenger. Du trenger ikke tenke på det. Levert innen 3 dager.',
+    howT3:'Vi følger deg', howD3:'En telefon etter 6 måneder, et kort hvert år. Vi feirer at det varer.',
+    terug:'← Tilbake', kistLeeg:'Kisten din er tom.<br>Hvilke produkter vil du bære gjennom livet?',
+    totaal:'Totalt', shipping:'Frakt €4,95 · PostNL · innen 3 virkedager · sporing',
+    keuzeDefinitief:'Bekreft valg',
+    bezorging:'Levering', bezorgingP:'Hvordan vil du motta bestillingen?',
+    postThuis:'PostNL — hjemlevering', postThuisSub:'Ved døren din innen 3 virkedager',
+    postAfhaal:'PostNL — hentepunkt', postAfhaalSub:'Velg et sted nær deg',
+    shipNote:'Frakt: €4,95 · Alt i én levering · Alltid med sporing',
+    verderBetalen:'Videre til betaling', annuleren:'Avbryt',
+    betalen:'Betaling', kiesBetaal:'Velg betalingsmåte',
+    betaalIdeal:'Betal via banken din', betaalCC:'Visa, Mastercard, Amex',
+    betaalDebit:'Maestro, V Pay, Bancontact', betaalPaypal:'Betal med PayPal-kontoen din',
+    betaalApple:'Betal med Face ID eller Touch ID', betaalBtn:'Betal',
+    bijna:'Nesten der.', nietLive:'was/dom er ikke live ennå. Din interesse betyr alt.',
+    houdOp:'Hold meg oppdatert.', laatEmail:'Legg igjen e-posten din. Når vi lanserer, er du den første som får vite det.',
+    emailPh:'deg@epost.no', aanmelden:'Registrer', opDeLijst:'Du er på listen.', sluiten:'Lukk',
+    footerTag:'Kuraterte husholdningsartikler bygget for å vare generasjoner, med omsorgen for å gjøre det til virkelighet.',
+    kiesVersie:'Velg en versjon for å se produktet og legge det til i kisten.',
+    voegToe:'Legg til i kisten min', goedeKeuze:'Godt valg.',
+    onderhoudLabel:'Vedlikehold inkludert',
+    onderhoudLT:'Dette produktet har livstidsgaranti. Vedlikehold er ikke nødvendig — hvis noe går i stykker, blir det erstattet.',
+    inclusief:'Inkluderer: ', optOut:'Jeg har allerede eget vedlikeholdsutstyr',
+    levensduur:'Levetid', lifetime:'livstid',
+    postLine:'PostNL · innen 3 virkedager · hjem eller hentepunkt · sporing',
+    zonderOnderhoud:'Uten vedlikeholdssett',
+    lifeYears:'+ år med vedlikehold dekket', lifeForever:'Livstid med vedlikehold dekket',
+    duurPre:'Ikke billig — et godt kjøp', duurH2:'To tidslinjer. Ett valg.',
+    duurP:'Beyerdynamic DT 770 Pro vs. alternativet. Fra i dag.',
+    hetAlt:'Alternativet', vandaag:'I dag', geld:'Penger', tijd:'Tid', zorgen:'Bekymringer',
+    gemiddeld:'gjennomsnitt', jaar:'år',
+    uitDeKistVan:'Fra kisten til...', schreef:'skrev', viaWord:'via',
+    levensduurKorter:'Levetiden kan bli kortere',
+    maintAdvies:'Produsenten anbefaler: ', maintWaarom:'. Regelmessig vedlikehold forlenger levetiden betydelig.',
+    quote0:'«Jo flere riper den har, desto bedre er den.»'
   }
 };
 function t(k){ return ui[curLang][k] || ui.nl[k] || k; }
@@ -1045,7 +1224,25 @@ var specNamesEn = {
   'Geschikt voor':'Suitable for','Vermogen':'Power','Motorgarantie':'Motor warranty',
   'Geluidsdruk':'Sound pressure'
 };
-function tSpec(n){ return curLang==='en' && specNamesEn[n] ? specNamesEn[n] : n; }
+var specNamesNo = {
+  'Materiaal':'Materiale','Gewicht':'Vekt','Vaatwasmachine':'Oppvaskmaskin',
+  'Snijdikte':'Skivetykkelse','Stijl':'Stil','Aantal tools':'Antall verktøy',
+  'Vergrendeling':'Låsing','Garantie':'Garanti','Type':'Type',
+  'Impedantie':'Impedans','Oorkussens':'Øreputer','Frequentiebereik':'Frekvensområde',
+  'Mechanisme':'Mekanisme','Wasbaar':'Vaskbar','Scheersysteem':'Barbersystem',
+  'Batterijduur':'Batteritid','Waterdicht':'Vanntett','Technologie':'Teknologi',
+  'Reiniging':'Rengjøring','Mestype':'Bladtype','Meslengte':'Bladlengde',
+  'Meswisseling':'Bladbytte','Bevestiging':'Feste','Inhoud':'Kapasitet',
+  'Laptopvak':'Laptoplomme','Onderhoud':'Vedlikehold','Rugsysteem':'Ryggsystem',
+  'Haartype':'Hårtype','Kussen':'Pute','Handgemaakt':'Håndlaget',
+  'Geschikt voor':'Egnet for','Vermogen':'Effekt','Motorgarantie':'Motorgaranti',
+  'Geluidsdruk':'Lydtrykk'
+};
+function tSpec(n){
+  if(curLang==='en' && specNamesEn[n]) return specNamesEn[n];
+  if(curLang==='no' && specNamesNo[n]) return specNamesNo[n];
+  return n;
+}
 
 var catTrans = {
   kaasschaaf:{name:'Cheese Slicer',sub:'Buy once, slice forever',tagline:'Dutch warmth or Scandinavian sleek',Ll:'Gouda feel',Rl:'Scandinavian sleek',items:[
@@ -1097,8 +1294,8 @@ var catTrans = {
     {desc:'2000-hour motor warranty. Aeroprecis technology. Faster drying, less heat.',bundle:'2000-hour motor warranty',tags:['English','Aeroprecis','2000-hour warranty'],specVals:['2200 watts. More power, shorter drying time. Less heat exposure for your hair.','582 grams. Comparable weight, slightly more power per gram.','Aeroprecis brushless motor. No wearing parts, consistent power over the entire lifespan.','2000-hour motor warranty. That’s about 10 years of daily 10-minute use.','70 dB — slightly quieter than average. You’ll notice especially when getting up early.']}
   ]}
 };
-function tc(c,f){ var tr=catTrans[c.id]; return curLang==='en'&&tr&&tr[f]!==undefined?tr[f]:c[f]; }
-function ti(c,idx,f){ var tr=catTrans[c.id]; return curLang==='en'&&tr&&tr.items&&tr.items[idx]&&tr.items[idx][f]!==undefined?tr.items[idx][f]:c.items[idx][f]; }
+function tc(c,f){ var tr=catTrans[c.id]; var useTr=(curLang==='en'||curLang==='no'); return useTr&&tr&&tr[f]!==undefined?tr[f]:c[f]; }
+function ti(c,idx,f){ var tr=catTrans[c.id]; var useTr=(curLang==='en'||curLang==='no'); return useTr&&tr&&tr.items&&tr.items[idx]&&tr.items[idx][f]!==undefined?tr.items[idx][f]:c.items[idx][f]; }
 
 // === DATA — copy aangescherpt in TOV ===
 // Tapered slash SVG — zelfde slash als het logo icoon
@@ -1130,6 +1327,237 @@ function getSpecOrder(specs){
   if(g>1){o.splice(g,1);o.splice(1,0,g);}
   return o;
 }
+
+// === ORIGIN TRANSLATIONS ===
+var originTrans = {
+  en:{'Nederland':'Netherlands','Noorwegen':'Norway','Amerika':'America','Zwitserland':'Switzerland','Duitsland':'Germany','Engeland':'England','Frankrijk':'France','Japan':'Japan','Zweden':'Sweden'},
+  no:{'Nederland':'Nederland','Noorwegen':'Norge','Amerika':'Amerika','Zwitserland':'Sveits','Duitsland':'Tyskland','Engeland':'England','Frankrijk':'Frankrike','Japan':'Japan','Zweden':'Sverige'}
+};
+function tOrigin(o){ return (curLang!=='nl' && originTrans[curLang] && originTrans[curLang][o]) ? originTrans[curLang][o] : o; }
+
+// === ANCHOR YEAR HELPERS ===
+var sinceWords = {
+  NL:'Sinds', DE:'Seit', CH:'Seit', NO:'Siden',
+  US:'Since', UK:'Since', FR:'Depuis', JP:'創業', SE:'Sedan'
+};
+function extractYear(founder){
+  var parts = founder.split(',');
+  return parts.length >= 2 ? parts[1].trim() : '';
+}
+function getSinceText(countryCode, year){
+  var word = sinceWords[countryCode] || 'Since';
+  return word + ' ' + year;
+}
+
+// === FLAG SVGs ===
+function flagSvg(code){
+  if(code==='nl') return '<svg viewBox="0 0 30 20" xmlns="http://www.w3.org/2000/svg"><rect width="30" height="6.67" fill="#AE1C28"/><rect y="6.67" width="30" height="6.67" fill="#FFF"/><rect y="13.33" width="30" height="6.67" fill="#21468B"/></svg>';
+  if(code==='en') return '<svg viewBox="0 0 30 20" xmlns="http://www.w3.org/2000/svg"><rect width="30" height="20" fill="#012169"/><path d="M0 0L30 20M30 0L0 20" stroke="#FFF" stroke-width="3.5"/><path d="M0 0L30 20M30 0L0 20" stroke="#C8102E" stroke-width="1.2"/><rect x="12" width="6" height="20" fill="#FFF"/><rect y="7.5" width="30" height="5" fill="#FFF"/><rect x="13" width="4" height="20" fill="#C8102E"/><rect y="8.5" width="30" height="3" fill="#C8102E"/></svg>';
+  if(code==='no') return '<svg viewBox="0 0 22 16" xmlns="http://www.w3.org/2000/svg"><rect width="22" height="16" fill="#BA0C2F"/><rect x="6" width="4" height="16" fill="#FFF"/><rect y="6" width="22" height="4" fill="#FFF"/><rect x="7" width="2" height="16" fill="#00205B"/><rect y="7" width="22" height="2" fill="#00205B"/></svg>';
+  return '';
+}
+
+// === LANGUAGE DROPDOWN ===
+function toggleLangDropdown(){
+  var dd = document.getElementById('langDropdown');
+  if(dd) dd.classList.toggle('open');
+}
+document.addEventListener('click', function(e){
+  var sel = document.getElementById('langSelector');
+  var dd = document.getElementById('langDropdown');
+  if(sel && dd && !sel.contains(e.target)) dd.classList.remove('open');
+});
+
+// === STAMP DATA ===
+var stampIcons = {
+  lifetime:'ti-infinity', maintenance:'ti-tools', replaceable:'ti-refresh',
+  award:'ti-award', handmade:'ti-hand-finger'
+};
+var stampLabels = {
+  nl:{ lifetime:'Lifetime garantie', maintenance:'Onderhoud inbegrepen', replaceable:'Vervangbare onderdelen', award:'Award winnaar', handmade:'Handgemaakt' },
+  en:{ lifetime:'Lifetime guarantee', maintenance:'Maintenance included', replaceable:'Replaceable parts', award:'Award winner', handmade:'Handmade' },
+  no:{ lifetime:'Livstidsgaranti', maintenance:'Vedlikehold inkludert', replaceable:'Utskiftbare deler', award:'Prisvinner', handmade:'Håndlaget' }
+};
+var stampData = {
+  'Boska Copenhagen':['maintenance','replaceable'],
+  'Bjørklund Original':['maintenance'],
+  'Leatherman Surge':['maintenance','replaceable'],
+  'Victorinox SwissTool Spirit X':['lifetime','replaceable'],
+  'Beyerdynamic DT 770 Pro':['replaceable','maintenance'],
+  'Sennheiser HD 560S':['replaceable','maintenance'],
+  'Rotring 600 (0.5mm)':['maintenance'],
+  'Lamy 2000':['maintenance'],
+  'Falke Airport':['maintenance'],
+  'Darn Tough Hiker Micro Crew':['lifetime'],
+  'Philips S9000 Prestige':['maintenance','replaceable'],
+  'Braun Series 9 Pro+':['maintenance','replaceable'],
+  'Stanley Interlock 10-018':['replaceable','maintenance'],
+  'OLFA MXP-AL (18mm)':['replaceable','maintenance'],
+  'Peak Design Slide Lite':['lifetime'],
+  'Peak Design Capture V3':['lifetime'],
+  'The North Face Borealis':['maintenance'],
+  'Fjällräven Kånken No.2':['maintenance','replaceable'],
+  'Osprey Stratos 36':['lifetime','replaceable'],
+  'Deuter Futura 27':['maintenance'],
+  'Mason Pearson BN3':['handmade','maintenance'],
+  'Kent OG1 Finest':['handmade','maintenance'],
+  'BaBylissPRO Nano Titanium':['maintenance'],
+  'ghd Helios':['maintenance']
+};
+
+// === FOUNDER QUOTES ===
+var founderQuotes = {
+  'Boska Copenhagen':'Een goede schaaf groeit mee met je keuken.',
+  'Bjørklund Original':'Ik wilde het perfecte gereedschap voor onze kaas.',
+  'Leatherman Surge':'Het beste gereedschap is dat wat je bij je hebt.',
+  'Victorinox SwissTool Spirit X':'Kwaliteit is geen toeval — het is een traditie.',
+  'Beyerdynamic DT 770 Pro':'Geluid moet eerlijk zijn. Dan kun je er op vertrouwen.',
+  'Sennheiser HD 560S':'Wij maken geen koptelefoons — wij geven muziek ruimte.',
+  'Rotring 600 (0.5mm)':'Een pen moet een verlengstuk zijn van je gedachten.',
+  'Lamy 2000':'Goed ontwerp verandert niet. Het hoeft niet.',
+  'Falke Airport':'De beste sok is de sok die je vergeet.',
+  'Darn Tough Hiker Micro Crew':'We garanderen ze voor het leven. Zo zeker zijn we.',
+  'Philips S9000 Prestige':'Innovatie moet het dagelijks leven eenvoudiger maken.',
+  'Braun Series 9 Pro+':'Minder, maar beter.',
+  'Stanley Interlock 10-018':'Maak het simpel. Maak het onverwoestbaar.',
+  'OLFA MXP-AL (18mm)':'Altijd een nieuw scherp lemmet — dat was mijn droom.',
+  'Peak Design Slide Lite':'Elk probleem heeft een elegante oplossing.',
+  'Peak Design Capture V3':'Elk probleem heeft een elegante oplossing.',
+  'The North Face Borealis':'Verken zonder grenzen.',
+  'Fjällräven Kånken No.2':'Goede spullen maken het buitenleven toegankelijker.',
+  'Osprey Stratos 36':'Als je rugzak goed zit, vergeet je hem.',
+  'Deuter Futura 27':'Wat goed is, bewijst zichzelf over de jaren.',
+  'Mason Pearson BN3':'Elke borstel wordt met dezelfde zorg gemaakt als de eerste.',
+  'Kent OG1 Finest':'Sinds 1777 maken we borstels die generaties meegaan.',
+  'BaBylissPRO Nano Titanium':'Professionele kracht, dagelijks comfort.',
+  'ghd Helios':'Technologie in dienst van schoonheid.'
+};
+var founderQuotesEn = {
+  'Boska Copenhagen':'A good slicer grows with your kitchen.',
+  'Bjørklund Original':'I simply wanted the perfect tool for our cheese.',
+  'Leatherman Surge':'The best tool is the one you have with you.',
+  'Victorinox SwissTool Spirit X':'Quality is not an accident — it is a tradition.',
+  'Beyerdynamic DT 770 Pro':'Sound must be honest. Then you can trust it.',
+  'Sennheiser HD 560S':'We don\'t make headphones — we give music space.',
+  'Rotring 600 (0.5mm)':'A pen should be an extension of your thoughts.',
+  'Lamy 2000':'Good design doesn\'t change. It doesn\'t need to.',
+  'Falke Airport':'The best sock is the sock you forget.',
+  'Darn Tough Hiker Micro Crew':'We guarantee them for life. That\'s how sure we are.',
+  'Philips S9000 Prestige':'Innovation should make daily life simpler.',
+  'Braun Series 9 Pro+':'Less, but better.',
+  'Stanley Interlock 10-018':'Make it simple. Make it indestructible.',
+  'OLFA MXP-AL (18mm)':'Always a fresh sharp blade — that was my dream.',
+  'Peak Design Slide Lite':'Every problem has an elegant solution.',
+  'Peak Design Capture V3':'Every problem has an elegant solution.',
+  'The North Face Borealis':'Explore without limits.',
+  'Fjällräven Kånken No.2':'Good gear makes the outdoors more accessible.',
+  'Osprey Stratos 36':'When your pack fits right, you forget it.',
+  'Deuter Futura 27':'What is good proves itself over the years.',
+  'Mason Pearson BN3':'Every brush is made with the same care as the first.',
+  'Kent OG1 Finest':'Since 1777, we make brushes that last generations.',
+  'BaBylissPRO Nano Titanium':'Professional power, daily comfort.',
+  'ghd Helios':'Technology in service of beauty.'
+};
+
+// === REVIEW DATA ===
+var reviewData = {
+  'Boska Copenhagen':[
+    {name:'Maarten v.',source:'Bol.com',time:'14 lentes geleden',timeEn:'14 springs ago',text:'Het eikenhout is alleen maar mooier geworden. Schaaft nog als nieuw.',textEn:'The oak only got more beautiful. Still slices like new.'},
+    {name:'Sandra K.',source:'KookForum',time:'8 herfsten',timeEn:'8 autumns',text:'Mijn moeder had hem, ik heb hem nu. Derde generatie binnenkort.',textEn:'My mother had one, now I do. Third generation soon.'}
+  ],
+  'Bjørklund Original':[
+    {name:'Erik de G.',source:'Reddit',time:'22 seizoenen',timeEn:'22 seasons',text:'Vaatwasser, elke dag, vijf jaar lang. Ziet eruit als nieuw.',textEn:'Dishwasher, every day, five years straight. Looks brand new.'},
+    {name:'Joris H.',source:'Tweakers',time:'sinds mijn studietijd',timeEn:'since college',text:'Gekocht als student, gebruik hem nog steeds. Onverwoestbaar ding.',textEn:'Bought it as a student, still using it. Indestructible thing.'}
+  ],
+  'Leatherman Surge':[
+    {name:'Pieter B.',source:'iFixit',time:'3 olympiades',timeEn:'3 olympiads',text:'Alles mee gerepareerd. Van fietsketting tot broodrooster.',textEn:'Fixed everything with it. From bike chains to toasters.'},
+    {name:'Daan V.',source:'Reddit',time:'11 kampvuren',timeEn:'11 campfires',text:'Zwaar, maar als je hem nodig hebt ben je blij dat je hem hebt.',textEn:'Heavy, but when you need it you\'re glad you have it.'}
+  ],
+  'Victorinox SwissTool Spirit X':[
+    {name:'Thomas W.',source:'Amazon',time:'7 winters geleden',timeEn:'7 winters ago',text:'Lichter dan verwacht, en de vergrendeling is briljant.',textEn:'Lighter than expected, and the locking mechanism is brilliant.'},
+    {name:'Frank E.',source:'Tweakers',time:'sinds mijn eerste baan',timeEn:'since my first job',text:'Lifetime garantie echt getest. Nieuw exemplaar binnen een week.',textEn:'Actually tested the lifetime warranty. New one within a week.'}
+  ],
+  'Beyerdynamic DT 770 Pro':[
+    {name:'Koen D.',source:'Tweakers',time:'14 lentes geleden',timeEn:'14 springs ago',text:'Oorkussens twee keer vervangen, klinkt nog als dag één.',textEn:'Replaced ear cushions twice, still sounds like day one.'},
+    {name:'Anneke R.',source:'Reddit',time:'3 olympiades',timeEn:'3 olympiads',text:'Als geluidstechnicus: dit is de standaard. Al 12 jaar.',textEn:'As a sound engineer: this is the standard. For 12 years now.'}
+  ],
+  'Sennheiser HD 560S':[
+    {name:'Willem Z.',source:'Amazon',time:'8 seizoenen',timeEn:'8 seasons',text:'Open design went even wennen, maar nu wil ik niet meer anders.',textEn:'Open design took getting used to, but now I wouldn\'t want anything else.'},
+    {name:'Lisa J.',source:'Tweakers',time:'5 herfsten',timeEn:'5 autumns',text:'Muziek klinkt alsof de artiest naast je zit. Ongelooflijk ruimtelijk.',textEn:'Music sounds like the artist is sitting next to you. Incredibly spatial.'}
+  ],
+  'Rotring 600 (0.5mm)':[
+    {name:'Jeroen S.',source:'Reddit',time:'sinds mijn studietijd',timeEn:'since college',text:'Het messing heeft een prachtig patina gekregen. Tekent nog perfect.',textEn:'The brass developed a beautiful patina. Still draws perfectly.'},
+    {name:'Femke L.',source:'Amazon',time:'22 seizoenen',timeEn:'22 seasons',text:'Architect. Dit is mijn derde Rotring. De eerste twee leven ook nog.',textEn:'Architect. This is my third Rotring. The first two are still alive.'}
+  ],
+  'Lamy 2000':[
+    {name:'Bart M.',source:'Reddit',time:'14 lentes geleden',timeEn:'14 springs ago',text:'Ontworpen in 1966, nog steeds de mooiste pen die ik ken.',textEn:'Designed in 1966, still the most beautiful pen I know.'},
+    {name:'Anouk F.',source:'Amazon',time:'8 herfsten',timeEn:'8 autumns',text:'Het zuigsysteem is geniaal. Geen cartridges, geen afval, puur schrijven.',textEn:'The piston filler is genius. No cartridges, no waste, pure writing.'}
+  ],
+  'Falke Airport':[
+    {name:'Ruben A.',source:'Bol.com',time:'11 pakjesavonden',timeEn:'11 holiday seasons',text:'Draag ze elke werkdag. Na 3 jaar nog geen slijtage.',textEn:'Wear them every workday. No wear after 3 years.'},
+    {name:'Sanne P.',source:'Amazon',time:'sinds mijn eerste pak',timeEn:'since my first suit',text:'Vergeet dat je ze draagt. Precies wat een sok moet doen.',textEn:'Forget you\'re wearing them. Exactly what a sock should do.'}
+  ],
+  'Darn Tough Hiker Micro Crew':[
+    {name:'Thijs O.',source:'Reddit',time:'3 lange winters',timeEn:'3 long winters',text:'Garantie gebruikt na 4 jaar. Nieuw paar, geen vragen. Respect.',textEn:'Used warranty after 4 years. New pair, no questions. Respect.'},
+    {name:'Marieke N.',source:'Amazon',time:'22 bergtoppen',timeEn:'22 summits',text:'Van de Mont Blanc tot de supermarkt. Beste sokken die ik heb.',textEn:'From Mont Blanc to the supermarket. Best socks I own.'}
+  ],
+  'Philips S9000 Prestige':[
+    {name:'Erik de G.',source:'Tweakers',time:'7 winters geleden',timeEn:'7 winters ago',text:'Draadloos laden is verslavend. Leg hem neer, klaar.',textEn:'Wireless charging is addictive. Put it down, done.'},
+    {name:'Pieter B.',source:'Bol.com',time:'5 herfsten',timeEn:'5 autumns',text:'Scheerkoppen een keer vervangen. Scheert nog steeds alsof hij nieuw is.',textEn:'Replaced the heads once. Still shaves like it\'s brand new.'}
+  ],
+  'Braun Series 9 Pro+':[
+    {name:'Daan V.',source:'Amazon',time:'8 seizoenen',timeEn:'8 seasons',text:'Smart Sense voelt echt aan hoe dik mijn baard is. Indrukwekkend.',textEn:'Smart Sense actually feels how thick my beard is. Impressive.'},
+    {name:'Joris H.',source:'Tweakers',time:'3 olympiades',timeEn:'3 olympiads',text:'Dieter Rams-design is niet overdreven. Dit ding is puur functie.',textEn:'Dieter Rams design is no exaggeration. This thing is pure function.'}
+  ],
+  'Stanley Interlock 10-018':[
+    {name:'Frank E.',source:'iFixit',time:'sinds mijn eerste verbouwing',timeEn:'since my first renovation',text:'Mijn opa had er een. Ik heb er een. Mijn zoon krijgt hem.',textEn:'My grandpa had one. I have one. My son will get it.'},
+    {name:'Thomas W.',source:'Amazon',time:'14 lentes geleden',timeEn:'14 springs ago',text:'Volledig metaal. Voelt onverwoestbaar. Is onverwoestbaar.',textEn:'Full metal. Feels indestructible. Is indestructible.'}
+  ],
+  'OLFA MXP-AL (18mm)':[
+    {name:'Koen D.',source:'Reddit',time:'11 seizoenen',timeEn:'11 seasons',text:'Japanse staalkwaliteit merk je echt. Scherper dan al het andere.',textEn:'You really notice the Japanese steel quality. Sharper than everything else.'},
+    {name:'Bart M.',source:'Amazon',time:'7 winters geleden',timeEn:'7 winters ago',text:'Afbreekmes klinkt goedkoop, maar dit is premium gereedschap.',textEn:'Snap-off sounds cheap, but this is premium tooling.'}
+  ],
+  'Peak Design Slide Lite':[
+    {name:'Willem Z.',source:'Amazon',time:'8 herfsten',timeEn:'8 autumns',text:'Eén hand verstellen terwijl je loopt. Game changer.',textEn:'One-hand adjustment while walking. Game changer.'},
+    {name:'Anneke R.',source:'Reddit',time:'3 vakanties',timeEn:'3 vacations',text:'Lifetime garantie en je voelt waarom. Dit slijt gewoon niet.',textEn:'Lifetime warranty and you feel why. This simply doesn\'t wear.'}
+  ],
+  'Peak Design Capture V3':[
+    {name:'Jeroen S.',source:'Reddit',time:'5 bergwandelingen',timeEn:'5 mountain hikes',text:'Camera altijd bereikbaar, handen altijd vrij. Briljant simpel.',textEn:'Camera always reachable, hands always free. Brilliantly simple.'},
+    {name:'Lisa J.',source:'Amazon',time:'22 seizoenen',timeEn:'22 seasons',text:'Arca Swiss compatibel met elk statief. Doordacht tot in detail.',textEn:'Arca Swiss compatible with any tripod. Thoughtful to the detail.'}
+  ],
+  'The North Face Borealis':[
+    {name:'Sanne P.',source:'Bol.com',time:'8 herfsten',timeEn:'8 autumns',text:'Elke dag woon-werk. Na 3 jaar nog steeds waterdicht.',textEn:'Every day commute. Still waterproof after 3 years.'},
+    {name:'Ruben A.',source:'Amazon',time:'sinds mijn eerste baan',timeEn:'since my first job',text:'28 liter is perfect. Laptop, lunch, gymkleren — alles past.',textEn:'28 liters is perfect. Laptop, lunch, gym clothes — everything fits.'}
+  ],
+  'Fjällräven Kånken No.2':[
+    {name:'Femke L.',source:'Reddit',time:'14 lentes geleden',timeEn:'14 springs ago',text:'Na waxen wordt hij alleen maar mooier. Leeft en veroudert met je mee.',textEn:'After waxing it only gets more beautiful. Lives and ages with you.'},
+    {name:'Thijs O.',source:'Bol.com',time:'7 winters geleden',timeEn:'7 winters ago',text:'Licht, simpel, Zweeds. Precies wat een rugzak moet zijn.',textEn:'Light, simple, Swedish. Exactly what a backpack should be.'}
+  ],
+  'Osprey Stratos 36':[
+    {name:'Marieke N.',source:'Amazon',time:'3 lange winters',timeEn:'3 long winters',text:'All Mighty Guarantee getest. Rits kapot, gratis gerepareerd.',textEn:'Tested the All Mighty Guarantee. Zipper broke, repaired for free.'},
+    {name:'Pieter B.',source:'Reddit',time:'22 bergtoppen',timeEn:'22 summits',text:'AirSpeed rugpaneel werkt echt. Geen natte rug, zelfs in de zomer.',textEn:'AirSpeed back panel really works. No wet back, even in summer.'}
+  ],
+  'Deuter Futura 27':[
+    {name:'Daan V.',source:'Bol.com',time:'11 seizoenen',timeEn:'11 seasons',text:'Lichter dan je denkt, steviger dan je verwacht. Duitse degelijkheid.',textEn:'Lighter than you think, sturdier than you expect. German solidity.'},
+    {name:'Sandra K.',source:'Amazon',time:'5 herfsten',timeEn:'5 autumns',text:'Compacter dan de Osprey, maar genoeg voor een dagje bergen.',textEn:'More compact than the Osprey, but enough for a day in the mountains.'}
+  ],
+  'Mason Pearson BN3':[
+    {name:'Anouk F.',source:'Amazon',time:'sinds mijn studietijd',timeEn:'since college',text:'Mijn kapper was verbaasd over mijn haar. Dit is het geheim.',textEn:'My hairdresser was amazed at my hair. This is the secret.'},
+    {name:'Maarten v.',source:'Bol.com',time:'14 lentes geleden',timeEn:'14 springs ago',text:'140 jaar onveranderd. Dat zegt alles. Beste borstel die er is.',textEn:'140 years unchanged. That says it all. Best brush there is.'}
+  ],
+  'Kent OG1 Finest':[
+    {name:'Lisa J.',source:'Amazon',time:'8 seizoenen',timeEn:'8 seasons',text:'Satijnhout voelt heerlijk. En het everzwijnhaar geeft echt glans.',textEn:'Satinwood feels wonderful. And the boar bristle really adds shine.'},
+    {name:'Sanne P.',source:'Reddit',time:'3 olympiades',timeEn:'3 olympiads',text:'Koninklijk hofleverancier sinds George III. Dat merk je.',textEn:'Royal warrant holder since George III. You can tell.'}
+  ],
+  'BaBylissPRO Nano Titanium':[
+    {name:'Femke L.',source:'Bol.com',time:'5 herfsten',timeEn:'5 autumns',text:'Licht en krachtig. Mijn arm wordt niet meer moe.',textEn:'Light and powerful. My arm doesn\'t get tired anymore.'},
+    {name:'Anneke R.',source:'Amazon',time:'7 winters geleden',timeEn:'7 winters ago',text:'Nano Titanium merk je echt. Minder pluis, sneller droog.',textEn:'You really notice the Nano Titanium. Less frizz, faster drying.'}
+  ],
+  'ghd Helios':[
+    {name:'Sandra K.',source:'Amazon',time:'3 lange winters',timeEn:'3 long winters',text:'2000 uur motorgarantie. Dat is vertrouwen in je eigen product.',textEn:'2000-hour motor warranty. That\'s confidence in your own product.'},
+    {name:'Marieke N.',source:'Bol.com',time:'8 seizoenen',timeEn:'8 seasons',text:'Stiller dan mijn vorige. Mijn huisgenoten zijn blij.',textEn:'Quieter than my last one. My housemates are happy.'}
+  ]
+};
 
 var cats = [
   { id:'kaasschaaf', name:'Kaasschaaf', sub:'Eens kopen, altijd schaven',
@@ -1336,6 +1764,13 @@ function renderCards(){
       }
       h += '</div>';
     }
+    // Anchor year overlays
+    if(two){
+      var yearL = extractYear(c.items[0].founder);
+      var yearR = extractYear(c.items[1].founder);
+      h += '<div class="anchor-year left"><span>'+getSinceText(c.L, yearL)+'</span></div>';
+      h += '<div class="anchor-year right"><span>'+getSinceText(c.R, yearR)+'</span></div>';
+    }
     var lifeMin = Math.min.apply(null, c.items.map(function(x){return x.life||10;}));
     var lifeLabel = lifeMin >= 99 ? t('lifeForever') : lifeMin + t('lifeYears');
 
@@ -1417,9 +1852,9 @@ function selectP(i){
 }
 function setPhoto(i){ activePhoto = i; renderPP(); }
 function toggleOptout(){
-  var hint = document.getElementById('optHint');
   var checked = document.getElementById('optC').checked;
-  hint.style.display = checked ? 'none' : 'block';
+  var warn = document.getElementById('optWarn');
+  if(warn) warn.style.display = checked ? 'block' : 'none';
 }
 
 function renderPP(){
@@ -1446,12 +1881,17 @@ function renderPP(){
       h += '<div class="split-ph-side"><div class="split-ph-code">'+c.R+'</div><div class="split-ph-sub">'+tc(c,'Rl')+'</div></div>';
       h += '</div>';
     }
+    // Anchor years for pp-split
+    var ppYearL = extractYear(c.items[0].founder);
+    var ppYearR = extractYear(c.items[1].founder);
+    h += '<div class="anchor-year left">'+getSinceText(c.L, ppYearL)+'</div>';
+    h += '<div class="anchor-year right">'+getSinceText(c.R, ppYearR)+'</div>';
     h += '</div>';
 
     h += '<div class="pp-selector">';
     c.items.forEach(function(x,i){
       h += '<div class="pp-brand-btn" onclick="selectP('+i+')">';
-      h += '<div class="pp-brand-name">'+x.brand+'</div><div class="pp-brand-origin">'+x.origin+'</div></div>';
+      h += '<div class="pp-brand-name">'+x.brand+'</div><div class="pp-brand-origin">'+tOrigin(x.origin)+'</div></div>';
     });
     h += '</div>';
 
@@ -1508,14 +1948,14 @@ function renderPP(){
     } else {
       h += '<div class="split-wrap pp-split"><div class="split-ph">';
       h += '<div class="split-ph-side"><div class="split-ph-code" style="font-size:40px;">'+selItem.brand.substring(0,2).toUpperCase()+'</div>';
-      h += '<div class="split-ph-sub">'+selItem.origin+'</div></div></div></div>';
+      h += '<div class="split-ph-sub">'+tOrigin(selItem.origin)+'</div></div></div></div>';
     }
 
     if(two){
       h += '<div class="pp-selector">';
       c.items.forEach(function(x,i){
         h += '<div class="pp-brand-btn'+(i===selIdx?' sel':'')+'" onclick="selectP('+i+')">';
-        h += '<div class="pp-brand-name">'+x.brand+'</div><div class="pp-brand-origin">'+x.origin+'</div></div>';
+        h += '<div class="pp-brand-name">'+x.brand+'</div><div class="pp-brand-origin">'+tOrigin(x.origin)+'</div></div>';
       });
       h += '</div>';
     }
@@ -1526,27 +1966,33 @@ function renderPP(){
     h += '<div>';
     h += '<div class="pp-model">'+selItem.model+'</div>';
     h += '<div class="pp-founder">'+selItem.founder+'</div>';
+    // Founder block
+    var fParts = selItem.founder.split(',');
+    var fName = fParts[0] ? fParts[0].trim() : '';
+    var fYear = fParts[1] ? fParts[1].trim() : '';
+    var fCity = fParts[2] ? fParts[2].trim() : '';
+    var fQuote = founderQuotes[selItem.model] || '';
+    var fQuoteText = curLang === 'en' && founderQuotesEn[selItem.model] ? founderQuotesEn[selItem.model] : fQuote;
+    if(fQuoteText){
+      h += '<div class="founder-block">';
+      h += '<div class="founder-avatar"><i class="ti ti-user"></i></div>';
+      h += '<div class="founder-info">';
+      h += '<div class="founder-name">'+fName+'</div>';
+      h += '<div class="founder-detail">'+fYear+' · '+fCity+'</div>';
+      h += '<div class="founder-quote-text">"'+fQuoteText+'"</div>';
+      h += '</div></div>';
+    }
     h += '</div>';
     if(selItem.life){
       var yrs = selItem.life;
-      var rounded = yrs >= 99 ? 40 : Math.round(yrs / 10) * 10;
-      if(rounded < 10) rounded = 10;
-      var ticks = [10,20,30,40];
-      h += '<div style="text-align:center;flex-shrink:0;">';
-      h += '<div style="font-size:9px;letter-spacing:1px;color:var(--muted);text-transform:uppercase;margin-bottom:6px;">'+t('levensduur')+(yrs>=99?' · '+t('lifetime'):'')+'</div>';
-      h += '<div style="display:flex;gap:3px;align-items:flex-end;height:36px;justify-content:center;" title="'+(yrs>=99?t('lifetime'):yrs+(curLang==='en'?' years':' jaar'))+'">';
-      ticks.forEach(function(tk){
-        var active = tk <= rounded;
-        var barH = (tk / 40) * 100;
-        h += '<div style="width:22px;height:'+barH+'%;border-radius:2px;background:'+(active?'var(--dark)':'var(--bg2)')+';cursor:default;" title="'+tk+(curLang==='en'?' years':' jaar')+'"></div>';
-      });
+      var lifeLabel = yrs >= 99 ? t('lifetime') : yrs + '+ ' + t('jaar');
+      h += '<div class="lifespan-wrap">';
+      h += '<div style="font-size:9px;letter-spacing:1px;color:var(--muted);text-transform:uppercase;margin-bottom:10px;">'+t('levensduur')+'</div>';
+      h += '<div class="lifespan-markers">';
+      h += '<div class="lifespan-marker" style="color:var(--muted);"><i class="ti ti-heart-broken"></i><span>'+t('gemiddeld')+' 1,5 '+t('jaar')+'</span></div>';
+      h += '<div class="lifespan-marker" style="color:var(--dark);text-align:right;"><i class="ti ti-heartbeat"></i><span>'+lifeLabel+'</span></div>';
       h += '</div>';
-      h += '<div style="display:flex;gap:3px;justify-content:center;margin-top:3px;">';
-      ticks.forEach(function(tk){
-        var active = tk <= rounded;
-        h += '<div style="width:22px;font-size:8px;color:'+(active?'var(--dark)':'var(--muted)')+';text-align:center;">'+tk+'</div>';
-      });
-      h += '</div>';
+      h += '<div class="lifespan-track"><div class="lifespan-tick" style="left:15%;"></div><div class="lifespan-fill"></div></div>';
       h += '</div>';
     }
     h += '</div>';
@@ -1556,6 +2002,36 @@ function renderPP(){
     var tags = ti(c,si,'tags');
     tags.forEach(function(tg){h+='<span class="pp-tag">'+tg+'</span>';});
     h += '</div>';
+
+    // Stamps
+    var stamps = stampData[selItem.model];
+    if(stamps && stamps.length > 0){
+      h += '<div class="stamps-row">';
+      stamps.forEach(function(s){
+        var sLabel = (stampLabels[curLang] || stampLabels.nl)[s] || s;
+        var sIcon = stampIcons[s] || '';
+        h += '<div class="stamp">';
+        if(sIcon) h += '<i class="ti '+sIcon+'"></i>';
+        h += '<span>'+sLabel+'</span></div>';
+      });
+      h += '</div>';
+    }
+
+    // Reviews
+    var reviews = reviewData[selItem.model];
+    if(reviews && reviews.length > 0){
+      h += '<div class="review-section">';
+      h += '<div class="review-header">'+t('uitDeKistVan')+'</div>';
+      reviews.forEach(function(r){
+        var rText = (curLang === 'en' || curLang === 'no') && r.textEn ? r.textEn : r.text;
+        var rTime = (curLang === 'en' || curLang === 'no') && r.timeEn ? r.timeEn : r.time;
+        h += '<div class="review-entry">';
+        h += '<div class="review-text">"'+rText+'"</div>';
+        h += '<div class="review-meta">'+r.name+' '+t('schreef')+' '+t('viaWord')+' <a href="#">'+r.source+'</a> · '+rTime+'</div>';
+        h += '</div>';
+      });
+      h += '</div>';
+    }
 
     if(c.specs && selItem.specVals){
       var specOrd = getSpecOrder(c.specs);
@@ -1588,7 +2064,14 @@ function renderPP(){
     h += '</div>';
     h += '<div style="background:var(--bg2);border-radius:0 0 8px 8px;padding:6px 20px 8px;">';
     h += '<div style="border-top:0.5px solid var(--border);margin:0 12px;"></div>';
-    h += '<div id="optLabel" style="display:flex;align-items:center;gap:6px;padding:6px 0;font-size:11px;color:var(--muted);"><input type="checkbox" id="optC" onchange="toggleOptout()" style="width:12px;height:12px;cursor:pointer;accent-color:var(--dark);"><span>'+t('optOut')+'</span></div>';
+    h += '<div id="optLabel" style="display:flex;align-items:center;gap:6px;padding:6px 0;font-size:11px;color:var(--muted);">';
+    h += '<input type="checkbox" id="optC" onchange="toggleOptout()" style="width:12px;height:12px;cursor:pointer;accent-color:var(--dark);">';
+    h += '<span>'+t('optOut')+'</span>';
+    h += '<span class="optout-info"><i class="ti ti-info-circle"></i>';
+    h += '<div class="optout-tooltip">'+t('maintAdvies')+bundleParts.join(', ')+t('maintWaarom')+'</div>';
+    h += '</span>';
+    h += '</div>';
+    h += '<div id="optWarn" style="display:none;font-size:11px;color:var(--muted);font-style:italic;padding:0 0 4px 18px;">'+t('levensduurKorter')+'</div>';
     h += '</div>';
 
     h += '<button class="pp-add'+(inK?' in':'')+'" id="ppAdd" onclick="addPP()">'+
@@ -1934,6 +2417,9 @@ function moveSlash(clientX, clientY){
       svg.style.transform = 'translateX(0px)';
       if(left) left.style.clipPath = 'polygon(0 0, 54% 0, 46% 100%, 0 100%)';
       if(right) right.style.clipPath = 'polygon(54% 0, 100% 0, 100% 100%, 46% 100%)';
+      // Hide anchor years
+      var anchors = wrap.querySelectorAll('.anchor-year');
+      anchors.forEach(function(a){ a.style.opacity = 0; });
       return;
     }
     wrap.classList.remove('returning');
@@ -1945,6 +2431,11 @@ function moveSlash(clientX, clientY){
     var botPct = (xPct * 100 - 4).toFixed(1);
     if(left) left.style.clipPath = 'polygon(0 0, '+topPct+'% 0, '+botPct+'% 100%, 0 100%)';
     if(right) right.style.clipPath = 'polygon('+topPct+'% 0, 100% 0, 100% 100%, '+botPct+'% 100%)';
+    // Anchor year fade
+    var anchorL = wrap.querySelector('.anchor-year.left');
+    var anchorR = wrap.querySelector('.anchor-year.right');
+    if(anchorL) anchorL.style.opacity = xPct > 0.5 ? (xPct - 0.5) * 2 : 0;
+    if(anchorR) anchorR.style.opacity = xPct < 0.5 ? (0.5 - xPct) * 2 : 0;
   });
 }
 function resetSlash(){
@@ -1957,6 +2448,9 @@ function resetSlash(){
     svg.style.transform = 'translateX(0px)';
     if(left) left.style.clipPath = 'polygon(0 0, 54% 0, 46% 100%, 0 100%)';
     if(right) right.style.clipPath = 'polygon(54% 0, 100% 0, 100% 100%, 46% 100%)';
+    // Hide anchor years
+    var anchors = wrap.querySelectorAll('.anchor-year');
+    anchors.forEach(function(a){ a.style.opacity = 0; });
   });
 }
 
@@ -1991,12 +2485,18 @@ document.addEventListener('touchend', function(){
 // === LANGUAGE SWITCH ===
 function setLang(lang){
   curLang = lang;
-  // Toggle buttons
-  document.querySelectorAll('.lang-btn').forEach(function(b){
-    b.classList.toggle('active', b.getAttribute('data-lang')===lang);
-  });
+  // Update language selector
+  var trigger = document.getElementById('langTriggerFlag');
+  if(trigger) trigger.innerHTML = flagSvg(lang);
+  var dd = document.getElementById('langDropdown');
+  if(dd){
+    dd.classList.remove('open');
+    dd.querySelectorAll('.lang-option').forEach(function(o){
+      o.classList.toggle('active', o.getAttribute('data-lang')===lang);
+    });
+  }
   // HTML lang + title
-  document.documentElement.lang = lang==='en'?'en':'nl';
+  document.documentElement.lang = lang==='en'?'en':lang==='no'?'no':'nl';
   document.title = t('pageTitle');
   // Nav links
   var nl = document.querySelectorAll('.nav-links a');
@@ -2092,6 +2592,16 @@ function setLang(lang){
   updK();
   if(document.getElementById('duurzaamPage').classList.contains('active')) renderTimeline();
 }
+
+// === INIT FLAGS ===
+function initFlags(){
+  document.querySelectorAll('[data-flag]').forEach(function(el){
+    el.innerHTML = flagSvg(el.getAttribute('data-flag'));
+  });
+  var trigger = document.getElementById('langTriggerFlag');
+  if(trigger) trigger.innerHTML = flagSvg(curLang);
+}
+initFlags();
 </script>
 </body>
 </html>
