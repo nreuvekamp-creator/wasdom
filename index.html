@@ -65,8 +65,12 @@ a { color: inherit; text-decoration: none; }
   color: var(--light); letter-spacing: 1px; line-height: 1.35; margin-bottom: 20px;
 }
 .hero-sub {
-  font-size: 15px; color: #888; max-width: 400px; margin: 0 auto 36px; line-height: 1.7;
+  font-size: 15px; color: #888; max-width: 560px; margin: 0 auto 36px; line-height: 1.7;
 }
+.hero-steps { list-style: none; display: flex; justify-content: center; gap: 40px; max-width: 760px; margin: 0 auto 8px; padding: 0; text-align: left; }
+.hero-steps li { flex: 1; font-size: 13px; line-height: 1.55; color: #888; }
+.hero-steps b { display: block; color: var(--light); font-weight: 700; font-size: 14px; margin-bottom: 4px; }
+@media (max-width: 640px) { .hero-steps { flex-direction: column; gap: 14px; text-align: center; } }
 .hero-cta {
   display: inline-block; border: 1px solid rgba(245,245,240,0.3); color: var(--light);
   font-size: 11px; letter-spacing: 3px; padding: 14px 40px; text-transform: uppercase;
@@ -845,7 +849,8 @@ a { color: inherit; text-decoration: none; }
   <div style="text-align:center;margin-bottom:0;">
     <div class="hero-pre">Gecureerd voor het leven</div>
     <h1>Twee iconen. Eén voorkeur.</h1>
-    <p class="hero-sub">Eén goede keuze. De rest van je leven. Onderhoud inbegrepen.</p>
+    <p class="hero-sub">Per product kiezen wij de twee beste opties die een leven lang meegaan. Jij kiest er één. Het onderhoud krijg je erbij.</p>
+    <ol class="hero-steps"><li><b data-i="st1t"></b><span data-i="st1d"></span></li><li><b data-i="st2t"></b><span data-i="st2d"></span></li><li><b data-i="st3t"></b><span data-i="st3d"></span></li></ol>
   </div>
   <div style="width:92%;max-width:960px;margin:32px auto 0;border-radius:12px 12px 0 0;overflow:hidden;position:relative;">
     <img src="img/hero.jpg" alt="De collectie" style="width:100%;display:block;margin-top:-10%;">
@@ -1081,8 +1086,8 @@ var ui = {
   nl:{
     pageTitle:'was/dom — gecureerd voor het leven',
     navCollectie:'Collectie', navHoe:'Hoe het werkt', navDuurzaam:'Duurzaam', mijnKist:'Mijn kist',
-    heroPre:'Gecureerd voor het leven', heroH1:'Twee iconen. Eén voorkeur.',
-    heroSub:'Eén goede keuze. De rest van je leven. Onderhoud inbegrepen.', heroCta:'Bekijk de collectie',
+    heroPre:'Voor het leven', heroH1:'Spullen die de rest van je leven meegaan.', st1t:'Wij kiezen er twee', st1d:'De twee beste opties per product, gemaakt voor een leven lang.', st2t:'Jij kiest', st2d:'Schuif de / om te vergelijken en kies wat jij mooi vindt.', st3t:'Wij helpen je het te houden', st3d:'Onderhoudsset en reparatietips inbegrepen.',
+    heroSub:'Per product kiezen wij de twee beste opties die een leven lang meegaan. Jij kiest er één. Het onderhoud krijg je erbij.', heroCta:'Bekijk de collectie',
     sectionLabel:'De zorgvuldig gecureerde collectie', howLabel:'Hoe was/dom werkt',
     howT1:'Kies je stijl', howD1:'Twee opties. Pure degelijkheid. Jij kiest welke de komende jaren met je meegaat.',
     howT2:'Onderhoud inbegrepen', howD2:'Bij elk product zit precies het onderhoud dat het nodig heeft. Jij hoeft er niet over na te denken. Binnen 3 dagen bezorgd.',
@@ -1125,8 +1130,8 @@ var ui = {
   en:{
     pageTitle:'was/dom — curated for life',
     navCollectie:'Collection', navHoe:'How it works', navDuurzaam:'Durability', mijnKist:'My chest',
-    heroPre:'Curated for life', heroH1:'Two icons. Your choice.',
-    heroSub:'Choose well once. Enjoy it for life. Care included.', heroCta:'Explore the collection',
+    heroPre:'Buy it for life', heroH1:'Things that last the rest of your life.', st1t:'We pick two', st1d:'The two best lifelong options for each product.', st2t:'You choose', st2d:'Slide the / to compare, then pick the one you like.', st3t:'We help you keep it', st3d:'Care kit and repair tips included.',
+    heroSub:'For every everyday product, we pick the two best options built to last a lifetime. You choose one. We include the care to keep it going.', heroCta:'Explore the collection',
     sectionLabel:'The curated collection', howLabel:'How was/dom works',
     howT1:'Choose your style', howD1:'Two options. Nothing but quality. You choose the one that stays with you for years to come.',
     howT2:'Care included', howD2:'Every product comes with exactly the care kit it needs, so you never have to think about it. Delivered within 3 business days.',
@@ -1169,8 +1174,8 @@ var ui = {
   no:{
     pageTitle:'was/dom — kuratert for livet',
     navCollectie:'Kolleksjon', navHoe:'Slik fungerer det', navDuurzaam:'Holdbarhet', mijnKist:'Min kiste',
-    heroPre:'Kuratert for livet', heroH1:'To ikoner. Én preferanse.',
-    heroSub:'Ett godt valg. Resten av livet. Vedlikehold inkludert.', heroCta:'Se kolleksjonen',
+    heroPre:'For livet', heroH1:'Ting som varer resten av livet.', st1t:'Vi velger to', st1d:'De to beste livslange alternativene per produkt.', st2t:'Du velger', st2d:'Skyv / for å sammenligne, og velg den du liker.', st3t:'Vi hjelper deg å ta vare på den', st3d:'Vedlikeholdssett og reparasjonstips inkludert.',
+    heroSub:'For hvert hverdagsprodukt velger vi de to beste alternativene som er laget for å vare livet ut. Du velger ett. Vedlikehold er inkludert.', heroCta:'Se kolleksjonen',
     sectionLabel:'Den nøye kuraterte kolleksjonen', howLabel:'Slik fungerer was/dom',
     howT1:'Velg din stil', howD1:'To alternativer. Ren kvalitet. Du velger hvilken som følger deg i årene fremover.',
     howT2:'Vedlikehold inkludert', howD2:'Hvert produkt kommer med nøyaktig den pleien det trenger. Du trenger ikke tenke på det. Levert innen 3 dager.',
@@ -2536,6 +2541,7 @@ function setLang(lang){
   var hp = document.querySelector('.hero-pre'); if(hp) hp.textContent = t('heroPre');
   var hh = document.querySelector('.hero h1'); if(hh) hh.textContent = t('heroH1');
   var hs = document.querySelector('.hero-sub'); if(hs) hs.textContent = t('heroSub');
+  document.querySelectorAll('.hero-steps [data-i]').forEach(function(el){ el.textContent = t(el.getAttribute('data-i')); });
   var hc = document.querySelector('.hero-cta'); if(hc) hc.textContent = t('heroCta');
   // Section label
   var sl = document.querySelector('#collectie .section-label'); if(sl) sl.textContent = t('sectionLabel');
