@@ -1962,6 +1962,9 @@ var cats = [
         specVals:['5-laags roestvrij staal, 24 cm, 5,2 liter, met deksel.','30 jaar op productiefouten bij huishoudelijk gebruik (Demeyere).','Mag alles. Verkleuring haal je weg met azijn of RVS-reiniger.','Strak en zilver.'] }
     ]}
 ];
+// Voorlopig verborgen tot de foto's per paar hetzelfde aanzicht hebben; leegmaken om terug te zetten.
+var hiddenCats = ['knoflookpers','kookpan'];
+cats = cats.filter(function(c){ return hiddenCats.indexOf(c.id) === -1; });
 
 // === RENDER CATEGORY CARDS ===
 function renderCards(){
