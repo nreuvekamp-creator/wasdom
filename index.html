@@ -27,13 +27,17 @@ a { color: inherit; text-decoration: none; }
   position: sticky; top: 0; background: rgba(250,250,247,0.95);
   backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 100;
 }
-.logo { display: flex; align-items: baseline; cursor: pointer; gap: 1px; }
-.logo-was { font-family: var(--serif); font-weight: 400; font-size: 20px; letter-spacing: 5px; }
+/* Logo (standaard F, business/keuzes/slash-specs.md): Ink op licht, Paper op donker */
+.logo { display: inline-flex; align-items: baseline; white-space: nowrap; line-height: 1; font-size: 20px; color: var(--dark); }
+.logo[onclick] { cursor: pointer; }
+.logo-sm { font-size: 16px; }
+.logo-on-dark { color: var(--bg); }
+.logo-was { font-family: var(--serif); font-weight: 400; letter-spacing: .25em; }
 .logo-slash {
-  display: inline-block; width: 2px; height: 16px; background: currentColor;
-  transform: rotate(25deg); margin: 0 4px; vertical-align: middle;
+  display: inline-block; width: max(.065em, 1px); height: 1.20em; background: currentColor;
+  transform: rotate(25deg); margin: 0 .36em 0 .20em; position: relative; top: .24em;
 }
-.logo-dom { font-family: var(--sans); font-weight: 700; font-size: 20px; letter-spacing: 5px; }
+.logo-dom { font-family: var(--sans); font-weight: 700; letter-spacing: .25em; margin-right: -.25em; }
 .nav-links { display: flex; gap: 28px; }
 .nav-links a {
   font-size: 11px; letter-spacing: 2.5px; color: var(--dim); text-transform: uppercase;
@@ -922,7 +926,7 @@ a { color: inherit; text-decoration: none; }
     KVK 94827361 · © 2026
   </div>
   <div style="text-align:center;">
-    <span class="logo-was" style="font-size:16px;">was</span><span class="logo-slash" style="height:13px;"></span><span class="logo-dom" style="font-size:16px;">dom</span>
+    <div class="logo logo-sm"><span class="logo-was">was</span><span class="logo-slash"></span><span class="logo-dom">dom</span></div>
     <div style="font-size:10px;color:var(--muted);margin-top:6px;line-height:1.5;max-width:280px;margin-left:auto;margin-right:auto;">Gecureerd huisraad dat generaties meegaat, met de zorg om dat ook echt waar te maken.</div>
   </div>
   <div class="footer-flags" id="footerFlags">
@@ -1001,7 +1005,7 @@ a { color: inherit; text-decoration: none; }
   <div class="modal">
     <div class="step active" id="stepShip">
       <div class="modal-top">
-        <div><span class="logo-was" style="color:var(--light);font-size:16px;">was</span><span class="logo-slash" style="background:var(--light);height:14px;"></span><span class="logo-dom" style="color:var(--light);font-size:16px;">dom</span></div>
+        <div class="logo logo-sm logo-on-dark"><span class="logo-was">was</span><span class="logo-slash"></span><span class="logo-dom">dom</span></div>
         <h3>Bezorging</h3>
         <p>Hoe wil je je bestelling ontvangen?</p>
       </div>
@@ -1023,7 +1027,7 @@ a { color: inherit; text-decoration: none; }
     </div>
     <div class="step" id="step1">
       <div class="modal-top">
-        <div><span class="logo-was" style="color:var(--light);font-size:16px;">was</span><span class="logo-slash" style="background:var(--light);height:14px;"></span><span class="logo-dom" style="color:var(--light);font-size:16px;">dom</span></div>
+        <div class="logo logo-sm logo-on-dark"><span class="logo-was">was</span><span class="logo-slash"></span><span class="logo-dom">dom</span></div>
         <h3>Betalen</h3>
         <p>Kies je betaalmethode</p>
       </div>
@@ -1059,7 +1063,7 @@ a { color: inherit; text-decoration: none; }
     </div>
     <div class="step" id="step2">
       <div class="modal-top">
-        <div><span class="logo-was" style="color:var(--light);font-size:16px;">was</span><span class="logo-slash" style="background:var(--light);height:14px;"></span><span class="logo-dom" style="color:var(--light);font-size:16px;">dom</span></div>
+        <div class="logo logo-sm logo-on-dark"><span class="logo-was">was</span><span class="logo-slash"></span><span class="logo-dom">dom</span></div>
         <h3>We zijn er bijna.</h3>
         <p>was/dom is nog niet live. Jouw interesse betekent alles.</p>
       </div>
