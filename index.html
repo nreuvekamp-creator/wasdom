@@ -1233,7 +1233,8 @@ var specNamesEn = {
   'Laptopvak':'Laptop compartment','Onderhoud':'Maintenance','Rugsysteem':'Back panel',
   'Haartype':'Bristle type','Kussen':'Cushion','Handgemaakt':'Handmade',
   'Geschikt voor':'Suitable for','Vermogen':'Power','Motorgarantie':'Motor warranty',
-  'Geluidsdruk':'Noise level'
+  'Geluidsdruk':'Noise level',
+  'Afmetingen':'Dimensions','Herkomst':'Origin','Karakter':'Character'
 };
 var specNamesNo = {
   'Materiaal':'Materiale','Gewicht':'Vekt','Vaatwasmachine':'Oppvaskmaskin',
@@ -1247,7 +1248,8 @@ var specNamesNo = {
   'Laptopvak':'Laptoplomme','Onderhoud':'Vedlikehold','Rugsysteem':'Ryggsystem',
   'Haartype':'Hårtype','Kussen':'Pute','Handgemaakt':'Håndlaget',
   'Geschikt voor':'Egnet for','Vermogen':'Effekt','Motorgarantie':'Motorgaranti',
-  'Geluidsdruk':'Lydtrykk'
+  'Geluidsdruk':'Lydtrykk',
+  'Afmetingen':'Mål','Herkomst':'Opprinnelse','Karakter':'Karakter'
 };
 function tSpec(n){
   if(curLang==='en' && specNamesEn[n]) return specNamesEn[n];
@@ -1256,127 +1258,175 @@ function tSpec(n){
 }
 
 var catTrans = {
-  kaasschaaf:{name:'Cheese Slicer',sub:'Buy once, slice forever',tagline:'Dutch warmth or Scandinavian minimalism',Ll:'Gouda warmth',Rl:'Scandinavian minimalism',items:[
-    {desc:'Oak handle, stainless steel blade. Made in Gouda since 1896. The kind of slicer you grew up with. Warm, familiar, and still on your counter in 20 years.',bundle:'Sharpening stone + microfiber cloth',tags:['Dutch','Stainless steel','Oak'],specVals:['Stainless steel blade with oak handle. The wood gets more beautiful the more you use it.','180 grams — solid in the hand, won’t wobble on hard cheese.','No — wash and dry by hand to protect the oak.','Adjustable slice thickness. Thin for aged cheese, thicker for young.','Warm and artisanal. The slicer you grew up with.']},
-    {desc:'All stainless steel. Sleek and Scandinavian. The original cheese slicer — invented by Thor Bjørklund himself. Functional, indestructible, timeless.',bundle:'Sharpening stone',tags:['Norwegian','All stainless steel','Scandinavian design'],specVals:['All stainless steel. No separate handle — forged from one piece.','120 grams — light and agile, perfect for daily use.','Yes — fully dishwasher safe, no extra care needed.','Fixed slice thickness. Consistent results, every time.','Minimalist Scandinavian. Function over decoration.']}
+  kaasschaaf:{name:"Cheese Slicer",sub:"Buy once, slice forever",tagline:"Dutch warmth or Scandinavian minimalism",Ll:"Gouda warmth",Rl:"Scandinavian minimalism",items:[
+    {desc:"All stainless steel with a hollow handle, 57 g. Light and sleek, and fine in the dishwasher. Boska gives 10 years warranty if you register it.",bundle:"Sharpening stone + microfibre cloth",tags:["Dutch", "Stainless steel", "Dishwasher safe"],specVals:["Stainless steel, hollow handle. All metal, no wood.", "57 g", "21 × 7.3 cm", "10 years (manufacturer), only after registering with Boska.", "Dishwasher safe.", "Netherlands · country of manufacture unknown", "Sleek and shiny."]},
+    {desc:"Stainless steel, Norwegian design. Thor Bjørklund filed the cheese slicer patent in 1925. A simple tool without loose parts.",bundle:"Sharpening stone",tags:["Norwegian", "Stainless steel", "Since 1925"],specVals:["Stainless steel (according to retailer).", "Unknown", "Unknown", "2 years legal guarantee (EU). Extra warranty from Bjørklund not confirmed.", "Unknown", "Norway · country of manufacture unknown", "Minimalist Scandinavian."]}
   ]},
-  multitool:{name:'Multitool',sub:'21 tools in your pocket',tagline:'American ruggedness or Swiss precision',Ll:'Portland, rugged',Rl:'Ibach, precise',items:[
-    {desc:'The heaviest model. 21 tools, replaceable wire cutters, 25-year warranty. For hands that work.',bundle:'Pivot oil + sharpening kit + polishing cloth',tags:['American','21 tools','Stainless steel'],specVals:['21 tools including replaceable wire cutters and a saw blade.','335 grams — the heaviest model. You feel the weight — and everything it can do.','420HC stainless steel. Hard enough to stay sharp, soft enough to sharpen.','All tools accessible without unfolding. One-handed operation.','25-year factory warranty against defects in materials and workmanship.']},
-    {desc:'Swiss precision since 1884. More elegant, just as capable. Lifetime warranty.',bundle:'Pivot oil + sharpening kit + polishing cloth',tags:['Swiss','Stainless steel','Lifetime warranty'],specVals:['27 tools — more functions in a slightly more compact package than the Surge.','295 grams — noticeably lighter. Better for everyday carry.','Swiss stainless steel. Slightly harder, holds its edge longer.','Internal spring lock. Every tool locks automatically when open.','Lifetime warranty. Unconditional, no receipt needed.']}
+  multitool:{name:"Multitool",sub:"21 tools in your pocket",tagline:"American ruggedness or Swiss precision",Ll:"Portland, rugged",Rl:"Ibach, precise",items:[
+    {desc:"Leatherman’s heaviest model, with 21 tools and replaceable wire cutters. 25 years warranty from Leatherman. For hands that work.",bundle:"Pivot oil + sharpening kit + polishing cloth",tags:["American", "Stainless steel", "Replaceable cutters"],specVals:["420HC stainless steel (according to retailer).", "335 g (according to retailer)", "11.4 cm closed (according to retailer)", "25 years (manufacturer) on material and workmanship defects. Original owner, bought from an authorised dealer.", "Unknown", "USA · made in the USA (Portland), with US and global parts", "21 tools, including replaceable wire cutters.", "Rugged and heavy."]},
+    {desc:"Swiss steel, 24 functions, 209 g. Lighter than the Surge and easier to carry every day. Lifetime warranty from Victorinox.",bundle:"Pivot oil + sharpening kit + polishing cloth",tags:["Swiss", "Stainless steel", "24 functions"],specVals:["Stainless steel.", "209 g", "10.5 × 3.5 × 1.8 cm", "Lifetime (manufacturer) on material and manufacturing defects. Keep your receipt.", "Unknown", "Switzerland · made in Switzerland", "24 functions.", "Sleek and precise."]}
   ]},
-  koptelefoon:{name:'Headphones',sub:'Studio quality, at home',tagline:'Block everything out or let everything in',Ll:'Closed-back, isolating',Rl:'Open-back, spacious',items:[
-    {desc:'80 ohms. The headphones sound engineers have trusted for 40 years. Closed-back: the world disappears.',bundle:'Spare set of velour ear pads',tags:['German','80 ohms','Closed-back','Velour'],specVals:['Closed-back. Shuts out ambient noise. Ideal for focus or noisy surroundings.','80 ohms. Plugs straight into any laptop, phone or audio interface. No amplifier needed.','270 grams. Solid yet comfortable, even during long sessions.','Replaceable velour ear pads. Breathable — no sweaty ears, even after hours.','5 Hz – 35 kHz. Deep bass, crisp highs. Studio standard.']},
-    {desc:'Open-back. Music as the artist intended it: spacious, honest, detailed.',bundle:'Spare set of ear pads',tags:['German','Open-back','Natural sound'],specVals:['Open-back. Lets ambient sound in. Music sounds more spacious and natural.','120 ohms. Works with most devices, but shines with a headphone amplifier.','240 grams. Light on the head, barely noticeable after hours of listening.','Replaceable velour ear pads. Soft and breathable for long listening sessions.','6 Hz – 38 kHz. Wide range, exceptionally detailed in the midrange.']}
+  koptelefoon:{name:"Headphones",sub:"Studio quality, at home",tagline:"Block everything out or let everything in",Ll:"Closed-back, isolating",Rl:"Open-back, spacious",items:[
+    {desc:"Closed-back studio headphones, 80 ohms, handcrafted in Germany. Ear pads, headband, cable and drivers can all be replaced.",bundle:"Spare set of velour ear pads",tags:["German", "Spring steel and velour", "Replaceable parts"],specVals:["Spring-steel headband, replaceable velour ear pads.", "270 g without cable, 375 g with cable", "Unknown", "2 years (manufacturer) on defects. Ear pads are wear parts and not covered.", "Ear pads, headband, cable and drivers available as spare parts.", "Germany · made in Germany", "Closed-back. Keeps ambient noise out.", "80 ohms. Works on a laptop or phone without an amplifier.", "Studio, black, no frills."]},
+    {desc:"Open-back headphones, 120 ohms, 280 g. Lets ambient sound in, which makes it sound spacious. Cable and ear pads can be replaced.",bundle:"Spare set of ear pads",tags:["German", "Open-back", "Replaceable cable"],specVals:["Unknown", "280 g", "Cable 1.8 m", "2 years (manufacturer), international.", "Cable and ear pads available as spare parts.", "Germany · made in Ireland", "Open-back. Lets ambient sound in.", "120 ohms. Sounds best with a headphone amplifier.", "Light and spacious."]}
   ]},
-  pen:{name:'Pen',sub:'Writing as a craft',tagline:'Technical precision or Bauhaus elegance',Ll:'Hamburg, 0.5mm',Rl:'Heidelberg, 1966',items:[
-    {desc:'Brass body. Precision mechanism. The pen architects choose. Feels like an instrument.',bundle:'3 tubes of refill leads + eraser',tags:['German','Brass','0.5mm precision'],specVals:['Mechanical pencil, 0.5mm. Technical drawing or daily writing — always sharp.','Solid brass. Weighty in the hand, like a precision instrument. Develops a patina over the years.','22 grams. Compact and precise. Fits in any breast pocket.','Push-button with locking mechanism. The lead won’t slip back under writing pressure.','Technical, precise. The pen architects and engineers choose.']},
-    {desc:'Makrolon and stainless steel. Designed in 1966, unchanged since. Bauhaus in your pocket.',bundle:'3x M16 refills + polishing cloth',tags:['German','Makrolon','Stainless steel','Since 1966'],specVals:['Fountain pen with piston filler. Writes with ink — every letter has character.','Makrolon (fiberglass-reinforced) and brushed stainless steel. Light, scratch-resistant, warm in the hand.','26 grams. Perfect balance between light and substantial.','Piston filler — draws ink directly from a bottle. No cartridges, no waste.','Bauhaus, timeless. Designed in 1966 by Gerd A. Müller. Unchanged ever since.']}
+  pen:{name:"Pen",sub:"Writing as a craft",tagline:"Technical precision or Bauhaus elegance",Ll:"Hamburg, 0.5mm",Rl:"Heidelberg, 1966",items:[
+    {desc:"A 0.5 mm mechanical pencil with a brass body, 22 g. Made for technical drawing, fine for every day.",bundle:"3 tubes of refill leads + eraser",tags:["German", "Brass", "0.5 mm"],specVals:["Brass body (according to retailer).", "22 g (according to retailer)", "Lead 0.5 mm", "2 years legal guarantee (EU). Extra warranty from Rotring not confirmed. Rotring gives 2 years according to a retailer.", "Unknown", "Germany · made in Japan (according to retailer)", "Mechanical pencil, 0.5 mm.", "Push button.", "Technical and precise."]},
+    {desc:"Fountain pen in Makrolon and brushed stainless steel with a piston filler. Designed in 1966 by Gerd A. Müller and barely changed since.",bundle:"Lamy T52 ink bottle + polishing cloth",tags:["German", "Makrolon and steel", "Since 1966"],specVals:["Makrolon (fibreglass-reinforced) and brushed stainless steel; 14k gold nib (according to retailer).", "25 g (according to retailer)", "14 cm (according to retailer)", "2 years (manufacturer) on material and manufacturing defects.", "Unknown", "Germany · made in Germany (according to retailer)", "Fountain pen.", "Piston filler: fills from an ink bottle.", "Bauhaus, timeless."]}
   ]},
-  sokken:{name:'Socks',sub:'The foundation under everything',tagline:'German merino or an American lifetime warranty',Ll:'Schmallenberg, merino',Rl:'Vermont, lifetime warranty',items:[
-    {desc:'Merino wool inside, cotton outside. The sock you forget you’re wearing. Made by Falke since 1895.',bundle:'Care instructions card',tags:['German','Merino wool','Cotton','Since 1895'],specVals:['Merino wool inside, cotton outside. Warm without the itch, smart enough for the office.','45 grams per pair. Thinner than you’d expect from a wool sock.','Machine washable at 40°C. No special care needed.','2-year factory warranty. With normal use they last much longer.','Smart and understated. Invisible under a suit, noticeably comfortable.']},
-    {desc:'Lifetime warranty. Worn through? New pair. No questions asked, no receipt needed.',bundle:'Lifetime warranty information',tags:['American','Vermont merino','Lifetime warranty'],specVals:['Vermont merino, nylon-reinforced at the wear points. Made for the mountains, at home anywhere.','55 grams per pair. Slightly thicker, more cushioning at the heel and ball of the foot.','Machine washable at 40°C. Do not tumble dry.','Lifetime warranty. Unconditional. Worn through? New pair. No receipt needed.','Outdoor and rugged. Visibly thicker, noticeably sturdier. Made to perform.']}
+  sokken:{name:"Socks",sub:"The foundation under everything",tagline:"German merino or an American lifetime warranty",Ll:"Schmallenberg, merino",Rl:"Vermont, lifetime warranty",items:[
+    {desc:"Wool sock with cotton, 60% virgin wool. Thin enough for smart shoes. Falke has made socks since 1895.",bundle:"Wool detergent",tags:["German", "Virgin wool and cotton", "Since 1895"],specVals:["60% virgin wool, 23% cotton, 15% polyamide, 2% elastane (according to retailer).", "Unknown", "Unknown", "2 years legal guarantee (EU). Extra warranty from Falke not confirmed.", "Wool cycle at 30 °C, no tumble dryer (according to retailer).", "Germany (Schmallenberg) · country of manufacture unknown", "Smart and understated."]},
+    {desc:"Merino sock from Vermont, reinforced with nylon. Worn through? You get a new pair, no receipt needed. Thicker than the Falke.",bundle:"Wool detergent",tags:["American", "Merino wool", "Made in Vermont"],specVals:["61% merino wool, 36% nylon, 3% Lycra spandex (according to retailer).", "Unknown", "Unknown", "Lifetime and unconditional (manufacturer). Worn through? New pair, no receipt needed.", "Unknown", "USA · made in the USA (Vermont)", "Outdoor and sturdy."]}
   ]},
-  scheerapparaat:{name:'Electric Shaver',sub:'One great shave',tagline:'Dutch innovation or German precision',Ll:'Eindhoven, nano-tech',Rl:'Frankfurt, Smart Sense',items:[
-    {desc:'Nano-tech blades. Wireless charging. From the same city as the light bulb.',bundle:'Replacement shaving heads (SH91)',tags:['Dutch','Nano-tech','Wireless charging'],specVals:['Three rotary heads that flex along your jawline, following every contour.','60 minutes of shaving on a single charge. Wireless charging via a Qi pad.','Yes — wet and dry. Use it in the shower or with foam.','Nano-tech blades. Self-sharpening. Cut hair right at skin level.','Quick Clean Pod. Cleans, lubricates, and dries automatically.']},
-    {desc:'Smart Sense adapts to your beard. Dieter Rams would approve.',bundle:'Replacement shaving heads',tags:['German','Smart Sense','Rams heritage'],specVals:['Foil system with 4 cutting elements. Catches more hair with every stroke.','60 minutes of shaving on a single charge. A 5-minute quick charge gives you one shave.','Yes — wet and dry. Fully waterproof, motor included.','Smart Sense. Reads your beard density 13 times per second and adjusts its power.','Clean & Charge station. Cleans with alcohol, charges, and dries in one step.']}
+  scheerapparaat:{name:"Electric Shaver",sub:"One great shave",tagline:"Dutch innovation or German precision",Ll:"Eindhoven, nano-tech",Rl:"Frankfurt, Smart Sense",items:[
+    {desc:"Shaver with three rotary heads that follow your jawline. Use it wet or dry. The shaving heads can be replaced.",bundle:"Replacement shaving heads",tags:["Dutch", "Rotary heads", "Replaceable heads"],specVals:["Unknown", "350 g (according to retailer)", "15 × 7 × 4 cm (according to retailer)", "2 years (manufacturer).", "Unknown", "Netherlands · made in Netherlands", "Three rotary heads.", "60 minutes of shaving per charge.", "Shiny and modern."]},
+    {desc:"Foil shaver, 207 g, made in Germany. Fully waterproof, so you rinse it under the tap.",bundle:"Replacement shaving head",tags:["German", "Foil system", "Waterproof"],specVals:["Unknown", "207 g shaver only", "16.8 × 6.6 × 4.4 cm", "2 years legal guarantee (EU). Extra warranty from Braun not confirmed. Braun offered an extension on registration as a promotion (expired).", "100% waterproof, can be rinsed under the tap. Some sets include a Clean & Charge station.", "Germany · made in Germany", "Foil system.", "60 minutes of shaving per charge.", "Sleek and businesslike."]}
   ]},
-  stanleymes:{name:'Utility Knife',sub:'The knife that opens everything',tagline:'American original or Japanese invention',Ll:'Connecticut, 1843',Rl:'Osaka, the snap-off blade',items:[
-    {desc:'The original retractable knife. Metal body, fixed blade mechanism. Your grandfather had one too.',bundle:'10 replacement blades',tags:['American','Metal','Since 1843'],specVals:['Retractable, with a fixed trapezoid blade. No snap-off segments.','19mm wide trapezoid blade. Standard size, available everywhere.','All-metal body. Feels indestructible, and it is.','Slide lock. Simple, reliable, no moving parts that wear out.','Spare blades stored in the handle. Tool-free blade changes.']},
-    {desc:'Yoshio Okada invented the snap-off blade. This is the best model from his own brand.',bundle:'10 replacement blades (OLFA LB-10)',tags:['Japanese','18mm','Aluminum'],specVals:['Segmented snap-off blade. Snap off a dull segment and a fresh, sharp edge is ready.','18mm snap-off segments. Japanese steel quality, sharper than most fixed blades.','Aluminum body with rubber grip. Light, sturdy, won’t rust.','Auto-lock ratchet. The blade locks automatically at any extended length.','Rear-loading. Slide in a new blade one-handed, without putting the knife down.']}
+  stanleymes:{name:"Utility Knife",sub:"The knife that opens everything",tagline:"American original or Japanese invention",Ll:"Connecticut, 1843",Rl:"Osaka, the snap-off blade",items:[
+    {desc:"An 18 mm snap-off knife with a die-cast metal body, 180 g. Solvent resistant. Snap off a dull segment and you cut sharp again.",bundle:"10 snap-off blades 18 mm",tags:["American", "Metal", "18 mm snap-off"],specVals:["Die-cast metal, solvent resistant.", "180 g (according to retailer)", "16.5 × 2.2 × 2.5 cm; blade 18 mm", "2 years legal guarantee (EU). Extra warranty from Stanley not confirmed.", "Unknown", "USA · country of manufacture unknown", "Snap-off blade, 18 mm.", "A tool. Heavy and metal."]},
+    {desc:"An 18 mm snap-off knife from OLFA, Yoshio Okada’s brand. Aluminium handle with a rubber grip, made in Japan.",bundle:"10 replacement blades (OLFA LB-10)",tags:["Japanese", "Aluminium", "18 mm snap-off"],specVals:["Die-cast aluminium handle, rubber grip, stainless blade channel (according to retailer).", "136 g (according to retailer)", "Blade 10 × 1.8 cm, 0.5 mm thick (according to retailer)", "2 years legal guarantee (EU). Extra warranty from OLFA not confirmed. Lifetime applies in the US only.", "Unknown", "Japan · made in Japan (according to retailer)", "Snap-off blade, 18 mm.", "Light and practical."]}
   ]},
-  camera:{name:'Camera Accessory',sub:'Never fumble again',tagline:'Strap or clip. Always within reach.',Ll:'Shoulder strap',Rl:'Backpack clip',items:[
-    {desc:'Camera strap with one-handed adjustment. Aluminum anchors, Hypalon trim. Lifetime warranty.',bundle:'Nothing needed — lifetime warranty',tags:['American','Aluminum','Hypalon','Lifetime warranty'],specVals:['Shoulder strap. Switches from shoulder to sling one-handed, on the move.','Aluminum anchors with Hypalon strap. Wear-resistant, water-resistant, gets softer with use.','85 grams. You forget you’re wearing it until you need it.','Quick-connector anchors. Click your camera on or off in seconds.','Lifetime warranty. Unconditional, no receipt or registration needed.']},
-    {desc:'Clip your camera to your backpack or belt. Hands free. Arca-Swiss compatible.',bundle:'Nothing needed — lifetime warranty',tags:['American','Aluminum','Arca-Swiss','Lifetime warranty'],specVals:['Backpack or belt clip. Clip your camera to your backpack strap. Hands free, camera within reach.','Anodized aluminum. Scratch-resistant, lightweight, industrial look.','90 grams including plate. Barely noticeable on your backpack.','Arca-Swiss plate. Fits virtually every professional tripod.','Lifetime warranty. Unconditional, no receipt or registration needed.']}
+  camera:{name:"Camera Accessory",sub:"Never fumble again",tagline:"Strap or clip. Always within reach.",Ll:"Shoulder strap",Rl:"Backpack clip",items:[
+    {desc:"Camera strap in nylon webbing with aluminium adjusters, one-handed to shorten or lengthen. Lifetime warranty from Peak Design after registration.",bundle:"Microfibre cloth",tags:["American", "Nylon and aluminium", "Quick connect"],specVals:["Seatbelt-style nylon webbing, anodised aluminium and glass-reinforced nylon adjusters (according to retailer).", "104 g (according to retailer)", "Length 99–145 cm, width 3.2 cm (according to retailer)", "Lifetime (manufacturer) on defects and breakage. Register with Peak Design to claim.", "Unknown", "USA · country of manufacture unknown", "Shoulder strap, can also be worn as a sling.", "Anchor quick connectors.", "Understated and technical."]},
+    {desc:"Aluminium clip for your camera on a backpack strap or belt. Hands free, camera within reach. The plate fits Arca-Swiss tripods.",bundle:"Microfibre cloth",tags:["American", "Aluminium", "Arca-Swiss"],specVals:["Aluminium alloy chassis, backplate and button, stainless steel locking pin, anodised.", "85 g (according to retailer)", "Fits straps up to 6.4 cm wide and 2.2 cm thick", "Lifetime (manufacturer) on defects and breakage. Register with Peak Design to claim.", "Unknown", "USA · country of manufacture unknown", "Clip for backpack strap or belt.", "Arca-Swiss plate.", "Industrial."]}
   ]},
-  'rugzak-stad':{name:'City Backpack',sub:'Every day, any weather',tagline:'American toughness or Swedish craftsmanship',Ll:'28L, technical',Rl:'16L, waxable',items:[
-    {desc:'28 liters. Laptop compartment, comfortable back panel. Every commute since 1966.',bundle:'Waterproofing spray + zipper lube',tags:['American','28 liters','Laptop compartment'],specVals:['28 liters. Room for a laptop, lunch, gym clothes and an extra layer.','600D polyester with ripstop reinforcement. Water-repellent, scratch-resistant.','1,160 grams. Solid but not heavy. Comfortable back panel for daily commutes.','15-inch laptop compartment, padded and elevated. Your laptop won’t touch the ground when you set the bag down.','Reproof every 6 months — we include the spray.']},
-    {desc:'16 liters. G-1000 fabric, leather details. Waxable, repairable. Swedish and timeless.',bundle:'Greenland Wax + waterproofing',tags:['Swedish','G-1000 fabric','Waxable','Leather'],specVals:['16 liters. Compact enough for daily use, big enough for a weekend away.','G-1000 fabric: cotton and polyester blend. Water-repellent once waxed, and better-looking with age.','460 grams. Remarkably light for its sturdiness. Folds almost flat when empty.','Fits a 13-inch laptop in the side pocket. Unpadded — a sleeve is a good idea.','Apply Greenland Wax and melt it in with an iron. Makes the bag more water-resistant and slightly darker.']}
+  'rugzak-stad':{name:"City Backpack",sub:"Every day, any weather",tagline:"American toughness or Swedish craftsmanship",Ll:"28L, technical",Rl:"16L, waxable",items:[
+    {desc:"A 28 l backpack with a laptop compartment and a sturdy back panel. Made for the daily commute. In the EU, 2 years warranty from The North Face.",bundle:"Waterproofing spray + zipper lube",tags:["American", "Polyester", "Laptop compartment"],specVals:["Unknown (retailers disagree).", "1.05 kg (according to retailer)", "28 l; 49.5 × 30.5 × 16.5 cm (according to retailer)", "2 years (manufacturer) on material and manufacturing defects in the EU.", "Unknown", "USA · country of manufacture unknown", "Sporty and practical."]},
+    {desc:"Swedish 16 l backpack with a rectangular shape from 1978. Compact, light and for everyday use. In the EU, 2 years warranty.",bundle:"Zipper lube + microfibre cloth",tags:["Swedish", "Vinylon F", "Since 1978"],specVals:["Vinylon F, polypropylene webbing (according to retailer, for the standard Kånken).", "300 g (according to retailer)", "16 l; 38 × 27 × 13 cm (according to retailer)", "2 years (manufacturer) in the EU. Lifetime applies in North America only.", "Unknown", "Sweden · made in Vietnam (according to retailer)", "Timeless and Swedish."]}
   ]},
-  'rugzak-outdoor':{name:'Outdoor Backpack',sub:'Mountain or forest',tagline:'The American All Mighty or German Aircomfort',Ll:'36L, any damage repaired',Rl:'27L, Augsburg',items:[
-    {desc:'36 liters. All Mighty Guarantee: Osprey repairs any damage. No questions asked.',bundle:'Waterproofing + zipper lube',tags:['American','36 liters','All Mighty Guarantee'],specVals:['36 liters. Ideal for multi-day hikes or a long weekend in the mountains.','500D Cordura nylon. Military-grade fabric. Resistant to rocks, branches, and rain.','1,480 grams. Midweight, with exceptional capacity for its weight.','AirSpeed mesh panel. Curved frame keeps the pack off your back. Stays ventilated even at 30°C.','All Mighty Guarantee. Osprey repairs any damage, regardless of cause. No cost.']},
-    {desc:'27 liters. Aircomfort back panel. 126 years of craftsmanship from Augsburg.',bundle:'Waterproofing + zipper lube',tags:['German','27 liters','Aircomfort'],specVals:['27 liters. More compact, enough for day hikes and short overnight trips.','Ripstop nylon 210D. Lighter than Cordura, still tear-resistant.','1,200 grams. Noticeably lighter — great for long distances.','Aircomfort ventilation. Mesh back panel with 3D frame. Moisture is carried away.','10-year factory warranty against defects in materials and workmanship.']}
+  'rugzak-outdoor':{name:"Outdoor Backpack",sub:"Mountain or forest",tagline:"The American All Mighty or German Aircomfort",Ll:"36L, any damage repaired",Rl:"27L, Augsburg",items:[
+    {desc:"A 36 l hiking pack with a ventilated back panel. Osprey repairs damage, whatever the cause, for 30 years.",bundle:"Waterproofing + zipper lube",tags:["American", "Recycled nylon", "All Mighty Guarantee"],specVals:["210D recycled nylon (according to retailer).", "1.55 kg", "36 l; 70 × 34 × 28 cm", "30 years (manufacturer), All Mighty Guarantee: any damage, any reason, repaired. Keep your receipt.", "Unknown", "USA · country of manufacture unknown", "AirSpeed: tensioned mesh keeps the pack off your back.", "Technical and sporty."]},
+    {desc:"A 27 l day pack from Augsburg, 1.33 kg, with the Aircomfort back system. 2 years warranty, then paid repairs from Deuter.",bundle:"Waterproofing + zipper lube",tags:["German", "Polyamide and polyester", "Aircomfort"],specVals:["210D recycled polyamide and 600D polyester, bluesign.", "1.33 kg", "27 l; 55 × 28 × 20 cm", "2 years (manufacturer) on defects. After that, Deuter’s paid lifetime repair service.", "Unknown", "Germany · country of manufacture unknown", "Aircomfort: mesh on a frame, with room for air.", "Solid and sporty."]}
   ]},
-  haarborstel:{name:'Hairbrush',sub:'One brush, forever',tagline:'British craftsmanship or British tradition',Ll:'London, 1885, handmade',Rl:'Kent, 1777, world’s oldest',items:[
-    {desc:'Handmade. Boar bristle and nylon. The brush hairdressers choose. Unchanged for 140 years.',bundle:'Cleaning brush + polishing cloth',tags:['British','Boar bristle','Nylon','Handmade'],specVals:['Mix of boar bristle and nylon. The bristles carry natural oils from scalp to ends — a natural conditioner.','Rubber air cushion. Gives with your scalp and prevents tugging at tangles.','Pneumatic cushion — springy, adapts to the shape of your head.','Yes — handmade in London. Each brush is individually assembled.','All hair types. The bristle-nylon mix works on fine to thick hair.']},
-    {desc:'The world’s oldest brush brand. Since 1777. Satinwood and pure boar bristle. Royal warrant holder since George III.',bundle:'Cleaning brush',tags:['British','Satinwood','Boar bristle','Since 1777'],specVals:['Pure boar bristle. Softer than the mixed version, with extra shine from natural oils.','Satinwood handle. Smooth, lightweight, grows more beautiful with age.','Fixed cushion — firmer brushing, more control over thicker hair.','Yes — handmade in Hertfordshire since 1777. Royal warrant holder.','Normal to thick hair. The firmer bristles provide more grip on thick or curly hair.']}
+  haarborstel:{name:"Hairbrush",sub:"One brush, forever",tagline:"British craftsmanship or British tradition",Ll:"London, 1885, handmade",Rl:"Kent, 1777, world’s oldest",items:[
+    {desc:"Brush with tufts of boar bristle and nylon in a rubber cushion. Mason Pearson’s design has existed since 1885.",bundle:"Cleaning brush + polishing cloth",tags:["British", "Boar bristle and nylon", "Rubber cushion"],specVals:["Boar bristle and nylon tufts in a rubber cushion (according to retailer).", "Unknown", "21.6 × 6.4 cm (according to retailer)", "2 years legal guarantee (EU). Extra warranty from Mason Pearson not confirmed.", "With the included cleaning brush (according to retailer).", "United Kingdom · country of manufacture unknown", "Classic and understated."]},
+    {desc:"Beechwood brush with pure black natural bristle, made in England. Kent has made brushes since 1777.",bundle:"Cleaning brush",tags:["British", "Beechwood", "Since 1777"],specVals:["Beechwood, pure black natural bristle.", "Unknown", "18.3 cm (according to retailer)", "2 years legal guarantee (EU). Kent adds its own 1-year warranty (manufacturer).", "Unknown", "United Kingdom · made in England (according to retailer)", "Warm wood, classic."]}
   ]},
-  fohn:{name:'Hair Dryer',sub:'Professional, every day',tagline:'French salon technology or British motor warranty',Ll:'Paris, salon motor',Rl:'Leeds, 2,000 hours',items:[
-    {desc:'Professional salon motor. Light and powerful. Built for daily use.',bundle:'Cleaning guide',tags:['French','Nano Titanium','Salon motor'],specVals:['2,000 watts. Enough power for thick hair, fast enough for rushed mornings.','580 grams. Light for a professional model. Your arm won’t tire, even on long sessions.','Nano Titanium ionic. Reduces frizz, speeds up drying, protects against heat damage.','2-year factory warranty. Even with professional salon use they last 4–5 years on average.','75 dB — comparable to a vacuum cleaner. Not whisper-quiet, but bearable in the morning.']},
-    {desc:'2,000-hour motor warranty. Aeroprecis technology. Faster drying, less heat.',bundle:'2,000-hour motor warranty',tags:['British','Aeroprecis','2,000-hour warranty'],specVals:['2,200 watts. More power, shorter drying time. Less heat exposure for your hair.','582 grams. Comparable weight, slightly more power per gram.','Aeroprecis brushless motor. No parts that wear out, consistent power for its entire life.','2,000-hour motor warranty. That’s about 10 years of daily 10-minute use.','70 dB — slightly quieter than average. You’ll appreciate it on early mornings.']}
+  fohn:{name:"Hair Dryer",sub:"Professional, every day",tagline:"French salon technology or British motor warranty",Ll:"Paris, salon motor",Rl:"Leeds, 2,000 hours",items:[
+    {desc:"Professional hair dryer from BaBylissPRO with nano titanium. An American model by Conair. We could not confirm weight, power or EU warranty.",bundle:"Microfibre cloth",tags:["French", "Nano titanium", "Salon model"],specVals:["Unknown", "Unknown", "Unknown", "2 years legal guarantee (EU). Extra warranty from BaBylissPRO not confirmed. In the US, Conair gives 4 years.", "Unknown", "France (brand owned by Conair, USA) · country of manufacture unknown", "Salon, black."]},
+    {desc:"Hair dryer from ghd with a brushless motor. 780 g according to a retailer. 2 years warranty from ghd for the consumer version.",bundle:"Microfibre cloth",tags:["British", "Brushless motor", "Aeroprecis"],specVals:["Unknown", "780 g (according to retailer)", "Unknown", "2 years (manufacturer), consumer version. Keep your receipt.", "Unknown", "United Kingdom · country of manufacture unknown", "Modern and sleek."]}
   ]},
-  koksmes:{name:"Chef's Knife",sub:'One knife for nearly everything',tagline:'German forged or Japanese in one piece',Ll:'Solingen, forged',Rl:'Niigata, one piece of steel',items:[
-    {desc:'Forged stainless steel, full tang, black handle with three rivets. Heavy, sturdy, and with sharpening good for decades.',bundle:'Whetstone',tags:['German','Forged','Since 1814'],specVals:['Forged stainless steel with a full tang. Synthetic handle with three rivets.','2 years from Wüsthof in the EU. Wüsthof’s lifetime warranty only applies in the US and Canada.','Wash and dry by hand. Hone regularly, sharpen now and then.','Classic and heavy.']},
-    {desc:'Blade and handle from one piece of Cromova 18 steel. No seam for dirt or moisture to get into. The range has existed since 1985.',bundle:'Whetstone',tags:['Japanese','One piece of steel','Since 1985'],specVals:['Cromova 18 steel. Handle and blade in one piece, the handle dimpled for grip.','2 years. Global’s longer warranty only applies in the United Kingdom.','Wash and dry by hand. Sharpen on a whetstone.','Sleek, light and all steel.']}
+  koksmes:{name:"Chef's Knife",sub:"One knife for nearly everything",tagline:"German forged or Japanese in one piece",Ll:"Solingen, forged",Rl:"Niigata, one piece of steel",items:[
+    {desc:"Forged stainless steel, full tang, black handle with three rivets. 268 g. Heavy, sturdy, and with sharpening good for decades.",bundle:"Whetstone",tags:["German", "Forged", "Since 1814"],specVals:["Forged steel, full tang. Synthetic handle with three rivets.", "268 g", "Blade 20 cm", "2 years (manufacturer) in the EU. Lifetime applies in the US and Canada only.", "Wash and dry by hand. Hone regularly, sharpen now and then.", "Germany (Solingen) · country of manufacture unknown", "Classic and heavy."]},
+    {desc:"Blade and handle from one piece of Cromova 18 steel. No seam for dirt or moisture to get into. The range has existed since 1985.",bundle:"Whetstone",tags:["Japanese", "One piece of steel", "Since 1985"],specVals:["Cromova 18 steel (according to retailer). Handle and blade in one piece.", "172 g (according to retailer)", "Blade 20 cm", "2 years legal guarantee (EU). Extra warranty from Global not confirmed. Longer warranties apply outside the EU only.", "Wash and dry by hand. Sharpen on a whetstone.", "Japan · country of manufacture unknown", "Sleek, light and all steel."]}
   ]},
-  knoflookpers:{name:'Garlic Press',sub:'Where cheap presses snap',tagline:'German stainless steel or Swiss aluminium',Ll:'Marktoberdorf, stainless steel',Rl:'Switzerland, aluminium',items:[
-    {desc:'All 18/10 stainless steel, with a fold-out sieve and a scraper. Presses unpeeled cloves.',bundle:'Cleaning brush',tags:['German','18/10 stainless steel','Since 1888'],specVals:['18/10 stainless steel. Fold-out sieve and scraper.','Rösle’s EU terms not confirmed. The lifetime warranty only appears in the US terms.','Fold out the sieve, rinse, done.','Long, heavy and industrial. With a hanging ring.']},
-    {desc:'Cast aluminium with a PFAS-free non-stick coating. Successor to the Susi 3, a design that has been around for decades.',bundle:'Cleaning brush',tags:['Swiss','Aluminium','Since 1951'],specVals:['Cast aluminium with stainless steel, PFAS-free non-stick coating.','5 years from Zyliss (EU shop).','Rinse straight after use.','Round and compact. Light in the hand.']}
+  knoflookpers:{name:"Garlic Press",sub:"Where cheap presses snap",tagline:"German stainless steel or Swiss aluminium",Ll:"Marktoberdorf, stainless steel",Rl:"Switzerland, aluminium",items:[
+    {desc:"All 18/10 stainless steel, with a fold-out sieve and a scraper. Presses unpeeled cloves. Heavy: 354 g according to a retailer.",bundle:"Cleaning brush",tags:["German", "18/10 stainless steel", "Since 1888"],specVals:["18/10 stainless steel (according to retailer). Fold-out sieve and scraper.", "354 g (according to retailer)", "20 cm (according to retailer)", "2 years legal guarantee (EU). Extra warranty from Rösle not confirmed. Lifetime only appears in the US terms.", "Flip the sieve fully open, rinse under the tap or put it in the dishwasher.", "Germany · country of manufacture unknown", "Long, heavy and industrial. With a hanging ring."]},
+    {desc:"Cast aluminium with a PFAS-free non-stick coating. Successor to the Susi 3, a design that has been around for decades.",bundle:"Cleaning brush",tags:["Swiss", "Aluminium", "Since 1951"],specVals:["Cast aluminium with stainless steel parts, PFAS-free non-stick coating.", "192 g (according to retailer)", "18.6 × 3.6 × 6.5 cm (according to retailer)", "5 years (manufacturer) on most Zyliss products, with proof of purchase.", "Dishwasher safe. Rinsing straight after use is easiest.", "Switzerland · country of manufacture unknown", "Round and compact. Light in the hand."]}
   ]},
-  rasp:{name:'Zester',sub:'Lemon, cheese, ginger, nutmeg',tagline:'The original or the Canadian challenger',Ll:'Arkansas, the original',Rl:'Canada, Surface Glide',items:[
-    {desc:'Etched stainless steel blade with a plastic handle. The zester every test refers to. To be fair: the blade does get duller over the years.',bundle:'Cleaning brush',tags:['American','Etched stainless steel','Since 1994'],specVals:['Etched stainless steel blade, plastic handle.','3 years from Microplane against manufacturing defects.','Rinse in the direction of the blade, never scrub against it with a sponge.','A tool. Black, no frills.']},
-    {desc:'Etched stainless steel blade with Surface Glide grooves. Same long shape and same price range as the Microplane, from a different brand.',bundle:'Cleaning brush',tags:['Canadian','Etched stainless steel','Surface Glide'],specVals:['Etched stainless steel blade with Surface Glide grooves, plastic handle.','Limited lifetime according to Cuisipro’s US site. Not confirmed for the EU.','Rinse in the direction of the blade, never scrub against it with a sponge.','A tool, with a green cap at the tip.']}
+  rasp:{name:"Zester",sub:"Lemon, cheese, ginger, nutmeg",tagline:"The original or the Canadian challenger",Ll:"Arkansas, the original",Rl:"Canada, Surface Glide",items:[
+    {desc:"Etched stainless steel blade with a soft-touch handle, 32.5 cm long. The blade is made in the USA. To be fair: it does get duller over the years.",bundle:"Cleaning brush",tags:["American", "Etched stainless steel", "Since 1994"],specVals:["Photo-etched stainless steel blade, soft-touch handle.", "Unknown", "32.5 cm; grating surface 20.3 × 2.5 cm", "3 years (manufacturer) on manufacturing defects.", "Dishwasher safe, the cover is not. Rinse in the direction of the blade.", "USA · blade made in the USA", "A tool. Black, no frills."]},
+    {desc:"Etched stainless steel blade with Surface Glide grooves. Same long shape and same price range as the Microplane, from a different brand.",bundle:"Cleaning brush",tags:["Canadian", "Etched stainless steel", "Surface Glide"],specVals:["Etched stainless steel blade with Surface Glide grooves (according to retailer), plastic handle.", "Unknown", "29 cm (according to retailer)", "2 years legal guarantee (EU). Extra warranty from Cuisipro not confirmed. Lifetime applies in the US only.", "Rinse in the direction of the blade, never scrub against it with a sponge.", "Canada · country of manufacture unknown", "A tool, with a green cap at the tip."]}
   ]},
-  keukenschaar:{name:'Kitchen Shears',sub:'From chicken to herbs',tagline:'Comes apart or one piece of steel',Ll:'Seki, comes apart',Rl:'Niigata, all steel',items:[
-    {desc:"Stainless steel blades with nylon handles. Comes apart, so you can clean it properly and sharpen it. Test winner at America's Test Kitchen (2025).",bundle:'Microfibre cloth',tags:['Japanese','Comes apart','Stainless steel'],specVals:['Stainless steel blades, nylon handles.','Lifetime according to retailers and Kai USA. Not confirmed for the EU.','Take apart, wash, put back together dry. The blades can be sharpened separately.','Practical and black.']},
-    {desc:'All Cromova 18 steel, handles included. No plastic to crack or come loose.',bundle:'Microfibre cloth',tags:['Japanese','All steel','21 cm'],specVals:['Cromova 18 steel, handles and blades.','25 years according to one retailer. Not confirmed by Global itself.','Wash by hand and dry well, around the pivot too.','Sleek and silver, matches the Global knives.']}
+  keukenschaar:{name:"Kitchen Shears",sub:"From chicken to herbs",tagline:"Comes apart or one piece of steel",Ll:"Seki, comes apart",Rl:"Niigata, all steel",items:[
+    {desc:"Stainless steel blades with polymer handles. Comes apart, so you can clean it properly and sharpen it. Test winner at America's Test Kitchen (2025).",bundle:"Microfibre cloth",tags:["Japanese", "Stainless steel", "Comes apart"],specVals:["420J2 stainless steel blades, polymer handles (according to retailer).", "146 g (according to retailer)", "22.5 cm (according to retailer)", "2 years legal guarantee (EU). Extra warranty from Shun not confirmed. Lifetime is only mentioned by retailers and Kai USA.", "Take apart, wash, put back together dry. The blades can be sharpened separately.", "Japan · country of manufacture unknown", "Practical and black."]},
+    {desc:"All Cromova 18 steel, handles included. No plastic to crack or come loose. 21 cm, 210 g according to a retailer.",bundle:"Microfibre cloth",tags:["Japanese", "All steel", "21 cm"],specVals:["Cromova 18 steel (according to retailer), handles and blades.", "210 g (according to retailer)", "21 cm (according to retailer)", "2 years legal guarantee (EU). Extra warranty from Global not confirmed.", "Wash by hand and dry well, around the pivot too.", "Japan · country of manufacture unknown", "Sleek and silver, matches the Global knives."]}
   ]},
-  dunschiller:{name:'Peeler',sub:'The tool everyone owns',tagline:'Light Swiss aluminium or heavy German steel',Ll:'Switzerland, 1947',Rl:'Marktoberdorf, stainless steel',items:[
-    {desc:'Aluminium handle, stainless steel blade, 14 grams. Designed in 1947, lifetime warranty from Victorinox.',bundle:'Microfibre cloth',tags:['Swiss','Aluminium','Since 1947'],specVals:['Aluminium handle, stainless steel blade. 14 grams.','Lifetime, according to Victorinox on the product page.','Rinse and let dry.','A Swiss icon that weighs next to nothing.']},
-    {desc:'Heavy 18/10 stainless steel peeler with a swivel blade. The blade can be replaced, so blunt doesn’t mean bin.',bundle:'Spare blade (95979)',tags:['German','18/10 stainless steel','Replaceable blade'],specVals:['18/10 stainless steel, replaceable blade (spare 95979). Right-handed model.','Rösle’s EU terms not confirmed. The lifetime warranty only appears in the US terms.','Rinse. When the blade goes blunt, replace just the blade.','Long and heavy, with a hanging ring.']}
+  dunschiller:{name:"Peeler",sub:"The tool everyone owns",tagline:"Light Swiss aluminium or heavy German steel",Ll:"Switzerland, 1947",Rl:"Marktoberdorf, stainless steel",items:[
+    {desc:"Aluminium handle, stainless steel blade, 14 g. Designed in 1947, made in Switzerland, with a lifetime warranty from Victorinox.",bundle:"Microfibre cloth",tags:["Swiss", "Aluminium", "Since 1947"],specVals:["Aluminium handle, stainless steel blade.", "14 g", "11 × 6.5 × 1.2 cm", "Lifetime (manufacturer) on material and manufacturing defects.", "Not dishwasher safe. Rinse and let dry.", "Switzerland · made in Switzerland", "A Swiss icon that weighs next to nothing."]},
+    {desc:"Heavy 18/10 stainless steel peeler with a swivel blade. The blade can be replaced, so blunt doesn’t mean bin.",bundle:"Spare blade (95979)",tags:["German", "18/10 stainless steel", "Replaceable blade"],specVals:["18/10 stainless steel, replaceable blade (according to retailer). Right-handed model.", "110 g (according to retailer)", "19 cm (according to retailer)", "2 years legal guarantee (EU). Extra warranty from Rösle not confirmed. Lifetime only appears in the US terms.", "Rinse. When the blade goes blunt, replace just the blade (95979).", "Germany · country of manufacture unknown", "Long and heavy, with a hanging ring."]}
   ]},
-  'peper-zout':{name:'Salt & Pepper',sub:'On the table every day',tagline:'Warm wood or sleek steel',Ll:'France, beech wood',Rl:'London, steel and acrylic',items:[
-    {desc:"Pepper and salt mill in beech wood, each with its own mechanism. The u'Select ring sets the grind. Peugeot has made mills since 1840. Price is for the set (2 × €46.90).",bundle:'Microfibre cloth',tags:['French','Beech wood','Set of 2'],specVals:['Beech wood. Steel mechanism for pepper, a separate one for salt.','Lifetime on the mechanism, 5 years on the body (Peugeot). Opening it up voids the warranty.','Keep dry, not under the tap. Wipe with a dry cloth.','Warm and classic.']},
-    {desc:'Pepper and salt mill in stainless steel and acrylic, each with its own mechanism. The grind is set in steps. Price is for the set (2 × €49.95).',bundle:'Microfibre cloth',tags:['English','Steel and acrylic','Set of 2'],specVals:['Stainless steel and acrylic. Separate mechanisms for pepper and salt.','Lifetime on the mechanism, 2 years on the rest (Cole & Mason).','Wipe with a damp cloth. The acrylic shows you when it’s nearly empty.','Sleek and modern.']}
+  'peper-zout':{name:"Salt & Pepper",sub:"On the table every day",tagline:"Warm wood or sleek steel",Ll:"France, beech wood",Rl:"London, steel and acrylic",items:[
+    {desc:"Pepper and salt mill in beech wood, each with its own mechanism. The u'Select ring sets the grind. The price is for the set of 2.",bundle:"Microfibre cloth",tags:["French", "Beech wood", "Set of 2"],specVals:["Beech wood (according to retailer). Steel mechanism for pepper, a separate one for salt.", "270 g per mill (according to retailer)", "18 cm high", "Lifetime on the mechanism, 5 years on the mill (manufacturer). Keep your receipt. Opening it up voids the warranty.", "Keep dry, not under the tap. Wipe with a dry cloth.", "France · country of manufacture unknown", "Warm and classic."]},
+    {desc:"Pepper and salt mill in stainless steel and acrylic, each with its own mechanism. The grind is set in steps. The price is for the set of 2.",bundle:"Microfibre cloth",tags:["English", "Steel and acrylic", "Set of 2"],specVals:["Stainless steel and acrylic (according to retailer). Separate mechanisms for pepper and salt.", "Unknown", "19 cm high, Ø 6 cm (according to retailer)", "2 years legal guarantee (EU). Extra warranty from Cole & Mason not confirmed. Lifetime on the mechanism applies to the Precision lines; whether the Derwent is one is not confirmed.", "Wipe with a damp cloth. The acrylic shows you when it’s nearly empty.", "United Kingdom · country of manufacture unknown", "Sleek and modern."]}
   ]},
-  ijsschep:{name:'Ice Cream Scoop',sub:'Even through rock-hard ice cream',tagline:'American retro aluminium or French steel',Ll:'Toledo, 1935',Rl:'Fesches-le-Châtel, steel',items:[
-    {desc:'Solid aluminium in one piece, with a heat-conducting fluid in the handle. No moving parts. Much the same design since 1935.',bundle:'Microfibre cloth',tags:['American','Aluminium','Since 1935'],specVals:['Solid one-piece aluminium, fluid in the handle. Size 20 (2 oz).','Zeroll does not state a warranty.','Wash by hand. Not in the dishwasher.','Retro and heavy in the hand.']},
-    {desc:'All stainless steel, no spring or rubber, so nothing to wear out. Made in Cristel’s own factory in France.',bundle:'Microfibre cloth',tags:['French','Stainless steel','Own factory'],specVals:['Stainless steel bowl and brushed stainless steel handle. No mechanism.','Lifetime against manufacturing defects, according to Cristel on the product page.','Wash and dry.','Sleek and French.']}
+  ijsschep:{name:"Ice Cream Scoop",sub:"Even through rock-hard ice cream",tagline:"American retro aluminium or French steel",Ll:"Toledo, 1935",Rl:"Fesches-le-Châtel, steel",items:[
+    {desc:"Solid aluminium in one piece, with a heat-conducting fluid in the handle. No moving parts. Much the same design since 1935.",bundle:"Microfibre cloth",tags:["American", "Aluminium", "Since 1935"],specVals:["Aluminium alloy, liquid-filled handle (according to retailer).", "Unknown", "Size 20 (59 ml)", "2 years legal guarantee (EU). Extra warranty from Zeroll not confirmed.", "Hand wash only, not in the dishwasher (according to retailer).", "USA · country of manufacture unknown", "Retro and heavy in the hand."]},
+    {desc:"All stainless steel, no spring or rubber, so nothing wears out. 80 g and dishwasher safe. Lifetime warranty from Cristel.",bundle:"Microfibre cloth",tags:["French", "Stainless steel", "No mechanism"],specVals:["Stainless steel bowl, brushed stainless steel handle. No mechanism.", "80 g", "Ø 5 cm, 20 cm long", "Lifetime (manufacturer) on manufacturing defects.", "Dishwasher safe.", "France · not made in France (country not stated)", "Sleek and French."]}
   ]},
-  kookpan:{name:'Stockpot',sub:'Soup, stew and pasta',tagline:'Warm cast iron or sleek steel',Ll:'Fresnaye, cast iron',Rl:'Antwerp, stainless steel',items:[
-    {desc:'Enamelled cast iron, 4.2 litres. Heavy and warm in colour. Cast iron doesn’t wear out.',bundle:'Soft dish brush',tags:['French','Cast iron','Since 1925'],specVals:['Enamelled cast iron, 24 cm, 4.2 litres.','Lifetime according to a retailer. Not yet checked with Le Creuset itself.','Don’t heat the enamel empty. No metal scourers.','Colourful and French.']},
-    {desc:'5-ply stainless steel, 5.2 litres, with lid. Stainless steel can take a beating, scouring included.',bundle:'Stainless steel cleaner',tags:['Belgian','5-ply stainless steel','Since 1908'],specVals:['5-ply stainless steel, 24 cm, 5.2 litres, with lid.','30 years on manufacturing defects for household use (Demeyere).','Anything goes. Remove discolouration with vinegar or steel cleaner.','Sleek and silver.']}
+  kookpan:{name:"Stockpot",sub:"Soup, stew and pasta",tagline:"Warm cast iron or sleek steel",Ll:"Fresnaye, cast iron",Rl:"Antwerp, stainless steel",items:[
+    {desc:"Enamelled cast iron, 4.2 l, 4.3 kg. Heavy and warm in colour. Le Creuset gives a lifetime warranty on the cast iron.",bundle:"Soft dish brush",tags:["French", "Cast iron", "Since 1925"],specVals:["Enamelled cast iron.", "4.3 kg (according to retailer)", "Ø 24 cm, 4.2 l", "Lifetime (manufacturer) on the cast iron. Excludes misuse and normal wear.", "Don’t heat the enamel empty. No metal scourers.", "France · country of manufacture unknown", "Colourful and French."]},
+    {desc:"5-ply 18/10 stainless steel with lid. Holds 5.2 l, made in Belgium. Stainless steel can take a beating and goes in the dishwasher.",bundle:"Stainless steel cleaner",tags:["Belgian", "5-ply stainless steel", "Since 1908"],specVals:["5-ply 18/10 stainless steel, Silvinox finish, with lid.", "2.55 kg", "Ø 24 cm, 5.2 l", "30 years (manufacturer) on manufacturing defects for household use.", "Dishwasher safe. Remove discolouration with vinegar or steel cleaner.", "Belgium · made in Belgium", "Sleek and silver."]}
   ]},
-  waterpomptang:{name:'Water Pump Pliers',sub:'For every pipe and nut in the house',tagline:'Grey and self-locking or chrome-plated',Ll:'Wuppertal, self-locking',Rl:'Remscheid, chrome-plated',items:[
-    {desc:'Grey atramentised steel, 250 mm, red handles. Locks onto pipe and nut by itself, without slipping. First of 12 in the Project Farm water pump pliers test (Oct 2021). Made in Germany.',bundle:'Microfibre cloth',tags:['German','Self-locking','Since 1882'],specVals:['Grey atramentised steel, handles with a non-slip plastic coating. 250 mm.','Knipex’s manufacturer warranty not confirmed.','A drop of oil on the joint now and then. Store dry.','A tool. Grey with red handles.']},
-    {desc:'Chrome-plated steel, 250 mm, two-component handles. A classic workshop plier. Second of 12 in the same Project Farm test (Oct 2021).',bundle:'Microfibre cloth',tags:['German','Chrome-plated','Since 1919'],specVals:['Chrome-plated steel, two-component handles. 250 mm.','Gedore’s manufacturer warranty not confirmed.','A drop of oil on the joint now and then. Wipe dry.','Shiny chrome with blue handles.']}
+  waterpomptang:{name:"Water Pump Pliers",sub:"For every pipe and nut in the house",tagline:"Grey and self-locking or chrome-plated",Ll:"Wuppertal, self-locking",Rl:"Remscheid, chrome-plated",items:[
+    {desc:"Grey atramentised chrome vanadium steel, 250 mm, red handles. Locks onto pipe and nut by itself. No. 1 of 12 in the Project Farm test (Oct 2021).",bundle:"Microfibre cloth",tags:["German", "Chrome vanadium steel", "Since 1882"],specVals:["Chrome vanadium steel, grey atramentised (according to retailer). Handles with a non-slip plastic coating.", "Unknown", "250 mm", "2 years legal guarantee (EU). Extra warranty from Knipex not confirmed. Lifetime applies in the US and Canada only.", "A drop of oil on the joint now and then. Store dry.", "Germany (Wuppertal) · country of manufacture unknown", "A tool. Grey with red handles."]},
+    {desc:"Chrome-plated chrome vanadium steel, 250 mm, 370 g, two-component handles. A classic workshop plier. No. 2 of 12 in the same Project Farm test (Oct 2021).",bundle:"Microfibre cloth",tags:["German", "Chrome-plated", "Since 1919"],specVals:["Chrome vanadium steel, chrome-plated, two-component handles.", "370 g", "250 mm", "2 years legal guarantee (EU). Extra warranty from Gedore not confirmed.", "A drop of oil on the joint now and then. Wipe dry.", "Germany · country of manufacture unknown", "Shiny chrome with blue handles."]}
   ]}
 };
 var catTransNo = {
-  koksmes:{name:'Kokkekniv',sub:'Én kniv til nesten alt',tagline:'Tysk smidd eller japansk i ett stykke',Ll:'Solingen, smidd',Rl:'Niigata, ett stykke stål',items:[
-    {desc:'Smidd rustfritt stål, full tange, svart skaft med tre nagler. Tung, solid og med sliping brukbar i flere tiår.',bundle:'Slipestein',tags:['Tysk','Smidd','Siden 1814'],specVals:['Smidd rustfritt stål med full tange. Skaft i kunststoff med tre nagler.','2 år fra Wüsthof i EU. Wüsthofs livstidsgaranti gjelder bare i USA og Canada.','Vask og tørk for hånd. Bryn jevnlig, slip av og til.','Klassisk og tung.']},
-    {desc:'Blad og skaft i ett stykke Cromova 18-stål. Ingen skjøt der skitt eller fukt kan komme inn. Serien har eksistert siden 1985.',bundle:'Slipestein',tags:['Japansk','Ett stykke stål','Siden 1985'],specVals:['Cromova 18-stål. Skaft og blad i ett stykke, skaftet med prikkmønster for grep.','2 år. Globals lengre garanti gjelder bare i Storbritannia.','Vask og tørk for hånd. Slip på slipestein.','Stram, lett og helt i stål.']}
+  kaasschaaf:{name:"Ostehøvel",sub:"Kjøp én gang, høvle for alltid",tagline:"Nederlandsk varme eller skandinavisk enkelhet",Ll:"Gouda-følelse",Rl:"Skandinavisk enkelt",items:[
+    {desc:"Helt i rustfritt stål med hult håndtak, 57 g. Lett og stram, og tåler oppvaskmaskin. Boska gir 10 års garanti hvis du registrerer den.",bundle:"Slipestein + mikrofiberklut",tags:["Nederlandsk", "Rustfritt stål", "Tåler oppvaskmaskin"],specVals:["Rustfritt stål, hult håndtak. Helt i metall, uten tre.", "57 g", "21 × 7,3 cm", "10 år (produsent), bare etter registrering hos Boska.", "Tåler oppvaskmaskin.", "Nederland · produksjonsland ukjent", "Stram og blank."]},
+    {desc:"Rustfritt stål, norsk design. Thor Bjørklund søkte patent på ostehøvelen i 1925. Et enkelt verktøy uten løse deler.",bundle:"Slipestein",tags:["Norsk", "Rustfritt stål", "Siden 1925"],specVals:["Rustfritt stål (ifølge forhandler).", "Ukjent", "Ukjent", "2 år lovfestet garanti (EU). Ekstra garanti fra Bjørklund ikke bekreftet.", "Ukjent", "Norge · produksjonsland ukjent", "Minimalistisk skandinavisk."]}
   ]},
-  knoflookpers:{name:'Hvitløkspresse',sub:'Der billige presser knekker',tagline:'Tysk rustfritt stål eller sveitsisk aluminium',Ll:'Marktoberdorf, rustfritt stål',Rl:'Sveits, aluminium',items:[
-    {desc:'Helt i rustfritt stål 18/10, med utfellbar sil og skrape. Presser uskrelte fedd.',bundle:'Rengjøringsbørste',tags:['Tysk','Rustfritt stål 18/10','Siden 1888'],specVals:['Rustfritt stål 18/10. Utfellbar sil og skrape.','Rösles vilkår for EU er ikke bekreftet. Livstidsgarantien står bare i de amerikanske vilkårene.','Fell ut silen, skyll, ferdig.','Lang, tung og industriell. Med opphengsring.']},
-    {desc:'Støpt aluminium med PFAS-fritt slippbelegg. Etterfølgeren til Susi 3, et design som har vart i tiår.',bundle:'Rengjøringsbørste',tags:['Sveitsisk','Aluminium','Siden 1951'],specVals:['Støpt aluminium med rustfritt stål, PFAS-fritt slippbelegg.','5 år fra Zyliss (EU-butikk).','Skyll rett etter bruk.','Rund og kompakt. Lett i hånden.']}
+  multitool:{name:"Multiverktøy",sub:"21 verktøy i lomma",tagline:"Amerikansk robusthet eller sveitsisk presisjon",Ll:"Portland, robust",Rl:"Ibach, presis",items:[
+    {desc:"Leathermans tyngste modell, med 21 verktøy og utskiftbare avbitere. 25 års garanti fra Leatherman. For hender som jobber.",bundle:"Leddolje + slipesett + pussklut",tags:["Amerikansk", "Rustfritt stål", "Utskiftbare avbitere"],specVals:["420HC rustfritt stål (ifølge forhandler).", "335 g (ifølge forhandler)", "11,4 cm sammenslått (ifølge forhandler)", "25 år (produsent) på material- og produksjonsfeil. Første eier, kjøpt hos autorisert forhandler.", "Ukjent", "USA · laget i USA (Portland), med amerikanske og utenlandske deler", "21 verktøy, inkludert utskiftbare avbitere.", "Robust og tung."]},
+    {desc:"Sveitsisk stål, 24 funksjoner, 209 g. Lettere enn Surge og enklere å ha med hver dag. Livstidsgaranti fra Victorinox.",bundle:"Leddolje + slipesett + pussklut",tags:["Sveitsisk", "Rustfritt stål", "24 funksjoner"],specVals:["Rustfritt stål.", "209 g", "10,5 × 3,5 × 1,8 cm", "Livstid (produsent) på material- og produksjonsfeil. Ta vare på kvitteringen.", "Ukjent", "Sveits · laget i Sveits", "24 funksjoner.", "Stram og presis."]}
   ]},
-  rasp:{name:'Rivjern',sub:'Sitron, ost, ingefær, muskat',tagline:'Originalen eller den kanadiske utfordreren',Ll:'Arkansas, originalen',Rl:'Canada, Surface Glide',items:[
-    {desc:'Etset blad i rustfritt stål med håndtak i plast. Rivjernet alle tester viser til. Ærlig talt: bladet blir sløvere med årene.',bundle:'Rengjøringsbørste',tags:['Amerikansk','Etset rustfritt stål','Siden 1994'],specVals:['Etset blad i rustfritt stål, håndtak i plast.','3 år fra Microplane mot produksjonsfeil.','Skyll i bladets retning, aldri med svamp mot bladet.','Et verktøy. Svart, uten dikkedarer.']},
-    {desc:'Etset blad i rustfritt stål med Surface Glide-riller. Samme lange form og samme prisklasse som Microplane, fra et annet merke.',bundle:'Rengjøringsbørste',tags:['Kanadisk','Etset rustfritt stål','Surface Glide'],specVals:['Etset blad i rustfritt stål med Surface Glide-riller, håndtak i plast.','Begrenset livstid ifølge Cuisipros amerikanske side. Ikke bekreftet for EU.','Skyll i bladets retning, aldri med svamp mot bladet.','Et verktøy, med en grønn hette på tuppen.']}
+  koptelefoon:{name:"Hodetelefoner",sub:"Studiokvalitet, hjemme",tagline:"Steng alt ute eller slipp alt inn",Ll:"Lukket, isolerende",Rl:"Åpen, romslig",items:[
+    {desc:"Lukkede studiohodetelefoner på 80 ohm, håndlaget i Tyskland. Øreputer, hodebøyle, kabel og drivere kan byttes.",bundle:"Ekstra sett velurøreputer",tags:["Tysk", "Fjærstål og velur", "Utskiftbare deler"],specVals:["Hodebøyle i fjærstål, utskiftbare velurøreputer.", "270 g uten kabel, 375 g med kabel", "Ukjent", "2 år (produsent) på feil. Øreputer er slitedeler og dekkes ikke.", "Øreputer, hodebøyle, kabel og drivere fås som reservedeler.", "Tyskland · laget i Tyskland", "Lukket. Holder omgivelseslyd ute.", "80 ohm. Fungerer på laptop og telefon uten forsterker.", "Studio, svart, uten dikkedarer."]},
+    {desc:"Åpne hodetelefoner på 120 ohm, 280 g. Slipper inn lyd fra omgivelsene og låter derfor romslig. Kabel og øreputer kan byttes.",bundle:"Ekstra sett øreputer",tags:["Tysk", "Åpen", "Utskiftbar kabel"],specVals:["Ukjent", "280 g", "Kabel 1,8 m", "2 år (produsent), internasjonalt.", "Kabel og øreputer fås som reservedeler.", "Tyskland · laget i Irland", "Åpen. Slipper inn omgivelseslyd.", "120 ohm. Låter best med hodetelefonforsterker.", "Lett og romslig."]}
   ]},
-  keukenschaar:{name:'Kjøkkensaks',sub:'Fra kylling til urter',tagline:'Kan tas fra hverandre eller ett stykke stål',Ll:'Seki, tas fra hverandre',Rl:'Niigata, helt i stål',items:[
-    {desc:"Blad i rustfritt stål med håndtak i nylon. Kan tas fra hverandre, så du får rengjort og slipt den. Testvinner hos America's Test Kitchen (2025).",bundle:'Mikrofiberklut',tags:['Japansk','Tas fra hverandre','Rustfritt stål'],specVals:['Blad i rustfritt stål, håndtak i nylon.','Livstid ifølge forhandlere og Kai USA. Ikke bekreftet for EU.','Ta fra hverandre, vask, sett sammen tørr. Bladene kan slipes hver for seg.','Praktisk og svart.']},
-    {desc:'Helt i Cromova 18-stål, også håndtakene. Ingen plast som kan sprekke eller løsne.',bundle:'Mikrofiberklut',tags:['Japansk','Helt i stål','21 cm'],specVals:['Cromova 18-stål, håndtak og blad.','25 år ifølge én forhandler. Ikke bekreftet av Global selv.','Vask for hånd og tørk godt, også rundt leddet.','Stram og sølvfarget, passer til Global-knivene.']}
+  pen:{name:"Penn",sub:"Skriving som håndverk",tagline:"Teknisk presisjon eller Bauhaus-klassiker",Ll:"Hamburg, teknisk",Rl:"Heidelberg, Bauhaus",items:[
+    {desc:"Stiftblyant på 0,5 mm med kropp i messing, 22 g. Laget for teknisk tegning, fin til hverdags.",bundle:"3 rør med stifter + viskelær",tags:["Tysk", "Messing", "0,5 mm"],specVals:["Kropp i messing (ifølge forhandler).", "22 g (ifølge forhandler)", "Stift 0,5 mm", "2 år lovfestet garanti (EU). Ekstra garanti fra Rotring ikke bekreftet. Rotring gir 2 år ifølge forhandler.", "Ukjent", "Tyskland · laget i Japan (ifølge forhandler)", "Stiftblyant, 0,5 mm.", "Trykknapp.", "Teknisk og presis."]},
+    {desc:"Fyllepenn i Makrolon og børstet rustfritt stål med stempelfylling. Designet i 1966 av Gerd A. Müller og nesten ikke endret siden.",bundle:"Lamy T52 blekkflaske + pussklut",tags:["Tysk", "Makrolon og stål", "Siden 1966"],specVals:["Makrolon (glassfiberforsterket) og børstet rustfritt stål; spiss i 14 karat gull (ifølge forhandler).", "25 g (ifølge forhandler)", "14 cm (ifølge forhandler)", "2 år (produsent) på material- og produksjonsfeil.", "Ukjent", "Tyskland · laget i Tyskland (ifølge forhandler)", "Fyllepenn.", "Stempelfylling: fylles fra blekkflaske.", "Bauhaus, tidløs."]}
   ]},
-  dunschiller:{name:'Skrellekniv',sub:'Verktøyet alle har',tagline:'Lett sveitsisk aluminium eller tungt tysk stål',Ll:'Sveits, 1947',Rl:'Marktoberdorf, rustfritt stål',items:[
-    {desc:'Håndtak i aluminium, blad i rustfritt stål, 14 gram. Designet i 1947, livstidsgaranti fra Victorinox.',bundle:'Mikrofiberklut',tags:['Sveitsisk','Aluminium','Siden 1947'],specVals:['Håndtak i aluminium, blad i rustfritt stål. 14 gram.','Livstid, ifølge Victorinox på produktsiden.','Skyll og la tørke.','Et sveitsisk ikon som nesten ikke veier noe.']},
-    {desc:'Tung skrellekniv i rustfritt stål 18/10 med svingblad. Bladet kan byttes, så sløv betyr ikke søppel.',bundle:'Reserveblad (95979)',tags:['Tysk','Rustfritt stål 18/10','Utskiftbart blad'],specVals:['Rustfritt stål 18/10, utskiftbart blad (reserve 95979). Høyrehendt modell.','Rösles vilkår for EU er ikke bekreftet. Livstidsgarantien står bare i de amerikanske vilkårene.','Skyll. Blir bladet sløvt, bytter du bare bladet.','Lang og tung, med opphengsring.']}
+  sokken:{name:"Sokker",sub:"Grunnlaget under alt",tagline:"Tysk eleganse eller amerikansk robusthet",Ll:"Schmallenberg, elegant",Rl:"Vermont, robust",items:[
+    {desc:"Ullsokk med bomull, 60% ny ull. Tynn nok til pene sko. Falke har laget sokker siden 1895.",bundle:"Ullvaskemiddel",tags:["Tysk", "Ny ull og bomull", "Siden 1895"],specVals:["60% ny ull, 23% bomull, 15% polyamid, 2% elastan (ifølge forhandler).", "Ukjent", "Ukjent", "2 år lovfestet garanti (EU). Ekstra garanti fra Falke ikke bekreftet.", "Ullprogram på 30 °C, ikke i tørketrommel (ifølge forhandler).", "Tyskland (Schmallenberg) · produksjonsland ukjent", "Pen og diskret."]},
+    {desc:"Merinosokk fra Vermont, forsterket med nylon. Slitt hull? Da får du et nytt par, uten kvittering. Tykkere enn Falke.",bundle:"Ullvaskemiddel",tags:["Amerikansk", "Merinoull", "Laget i Vermont"],specVals:["61% merinoull, 36% nylon, 3% lycra (ifølge forhandler).", "Ukjent", "Ukjent", "Livstid og ubetinget (produsent). Slitt hull? Nytt par, ingen kvittering nødvendig.", "Ukjent", "USA · laget i USA (Vermont)", "Friluft og solid."]}
   ]},
-  'peper-zout':{name:'Salt og pepper',sub:'På bordet hver dag',tagline:'Varmt tre eller stramt stål',Ll:'Frankrike, bøk',Rl:'London, stål og akryl',items:[
-    {desc:"Pepper- og saltkvern i bøk, hver med eget kvernverk. Med u'Select-ringen stiller du inn malingen. Peugeot har laget kverner siden 1840. Prisen gjelder settet (2 × €46,90).",bundle:'Mikrofiberklut',tags:['Fransk','Bøk','Sett med 2'],specVals:['Bøk. Kvernverk i stål for pepper, eget kvernverk for salt.','Livstid på kvernverket, 5 år på kroppen (Peugeot). Skrur du den opp, faller garantien bort.','Hold den tørr, ikke under springen. Tørk av med en tørr klut.','Varm og klassisk.']},
-    {desc:'Pepper- og saltkvern i rustfritt stål og akryl, hver med eget kvernverk. Malingen stilles i trinn. Prisen gjelder settet (2 × €49,95).',bundle:'Mikrofiberklut',tags:['Engelsk','Stål og akryl','Sett med 2'],specVals:['Rustfritt stål og akryl. Egne kvernverk for pepper og salt.','Livstid på kvernverket, 2 år på resten (Cole & Mason).','Tørk av med en fuktig klut. Gjennom akrylen ser du når den snart er tom.','Stram og moderne.']}
+  scheerapparaat:{name:"Barbermaskin",sub:"Én god barbering",tagline:"Nederlandsk innovasjon eller tysk presisjon",Ll:"Eindhoven, roterende",Rl:"Kronberg, folie",items:[
+    {desc:"Barbermaskin med tre roterende hoder som følger kjevelinjen. Kan brukes vått og tørt. Barberhodene kan byttes.",bundle:"Nye barberhoder",tags:["Nederlandsk", "Roterende hoder", "Utskiftbare hoder"],specVals:["Ukjent", "350 g (ifølge forhandler)", "15 × 7 × 4 cm (ifølge forhandler)", "2 år (produsent).", "Ukjent", "Nederland · laget i Nederland", "Tre roterende hoder.", "60 minutter barbering per lading.", "Blank og moderne."]},
+    {desc:"Barbermaskin med folie, 207 g, laget i Tyskland. Helt vanntett, så du skyller den under springen.",bundle:"Nytt barberhode",tags:["Tysk", "Folie", "Vanntett"],specVals:["Ukjent", "207 g uten stasjon", "16,8 × 6,6 × 4,4 cm", "2 år lovfestet garanti (EU). Ekstra garanti fra Braun ikke bekreftet. Braun ga forlengelse ved registrering som kampanje (utløpt).", "100% vanntett, kan skylles under springen. Noen sett har Clean & Charge-stasjon.", "Tyskland · laget i Tyskland", "Folie.", "60 minutter barbering per lading.", "Stram og saklig."]}
   ]},
-  ijsschep:{name:'Iskremskje',sub:'Også gjennom steinhard is',tagline:'Amerikansk retro-aluminium eller fransk stål',Ll:'Toledo, 1935',Rl:'Fesches-le-Châtel, stål',items:[
-    {desc:'Massivt aluminium i ett stykke, med varmeledende væske i skaftet. Ingen bevegelige deler. Omtrent samme design siden 1935.',bundle:'Mikrofiberklut',tags:['Amerikansk','Aluminium','Siden 1935'],specVals:['Massivt aluminium i ett stykke, væske i skaftet. Størrelse 20 (2 oz).','Zeroll oppgir ingen garanti.','Vask for hånd. Ikke i oppvaskmaskinen.','Retro og tung i hånden.']},
-    {desc:'Helt i rustfritt stål, uten fjær eller gummi, så ingenting slites. Laget på Cristels egen fabrikk i Frankrike.',bundle:'Mikrofiberklut',tags:['Fransk','Rustfritt stål','Egen fabrikk'],specVals:['Skje i rustfritt stål og børstet skaft i rustfritt stål. Ingen mekanikk.','Livstid mot produksjonsfeil, ifølge Cristel på produktsiden.','Vask og tørk.','Stram og fransk.']}
+  stanleymes:{name:"Tapetkniv",sub:"Kniven som åpner alt",tagline:"Amerikansk metall eller japansk original",Ll:"Connecticut, metall",Rl:"Osaka, avbrekkblad",items:[
+    {desc:"Avbrekkniv på 18 mm med kropp i støpt metall, 180 g. Tåler løsemidler. Knekk av et sløvt segment, så skjærer du skarpt igjen.",bundle:"10 avbrekkblad 18 mm",tags:["Amerikansk", "Metall", "Avbrekkblad 18 mm"],specVals:["Støpt metall, tåler løsemidler.", "180 g (ifølge forhandler)", "16,5 × 2,2 × 2,5 cm; blad 18 mm", "2 år lovfestet garanti (EU). Ekstra garanti fra Stanley ikke bekreftet.", "Ukjent", "USA · produksjonsland ukjent", "Avbrekkblad, 18 mm.", "Et verktøy. Tungt og i metall."]},
+    {desc:"Avbrekkniv på 18 mm fra OLFA, merket til Yoshio Okada. Håndtak i aluminium med gummigrep, laget i Japan.",bundle:"10 reserveblad (OLFA LB-10)",tags:["Japansk", "Aluminium", "Avbrekkblad 18 mm"],specVals:["Håndtak i støpt aluminium, gummigrep, bladføring i rustfritt stål (ifølge forhandler).", "136 g (ifølge forhandler)", "Blad 10 × 1,8 cm, 0,5 mm tykk (ifølge forhandler)", "2 år lovfestet garanti (EU). Ekstra garanti fra OLFA ikke bekreftet. Livstid gjelder bare i USA.", "Ukjent", "Japan · laget i Japan (ifølge forhandler)", "Avbrekkblad, 18 mm.", "Lett og praktisk."]}
   ]},
-  kookpan:{name:'Gryte',sub:'Suppe, gryterett og pasta',tagline:'Varmt støpejern eller stramt stål',Ll:'Fresnaye, støpejern',Rl:'Antwerpen, rustfritt stål',items:[
-    {desc:'Emaljert støpejern, 4,2 liter. Tung og varm i fargen. Støpejern slites ikke.',bundle:'Myk oppvaskbørste',tags:['Fransk','Støpejern','Siden 1925'],specVals:['Emaljert støpejern, 24 cm, 4,2 liter.','Livstid ifølge en forhandler. Ikke sjekket hos Le Creuset selv.','Ikke varm opp emaljen tom. Ingen skuresvamp i metall.','Fargerik og fransk.']},
-    {desc:'5-lags rustfritt stål, 5,2 liter, med lokk. Rustfritt stål tåler en støyt, også skuring.',bundle:'Rengjøringsmiddel for rustfritt stål',tags:['Belgisk','5-lags rustfritt stål','Siden 1908'],specVals:['5-lags rustfritt stål, 24 cm, 5,2 liter, med lokk.','30 år på produksjonsfeil ved bruk i husholdningen (Demeyere).','Alt er lov. Misfarging fjerner du med eddik eller stålrens.','Stram og sølvfarget.']}
+  camera:{name:"Kameratilbehør",sub:"Aldri mer fomling",tagline:"Rem eller klips",Ll:"Skulderrem",Rl:"Klips",items:[
+    {desc:"Kamerarem i nylonbånd med justering i aluminium, kan gjøres kortere eller lengre med én hånd. Livstidsgaranti fra Peak Design etter registrering.",bundle:"Mikrofiberklut",tags:["Amerikansk", "Nylon og aluminium", "Hurtigkobling"],specVals:["Nylonbånd som et bilbelte, anodisert aluminium og glassforsterket nylon (ifølge forhandler).", "104 g (ifølge forhandler)", "Lengde 99–145 cm, bredde 3,2 cm (ifølge forhandler)", "Livstid (produsent) på feil og brudd. Registrering hos Peak Design kreves for å reklamere.", "Ukjent", "USA · produksjonsland ukjent", "Skulderrem, kan også brukes som sling.", "Anchor-hurtigkoblinger.", "Nøktern og teknisk."]},
+    {desc:"Klips i aluminium for kameraet på sekkestroppen eller beltet. Hendene fri, kameraet innen rekkevidde. Platen passer Arca-Swiss-stativer.",bundle:"Mikrofiberklut",tags:["Amerikansk", "Aluminium", "Arca-Swiss"],specVals:["Kropp, bakplate og knapp i aluminium, låsepinne i rustfritt stål, anodisert.", "85 g (ifølge forhandler)", "Passer stropper opptil 6,4 cm bred og 2,2 cm tykk", "Livstid (produsent) på feil og brudd. Registrering hos Peak Design kreves for å reklamere.", "Ukjent", "USA · produksjonsland ukjent", "Klips for sekkestropp eller belte.", "Arca-Swiss-plate.", "Industriell."]}
   ]},
-  waterpomptang:{name:'Vannpumpetang',sub:'For hvert rør og hver mutter i huset',tagline:'Grå og selvlåsende eller forkrommet',Ll:'Wuppertal, selvlåsende',Rl:'Remscheid, forkrommet',items:[
-    {desc:'Grå atramentert stål, 250 mm, røde håndtak. Låser seg selv fast på rør og mutter, uten å skli. Nummer 1 av 12 i Project Farms test av vannpumpetenger (okt. 2021). Laget i Tyskland.',bundle:'Mikrofiberklut',tags:['Tysk','Selvlåsende','Siden 1882'],specVals:['Grå atramentert stål, håndtak med sklisikkert plastbelegg. 250 mm.','Knipex’ produsentgaranti er ikke bekreftet.','En dråpe olje på leddet av og til. Oppbevares tørt.','Et verktøy. Grå med røde håndtak.']},
-    {desc:'Forkrommet stål, 250 mm, tokomponent-håndtak. En klassisk verkstedtang. Nummer 2 av 12 i samme test fra Project Farm (okt. 2021).',bundle:'Mikrofiberklut',tags:['Tysk','Forkrommet','Siden 1919'],specVals:['Forkrommet stål, tokomponent-håndtak. 250 mm.','Gedores produsentgaranti er ikke bekreftet.','En dråpe olje på leddet av og til. Tørk av.','Blank krom med blå håndtak.']}
+  'rugzak-stad':{name:"Bysekk",sub:"Hver dag, i all slags vær",tagline:"Amerikansk pendler eller svensk klassiker",Ll:"Pendler, 28 l",Rl:"Klassiker, 16 l",items:[
+    {desc:"Sekk på 28 l med laptoplomme og et solid ryggpanel. Laget for daglig pendling. I EU 2 års garanti fra The North Face.",bundle:"Impregneringsspray + glidelåsfett",tags:["Amerikansk", "Polyester", "Laptoplomme"],specVals:["Ukjent (forhandlere er uenige).", "1,05 kg (ifølge forhandler)", "28 l; 49,5 × 30,5 × 16,5 cm (ifølge forhandler)", "2 år (produsent) på material- og produksjonsfeil i EU.", "Ukjent", "USA · produksjonsland ukjent", "Sporty og praktisk."]},
+    {desc:"Svensk sekk på 16 l med rektangulær form fra 1978. Kompakt, lett og til hverdagsbruk. I EU 2 års garanti.",bundle:"Glidelåsfett + mikrofiberklut",tags:["Svensk", "Vinylon F", "Siden 1978"],specVals:["Vinylon F, stropper i polypropylen (ifølge forhandler, for vanlig Kånken).", "300 g (ifølge forhandler)", "16 l; 38 × 27 × 13 cm (ifølge forhandler)", "2 år (produsent) i EU. Livstid gjelder bare i Nord-Amerika.", "Ukjent", "Sverige · laget i Vietnam (ifølge forhandler)", "Tidløs og svensk."]}
+  ]},
+  'rugzak-outdoor':{name:"Tursekk",sub:"Fjell eller skog",tagline:"Amerikansk garanti eller tysk håndverk",Ll:"Santa Cruz, 36 l",Rl:"Augsburg, 27 l",items:[
+    {desc:"Tursekk på 36 l med ventilert ryggpanel. Osprey reparerer skader, uansett årsak, i 30 år.",bundle:"Impregnering + glidelåsfett",tags:["Amerikansk", "Resirkulert nylon", "All Mighty Guarantee"],specVals:["210D resirkulert nylon (ifølge forhandler).", "1,55 kg", "36 l; 70 × 34 × 28 cm", "30 år (produsent), All Mighty Guarantee: all skade, uansett årsak, repareres. Ta vare på kvitteringen.", "Ukjent", "USA · produksjonsland ukjent", "AirSpeed: stramt nett holder sekken unna ryggen.", "Teknisk og sporty."]},
+    {desc:"Dagstursekk på 27 l fra Augsburg, 1,33 kg, med Aircomfort-ryggsystem. 2 års garanti, deretter betalt reparasjon hos Deuter.",bundle:"Impregnering + glidelåsfett",tags:["Tysk", "Polyamid og polyester", "Aircomfort"],specVals:["210D resirkulert polyamid og 600D polyester, bluesign.", "1,33 kg", "27 l; 55 × 28 × 20 cm", "2 år (produsent) på feil. Deretter Deuters betalte reparasjonsservice, livet ut.", "Ukjent", "Tyskland · produksjonsland ukjent", "Aircomfort: nett på en ramme, med plass til luft.", "Solid og sporty."]}
+  ]},
+  haarborstel:{name:"Hårbørste",sub:"Én børste, for alltid",tagline:"Britisk håndverk",Ll:"London, pute",Rl:"Hertfordshire, bøk",items:[
+    {desc:"Børste med dusker av villsvinhår og nylon i en gummipute. Designet til Mason Pearson har eksistert siden 1885.",bundle:"Rensebørste + pussklut",tags:["Britisk", "Villsvinhår og nylon", "Gummipute"],specVals:["Villsvinhår og nylon i en gummipute (ifølge forhandler).", "Ukjent", "21,6 × 6,4 cm (ifølge forhandler)", "2 år lovfestet garanti (EU). Ekstra garanti fra Mason Pearson ikke bekreftet.", "Med den medfølgende rensebørsten (ifølge forhandler).", "Storbritannia · produksjonsland ukjent", "Klassisk og diskret."]},
+    {desc:"Børste i bøk med rent svart naturhår, laget i England. Kent har laget børster siden 1777.",bundle:"Rensebørste",tags:["Britisk", "Bøk", "Siden 1777"],specVals:["Bøk, rent svart naturhår.", "Ukjent", "18,3 cm (ifølge forhandler)", "2 år lovfestet garanti (EU). Kent gir i tillegg 1 års egen garanti (produsent).", "Ukjent", "Storbritannia · laget i England (ifølge forhandler)", "Varmt tre, klassisk."]}
+  ]},
+  fohn:{name:"Hårføner",sub:"Profesjonell, hver dag",tagline:"Fransk salong eller britisk teknologi",Ll:"Paris, salong",Rl:"Leeds, teknologi",items:[
+    {desc:"Profesjonell hårføner fra BaBylissPRO med nanotitan. En amerikansk modell fra Conair. Vekt, effekt og EU-garanti har vi ikke kunnet bekrefte.",bundle:"Mikrofiberklut",tags:["Fransk", "Nanotitan", "Salongmodell"],specVals:["Ukjent", "Ukjent", "Ukjent", "2 år lovfestet garanti (EU). Ekstra garanti fra BaBylissPRO ikke bekreftet. I USA gir Conair 4 år.", "Ukjent", "Frankrike (merke eid av Conair, USA) · produksjonsland ukjent", "Salong, svart."]},
+    {desc:"Hårføner fra ghd med børsteløs motor. 780 g ifølge en forhandler. 2 års garanti fra ghd for forbrukerversjonen.",bundle:"Mikrofiberklut",tags:["Britisk", "Børsteløs motor", "Aeroprecis"],specVals:["Ukjent", "780 g (ifølge forhandler)", "Ukjent", "2 år (produsent), forbrukerversjon. Ta vare på kvitteringen.", "Ukjent", "Storbritannia · produksjonsland ukjent", "Moderne og stram."]}
+  ]},
+  koksmes:{name:"Kokkekniv",sub:"Én kniv til nesten alt",tagline:"Tysk smidd eller japansk i ett stykke",Ll:"Solingen, smidd",Rl:"Niigata, ett stykke stål",items:[
+    {desc:"Smidd rustfritt stål, full tange, svart skaft med tre nagler. 268 g. Tung, solid og med sliping brukbar i flere tiår.",bundle:"Slipestein",tags:["Tysk", "Smidd", "Siden 1814"],specVals:["Smidd stål, full tange. Skaft i kunststoff med tre nagler.", "268 g", "Blad 20 cm", "2 år (produsent) i EU. Livstid gjelder bare i USA og Canada.", "Vask og tørk for hånd. Bryn jevnlig, slip av og til.", "Tyskland (Solingen) · produksjonsland ukjent", "Klassisk og tung."]},
+    {desc:"Blad og skaft i ett stykke Cromova 18-stål. Ingen skjøt der skitt eller fukt kan komme inn. Serien har eksistert siden 1985.",bundle:"Slipestein",tags:["Japansk", "Ett stykke stål", "Siden 1985"],specVals:["Cromova 18-stål (ifølge forhandler). Skaft og blad i ett stykke.", "172 g (ifølge forhandler)", "Blad 20 cm", "2 år lovfestet garanti (EU). Ekstra garanti fra Global ikke bekreftet. Lengre garantier gjelder bare utenfor EU.", "Vask og tørk for hånd. Slip på slipestein.", "Japan · produksjonsland ukjent", "Stram, lett og helt i stål."]}
+  ]},
+  knoflookpers:{name:"Hvitløkspresse",sub:"Der billige presser knekker",tagline:"Tysk rustfritt stål eller sveitsisk aluminium",Ll:"Marktoberdorf, rustfritt stål",Rl:"Sveits, aluminium",items:[
+    {desc:"Helt i rustfritt stål 18/10, med utfellbar sil og skrape. Presser uskrelte fedd. Tung: 354 g ifølge en forhandler.",bundle:"Rengjøringsbørste",tags:["Tysk", "Rustfritt stål 18/10", "Siden 1888"],specVals:["Rustfritt stål 18/10 (ifølge forhandler). Utfellbar sil og skrape.", "354 g (ifølge forhandler)", "20 cm (ifølge forhandler)", "2 år lovfestet garanti (EU). Ekstra garanti fra Rösle ikke bekreftet. Livstid står bare i de amerikanske vilkårene.", "Fell silen helt opp, skyll under springen eller vask i oppvaskmaskin.", "Tyskland · produksjonsland ukjent", "Lang, tung og industriell. Med opphengsring."]},
+    {desc:"Støpt aluminium med PFAS-fritt slippbelegg. Etterfølgeren til Susi 3, et design som har eksistert i tiår.",bundle:"Rengjøringsbørste",tags:["Sveitsisk", "Aluminium", "Siden 1951"],specVals:["Støpt aluminium med deler i rustfritt stål, PFAS-fritt slippbelegg.", "192 g (ifølge forhandler)", "18,6 × 3,6 × 6,5 cm (ifølge forhandler)", "5 år (produsent) på de fleste Zyliss-produkter, med kjøpsbevis.", "Tåler oppvaskmaskin. Enklest å skylle rett etter bruk.", "Sveits · produksjonsland ukjent", "Rund og kompakt. Lett i hånden."]}
+  ]},
+  rasp:{name:"Rivjern",sub:"Sitron, ost, ingefær, muskat",tagline:"Originalen eller den kanadiske utfordreren",Ll:"Arkansas, originalen",Rl:"Canada, Surface Glide",items:[
+    {desc:"Etset blad i rustfritt stål med mykt håndtak, 32,5 cm langt. Bladet lages i USA. Ærlig talt: bladet blir sløvere med årene.",bundle:"Rengjøringsbørste",tags:["Amerikansk", "Etset rustfritt stål", "Siden 1994"],specVals:["Fotoetset blad i rustfritt stål, mykt håndtak.", "Ukjent", "32,5 cm; riveflate 20,3 × 2,5 cm", "3 år (produsent) på produksjonsfeil.", "Tåler oppvaskmaskin, beskyttelseshetten gjør det ikke. Skyll i bladets retning.", "USA · bladet laget i USA", "Et verktøy. Svart, uten dikkedarer."]},
+    {desc:"Etset blad i rustfritt stål med Surface Glide-riller. Samme lange form og samme prisklasse som Microplane, fra et annet merke.",bundle:"Rengjøringsbørste",tags:["Kanadisk", "Etset rustfritt stål", "Surface Glide"],specVals:["Etset blad i rustfritt stål med Surface Glide-riller (ifølge forhandler), håndtak i plast.", "Ukjent", "29 cm (ifølge forhandler)", "2 år lovfestet garanti (EU). Ekstra garanti fra Cuisipro ikke bekreftet. Livstid gjelder bare i USA.", "Skyll i bladets retning, aldri med svamp mot bladet.", "Canada · produksjonsland ukjent", "Et verktøy, med en grønn hette på tuppen."]}
+  ]},
+  keukenschaar:{name:"Kjøkkensaks",sub:"Fra kylling til urter",tagline:"Kan tas fra hverandre eller ett stykke stål",Ll:"Seki, tas fra hverandre",Rl:"Niigata, helt i stål",items:[
+    {desc:"Blad i rustfritt stål med håndtak i kunststoff. Kan tas fra hverandre, så du får rengjort og slipt den. Testvinner hos America's Test Kitchen (2025).",bundle:"Mikrofiberklut",tags:["Japansk", "Rustfritt stål", "Tas fra hverandre"],specVals:["Blad i 420J2 rustfritt stål, håndtak i kunststoff (ifølge forhandler).", "146 g (ifølge forhandler)", "22,5 cm (ifølge forhandler)", "2 år lovfestet garanti (EU). Ekstra garanti fra Shun ikke bekreftet. Livstid nevnes bare av forhandlere og Kai USA.", "Ta fra hverandre, vask, sett sammen tørr. Bladene kan slipes hver for seg.", "Japan · produksjonsland ukjent", "Praktisk og svart."]},
+    {desc:"Helt i Cromova 18-stål, også håndtakene. Ingen plast som kan sprekke eller løsne. 21 cm, 210 g ifølge en forhandler.",bundle:"Mikrofiberklut",tags:["Japansk", "Helt i stål", "21 cm"],specVals:["Cromova 18-stål (ifølge forhandler), håndtak og blad.", "210 g (ifølge forhandler)", "21 cm (ifølge forhandler)", "2 år lovfestet garanti (EU). Ekstra garanti fra Global ikke bekreftet.", "Vask for hånd og tørk godt, også rundt leddet.", "Japan · produksjonsland ukjent", "Stram og sølvfarget, passer til Global-knivene."]}
+  ]},
+  dunschiller:{name:"Skrellekniv",sub:"Verktøyet alle har",tagline:"Lett sveitsisk aluminium eller tungt tysk stål",Ll:"Sveits, 1947",Rl:"Marktoberdorf, rustfritt stål",items:[
+    {desc:"Håndtak i aluminium, blad i rustfritt stål, 14 g. Designet i 1947, laget i Sveits, med livstidsgaranti fra Victorinox.",bundle:"Mikrofiberklut",tags:["Sveitsisk", "Aluminium", "Siden 1947"],specVals:["Håndtak i aluminium, blad i rustfritt stål.", "14 g", "11 × 6,5 × 1,2 cm", "Livstid (produsent) på material- og produksjonsfeil.", "Ikke i oppvaskmaskin. Skyll og la tørke.", "Sveits · laget i Sveits", "Et sveitsisk ikon som nesten ikke veier noe."]},
+    {desc:"Tung skrellekniv i rustfritt stål 18/10 med svingblad. Bladet kan byttes, så sløv betyr ikke søppel.",bundle:"Reserveblad (95979)",tags:["Tysk", "Rustfritt stål 18/10", "Utskiftbart blad"],specVals:["Rustfritt stål 18/10, utskiftbart blad (ifølge forhandler). Høyrehendt modell.", "110 g (ifølge forhandler)", "19 cm (ifølge forhandler)", "2 år lovfestet garanti (EU). Ekstra garanti fra Rösle ikke bekreftet. Livstid står bare i de amerikanske vilkårene.", "Skyll. Blir bladet sløvt, bytter du bare bladet (95979).", "Tyskland · produksjonsland ukjent", "Lang og tung, med opphengsring."]}
+  ]},
+  'peper-zout':{name:"Salt og pepper",sub:"På bordet hver dag",tagline:"Varmt tre eller stramt stål",Ll:"Frankrike, bøk",Rl:"London, stål og akryl",items:[
+    {desc:"Pepper- og saltkvern i bøk, hver med eget kvernverk. Med u'Select-ringen stiller du inn malingen. Prisen gjelder settet med 2.",bundle:"Mikrofiberklut",tags:["Fransk", "Bøk", "Sett med 2"],specVals:["Bøk (ifølge forhandler). Kvernverk i stål for pepper, eget kvernverk for salt.", "270 g per kvern (ifølge forhandler)", "18 cm høy", "Livstid på kvernverket, 5 år på kverna (produsent). Ta vare på kvitteringen. Skrur du den opp, faller garantien bort.", "Hold den tørr, ikke under springen. Tørk av med en tørr klut.", "Frankrike · produksjonsland ukjent", "Varm og klassisk."]},
+    {desc:"Pepper- og saltkvern i rustfritt stål og akryl, hver med eget kvernverk. Malingen stilles i trinn. Prisen gjelder settet med 2.",bundle:"Mikrofiberklut",tags:["Engelsk", "Stål og akryl", "Sett med 2"],specVals:["Rustfritt stål og akryl (ifølge forhandler). Egne kvernverk for pepper og salt.", "Ukjent", "19 cm høy, Ø 6 cm (ifølge forhandler)", "2 år lovfestet garanti (EU). Ekstra garanti fra Cole & Mason ikke bekreftet. Livstid på kvernverket gjelder Precision-seriene; om Derwent hører til der, er ikke bekreftet.", "Tørk av med en fuktig klut. Gjennom akrylen ser du når den snart er tom.", "Storbritannia · produksjonsland ukjent", "Stram og moderne."]}
+  ]},
+  ijsschep:{name:"Iskremskje",sub:"Også gjennom steinhard is",tagline:"Amerikansk retro-aluminium eller fransk stål",Ll:"Toledo, 1935",Rl:"Fesches-le-Châtel, stål",items:[
+    {desc:"Massivt aluminium i ett stykke, med varmeledende væske i skaftet. Ingen bevegelige deler. Omtrent samme design siden 1935.",bundle:"Mikrofiberklut",tags:["Amerikansk", "Aluminium", "Siden 1935"],specVals:["Aluminiumslegering, skaft med væske (ifølge forhandler).", "Ukjent", "Størrelse 20 (59 ml)", "2 år lovfestet garanti (EU). Ekstra garanti fra Zeroll ikke bekreftet.", "Vask for hånd, ikke i oppvaskmaskin (ifølge forhandler).", "USA · produksjonsland ukjent", "Retro og tung i hånden."]},
+    {desc:"Helt i rustfritt stål, uten fjær eller gummi, så ingenting slites. 80 g og tåler oppvaskmaskin. Livstidsgaranti fra Cristel.",bundle:"Mikrofiberklut",tags:["Fransk", "Rustfritt stål", "Ingen mekanikk"],specVals:["Skje i rustfritt stål, børstet skaft i rustfritt stål. Ingen mekanikk.", "80 g", "Ø 5 cm, 20 cm lang", "Livstid (produsent) på produksjonsfeil.", "Tåler oppvaskmaskin.", "Frankrike · ikke laget i Frankrike (land ikke oppgitt)", "Stram og fransk."]}
+  ]},
+  kookpan:{name:"Gryte",sub:"Suppe, gryterett og pasta",tagline:"Varmt støpejern eller stramt stål",Ll:"Fresnaye, støpejern",Rl:"Antwerpen, rustfritt stål",items:[
+    {desc:"Emaljert støpejern, 4,2 l, 4,3 kg. Tung og varm i fargen. Le Creuset gir livstidsgaranti på støpejernet.",bundle:"Myk oppvaskbørste",tags:["Fransk", "Støpejern", "Siden 1925"],specVals:["Emaljert støpejern.", "4,3 kg (ifølge forhandler)", "Ø 24 cm, 4,2 l", "Livstid (produsent) på støpejernet. Gjelder ikke feil bruk eller normal slitasje.", "Ikke varm opp emaljen tom. Ingen skuresvamp i metall.", "Frankrike · produksjonsland ukjent", "Fargerik og fransk."]},
+    {desc:"5-lags rustfritt stål 18/10 med lokk. Rommer 5,2 l, laget i Belgia. Rustfritt stål tåler en støyt og kan vaskes i oppvaskmaskin.",bundle:"Rengjøringsmiddel for rustfritt stål",tags:["Belgisk", "5-lags rustfritt stål", "Siden 1908"],specVals:["5-lags rustfritt stål 18/10, Silvinox-finish, med lokk.", "2,55 kg", "Ø 24 cm, 5,2 l", "30 år (produsent) på produksjonsfeil ved bruk i husholdningen.", "Tåler oppvaskmaskin. Misfarging fjerner du med eddik eller stålrens.", "Belgia · laget i Belgia", "Stram og sølvfarget."]}
+  ]},
+  waterpomptang:{name:"Vannpumpetang",sub:"For hvert rør og hver mutter i huset",tagline:"Grå og selvlåsende eller forkrommet",Ll:"Wuppertal, selvlåsende",Rl:"Remscheid, forkrommet",items:[
+    {desc:"Grå atramentert krom-vanadium-stål, 250 mm, røde håndtak. Låser seg selv fast på rør og mutter. Nummer 1 av 12 i Project Farms test (okt. 2021).",bundle:"Mikrofiberklut",tags:["Tysk", "Krom-vanadium-stål", "Siden 1882"],specVals:["Krom-vanadium-stål, grå atramentert (ifølge forhandler). Håndtak med sklisikkert plastbelegg.", "Ukjent", "250 mm", "2 år lovfestet garanti (EU). Ekstra garanti fra Knipex ikke bekreftet. Livstid gjelder bare i USA og Canada.", "En dråpe olje på leddet av og til. Oppbevares tørt.", "Tyskland (Wuppertal) · produksjonsland ukjent", "Et verktøy. Grå med røde håndtak."]},
+    {desc:"Forkrommet krom-vanadium-stål, 250 mm, 370 g, tokomponent-håndtak. En klassisk verkstedtang. Nummer 2 av 12 i samme test fra Project Farm (okt. 2021).",bundle:"Mikrofiberklut",tags:["Tysk", "Forkrommet", "Siden 1919"],specVals:["Krom-vanadium-stål, forkrommet, tokomponent-håndtak.", "370 g", "250 mm", "2 år lovfestet garanti (EU). Ekstra garanti fra Gedore ikke bekreftet.", "En dråpe olje på leddet av og til. Tørk av.", "Tyskland · produksjonsland ukjent", "Blank krom med blå håndtak."]}
   ]}
 };
 function tc(c,f){ var tr=(curLang==='no'&&catTransNo[c.id])||catTrans[c.id]; var useTr=(curLang==='en'||curLang==='no'); return useTr&&tr&&tr[f]!==undefined?tr[f]:c[f]; }
@@ -1403,7 +1453,8 @@ var specIcons = {
   'Laptopvak':'ti-device-laptop','Onderhoud':'ti-tools','Rugsysteem':'ti-spine',
   'Haartype':'ti-feather','Kussen':'ti-ripple','Handgemaakt':'ti-hand-finger',
   'Geschikt voor':'ti-user','Vermogen':'ti-bolt','Motorgarantie':'ti-shield-check',
-  'Geluidsdruk':'ti-volume'
+  'Geluidsdruk':'ti-volume',
+  'Afmetingen':'ti-ruler','Herkomst':'ti-world','Karakter':'ti-palette'
 };
 // Gewicht altijd als 2e tonen
 function getSpecOrder(specs){
@@ -1483,7 +1534,7 @@ var stampData = {
   'Peak Design Capture V3':['lifetime'],
   'The North Face Borealis':['maintenance'],
   'Fjällräven Kånken No.2':['maintenance','replaceable'],
-  'Osprey Stratos 36':['lifetime','replaceable'],
+  'Osprey Stratos 36':['replaceable'],
   'Deuter Futura 27':['maintenance'],
   'Mason Pearson BN3':['handmade','maintenance'],
   'Kent OG1 Finest':['handmade','maintenance'],
@@ -1652,338 +1703,338 @@ var cats = [
   { id:'kaasschaaf', name:'Kaasschaaf', sub:'Eens kopen, altijd schaven',
     tagline:'Nederlandse warmte of Scandinavisch strak',
     L:'NL', Ll:'Gouda-gevoel', R:'NO', Rl:'Scandinavisch strak',
-    specs:['Materiaal','Gewicht','Vaatwasmachine','Snijdikte','Stijl'],
+    specs:["Materiaal", "Gewicht", "Afmetingen", "Garantie", "Onderhoud", "Herkomst", "Karakter"],
     items:[
       { brand:'Boska', origin:'Nederland', model:'Boska Copenhagen', founder:'Albert Boska, 1896, Gouda',
-        desc:'Eikenhout handvat, RVS mes. Gemaakt in Gouda sinds 1896. Het type schaaf waarmee je bent opgegroeid. Warm, vertrouwd, en over 20 jaar nog steeds op je aanrecht.',
-        bundle:'Slijpsteen + microvezel doek', price:40, tags:['Nederlands','RVS','Eikenhout'], life:20,
+        desc:"Geheel RVS, hol handvat, 57 g. Licht en strak, en kan gewoon in de vaatwasser. Boska geeft 10 jaar garantie als je hem registreert.",
+        bundle:"Slijpsteen + microvezeldoek", price:40, tags:["Nederlands", "RVS", "Vaatwasserbestendig"], life:20,
         img:'img/boska.png',
-        specVals:['RVS mes met eikenhout handvat. Het hout wordt mooier naarmate je het vaker gebruikt.','180 gram — stevig in de hand, kantelt niet bij harde kaas.','Nee — het eikenhout moet met de hand worden afgespoeld en gedroogd.','Verstelbare schaafdikte. Dun voor oude kaas, dikker voor jong.','Warm en ambachtelijk. De schaaf waarmee je bent opgegroeid.'] },
+        specVals:["RVS, hol handvat. Geheel uit metaal, geen hout.", "57 g", "21 × 7,3 cm", "10 jaar (fabrikant), alleen na registratie bij Boska.", "Vaatwasserbestendig.", "Nederland · productieland onbekend", "Strak en glanzend."] },
       { brand:'Bjørklund', origin:'Noorwegen', model:'Bjørklund Original', founder:'Thor Bjørklund, 1925, Noorwegen',
-        desc:'Vol RVS. Strak Scandinavisch. De originele kaasschaaf — uitgevonden door Thor Bjørklund zelf. Functioneel, onverwoestbaar, tijdloos.',
-        bundle:'Slijpsteen', price:30, tags:['Noors','Vol RVS','Scandinavisch design'], life:30,
+        desc:"Roestvrij staal, Noors ontwerp. Thor Bjørklund vroeg in 1925 patent aan op de kaasschaaf. Eenvoudig gereedschap zonder losse onderdelen.",
+        bundle:"Slijpsteen", price:30, tags:["Noors", "RVS", "Sinds 1925"], life:30,
         img:'img/bjorklund.png',
-        specVals:['Volledig roestvrij staal. Geen apart handvat — uit één stuk gesmeed.','120 gram — licht en wendbaar, perfect voor dagelijks gebruik.','Ja — volledig vaatwasserbestendig, geen extra zorg nodig.','Vaste schaafdikte. Consistent resultaat, elke keer.','Minimalistisch Scandinavisch. Functie boven decoratie.'] }
+        specVals:["RVS (volgens winkel).", "Onbekend", "Onbekend", "2 jaar wettelijke garantie (EU). Extra garantie van Bjørklund niet bevestigd.", "Onbekend", "Noorwegen · productieland onbekend", "Minimalistisch Scandinavisch."] }
     ]},
   { id:'multitool', name:'Multitool', sub:'21 tools in je broekzak',
     tagline:'Amerikaanse degelijkheid of Zwitserse precisie',
     L:'US', Ll:'Portland, robuust', R:'CH', Rl:'Ibach, precies',
-    specs:['Aantal tools','Gewicht','Materiaal','Vergrendeling','Garantie'],
+    specs:["Materiaal", "Gewicht", "Afmetingen", "Garantie", "Onderhoud", "Herkomst", "Aantal tools", "Karakter"],
     items:[
       { brand:'Leatherman', origin:'Amerika', model:'Leatherman Surge', founder:'Tim Leatherman, 1983, Portland',
-        desc:'Het zwaarste model. 21 tools, vervangbare draadknippers, 25 jaar garantie. Voor handen die werken.',
-        bundle:'Scharnierolie + slijpset + poetsdoek', price:145, tags:['Amerikaans','21 tools','RVS'], life:25,
+        desc:"Het zwaarste model van Leatherman, met 21 tools en vervangbare draadknippers. 25 jaar garantie van Leatherman. Voor handen die werken.",
+        bundle:"Scharnierolie + slijpset + poetsdoek", price:145, tags:["Amerikaans", "RVS", "Vervangbare knippers"], life:25,
         img:'img/leatherman.png',
-        specVals:['21 tools inclusief vervangbare draadknippers en zaagblad.','335 gram — het zwaarste model. Je voelt het gewicht, maar ook de mogelijkheden.','420HC roestvrij staal. Hard genoeg om scherp te blijven, zacht genoeg om te slijpen.','Alle tools toegankelijk zonder het mes open te klappen. Eén hand bediening.','25 jaar fabrieksgarantie op materiaal- en productiefouten.'] },
+        specVals:["420HC-roestvrij staal (volgens winkel).", "335 g (volgens winkel)", "11,4 cm dichtgeklapt (volgens winkel)", "25 jaar (fabrikant) op materiaal- en fabricagefouten. Eerste eigenaar, gekocht bij een erkende dealer.", "Onbekend", "VS · gemaakt in de VS (Portland), met Amerikaanse en buitenlandse onderdelen", "21 tools, inclusief vervangbare draadknippers.", "Robuust en zwaar."] },
       { brand:'Victorinox', origin:'Zwitserland', model:'Victorinox SwissTool Spirit X', founder:'Karl Elsener, 1884, Ibach',
-        desc:'Zwitserse precisie sinds 1884. Eleganter, net zo capabel. Lifetime garantie.',
-        bundle:'Scharnierolie + slijpset + poetsdoek', price:135, tags:['Zwitsers','RVS','Lifetime garantie'], life:30,
+        desc:"Zwitsers staal, 24 functies, 209 g. Lichter dan de Surge en makkelijker om elke dag mee te nemen. Levenslange garantie van Victorinox.",
+        bundle:"Scharnierolie + slijpset + poetsdoek", price:135, tags:["Zwitsers", "RVS", "24 functies"], life:30,
         img:'img/victorinox.png',
-        specVals:['27 tools — meer opties, iets compacter ingepakt dan de Surge.','295 gram — merkbaar lichter. Fijner voor dagelijks dragen.','Zwitsers roestvast staal. Iets harder, houdt langer zijn scherpte.','Interne veerbeveiliging. Alles vergrendelt automatisch in open positie.','Lifetime garantie. Onvoorwaardelijk, zonder bon.'] }
+        specVals:["Roestvrij staal.", "209 g", "10,5 × 3,5 × 1,8 cm", "Levenslang (fabrikant) op materiaal- en fabricagefouten. Bewaar je bon.", "Onbekend", "Zwitserland · gemaakt in Zwitserland", "24 functies.", "Strak en precies."] }
     ]},
   { id:'koptelefoon', name:'Koptelefoon', sub:'Studiokwaliteit, thuis',
     tagline:'Alles buitensluiten of alles binnenlaten',
     L:'DE', Ll:'Gesloten, isolerend', R:'DE', Rl:'Open, ruimtelijk',
-    specs:['Type','Impedantie','Gewicht','Oorkussens','Frequentiebereik'],
+    specs:["Materiaal", "Gewicht", "Afmetingen", "Garantie", "Onderhoud", "Herkomst", "Type", "Impedantie", "Karakter"],
     items:[
       { brand:'Beyerdynamic', origin:'Duitsland', model:'Beyerdynamic DT 770 Pro', founder:'Eugen Beyer, 1924, Heilbronn',
-        desc:'80 Ohm. De kop die geluidstechnici al 40 jaar vertrouwen. Gesloten: de wereld verdwijnt.',
-        bundle:'Extra set velour oorkussens', price:175, tags:['Duits','80 Ohm','Gesloten','Velour'], life:15,
+        desc:"Gesloten studiokoptelefoon van 80 ohm, met de hand gemaakt in Duitsland. Oorkussens, hoofdband, kabel en drivers zijn los te vervangen.",
+        bundle:"Extra set velours oorkussens", price:175, tags:["Duits", "Verenstaal en velours", "Vervangbare onderdelen"], life:15,
         img:'img/beyerdynamic.png',
-        specVals:['Gesloten. Isoleert omgevingsgeluid volledig. Ideaal voor concentratie of luide omgevingen.','80 Ohm. Werkt direct op elke laptop, telefoon of interface. Geen versterker nodig.','270 gram. Stevig maar comfortabel, ook bij lange sessies.','Velour oorkussens, vervangbaar. Ademen goed, geen zweet bij langdurig gebruik.','5 Hz – 35 kHz. Diepe bas, scherpe hoge tonen. Studiostandaard.'] },
+        specVals:["Hoofdband van verenstaal, vervangbare velours oorkussens.", "270 g zonder kabel, 375 g met kabel", "Onbekend", "2 jaar (fabrikant) op defecten. Oorkussens zijn slijtdelen en vallen erbuiten.", "Oorkussens, hoofdband, kabel en drivers los te vervangen.", "Duitsland · gemaakt in Duitsland", "Gesloten. Houdt omgevingsgeluid buiten.", "80 ohm. Werkt zonder versterker op laptop en telefoon.", "Studio, zwart, zonder franje."] },
       { brand:'Sennheiser', origin:'Duitsland', model:'Sennheiser HD 560S', founder:'Fritz Sennheiser, 1945, Wedemark',
-        desc:'Open design. Muziek klinkt zoals de artiest het bedoelde. Ruimtelijk, eerlijk, gedetailleerd.',
-        bundle:'Extra set oorkussens', price:160, tags:['Duits','Open design','Natuurlijk geluid'], life:15,
+        desc:"Open koptelefoon van 120 ohm, 280 g. Laat omgevingsgeluid door en klinkt daardoor ruimtelijk. Kabel en oorkussens zijn los te vervangen.",
+        bundle:"Extra set oorkussens", price:160, tags:["Duits", "Open", "Vervangbare kabel"], life:15,
         img:'img/sennheiser.png',
-        specVals:['Open. Laat omgevingsgeluid door. Muziek klinkt ruimtelijker en natuurlijker.','120 Ohm. Werkt op de meeste apparaten, maar klinkt beter met een koptelefoonversterker.','240 gram. Licht op het hoofd, merk je nauwelijks na uren luisteren.','Velour oorkussens, vervangbaar. Zacht en ademend voor langdurig comfort.','6 Hz – 38 kHz. Breed bereik, bijzonder gedetailleerd in de middentonen.'] }
+        specVals:["Onbekend", "280 g", "Kabel 1,8 m", "2 jaar (fabrikant), internationaal.", "Kabel en oorkussens los te vervangen.", "Duitsland · gemaakt in Ierland", "Open. Laat omgevingsgeluid door.", "120 ohm. Klinkt het best met een koptelefoonversterker.", "Licht en ruimtelijk."] }
     ]},
   { id:'pen', name:'Pen', sub:'Schrijven als ambacht',
     tagline:'Technische precisie of Bauhaus-elegantie',
     L:'DE', Ll:'Hamburg, 0.5mm', R:'DE', Rl:'Heidelberg, 1966',
-    specs:['Type','Materiaal','Gewicht','Mechanisme','Stijl'],
+    specs:["Materiaal", "Gewicht", "Afmetingen", "Garantie", "Onderhoud", "Herkomst", "Type", "Mechanisme", "Karakter"],
     items:[
       { brand:'Rotring', origin:'Duitsland', model:'Rotring 600 (0.5mm)', founder:'Rotring, 1928, Hamburg',
-        desc:'Messing behuizing. Precisiemechanisme. De pen die architecten kiezen. Voelt als een instrument.',
-        bundle:'3x navulkoker stiften + gum', price:40, tags:['Duits','Messing','0.5mm precisie'], life:20,
+        desc:"Vulpotlood van 0,5 mm met een messing body, 22 g. Gemaakt voor technisch tekenen, prima voor elke dag.",
+        bundle:"3 kokers vullingen + gum", price:40, tags:["Duits", "Messing", "0,5 mm"], life:20,
         img:'img/rotring-600.png',
-        specVals:['Vulpotlood, 0.5mm. Technisch tekenen of dagelijks schrijven — altijd scherp.','Volledig messing. Zwaar in de hand, voelt als een instrument. Zal na jaren een patina krijgen.','22 gram. Compact en precies. Past in elk borstzakje.','Drukknop met vergrendeling. De stift trekt niet in bij schrijfdruk.','Technisch, precies. De pen die architecten en ingenieurs kiezen.'] },
+        specVals:["Messing body (volgens winkel).", "22 g (volgens winkel)", "Stift 0,5 mm", "2 jaar wettelijke garantie (EU). Extra garantie van Rotring niet bevestigd. Rotring geeft 2 jaar volgens winkel.", "Onbekend", "Duitsland · gemaakt in Japan (volgens winkel)", "Vulpotlood, 0,5 mm.", "Drukknop.", "Technisch en precies."] },
       { brand:'Lamy', origin:'Duitsland', model:'Lamy 2000', founder:'Josef Lamy, 1930, Heidelberg',
-        desc:'Makrolon en RVS. Ontworpen in 1966, onveranderd sindsdien. Bauhaus in je binnenzak.',
-        bundle:'3x M16 vullingen + poetsdoekje', price:100, tags:['Duits','Makrolon','RVS','Sinds 1966'], life:30,
+        desc:"Vulpen van Makrolon en geborsteld RVS met een zuigervulling. Ontworpen in 1966 door Gerd A. Müller en sindsdien nauwelijks veranderd.",
+        bundle:"Lamy T52 inktfles + poetsdoek", price:100, tags:["Duits", "Makrolon en RVS", "Sinds 1966"], life:30,
         img:'img/lamy-2000.png',
-        specVals:['Vulpen met zuigsysteem. Schrijft met inkt — elke letter heeft karakter.','Makrolon (glasvezelversterkt) en geborsteld RVS. Licht, krasbestendig, warm in de hand.','26 gram. Perfecte balans tussen licht en substantieel.','Piston filler — zuigt inkt direct uit een potje. Geen cartridges, geen afval.','Bauhaus, tijdloos. Ontworpen in 1966 door Gerd A. Müller. Sindsdien onveranderd.'] }
+        specVals:["Makrolon (glasvezelversterkt) en geborsteld RVS; 14 karaat gouden punt (volgens winkel).", "25 g (volgens winkel)", "14 cm (volgens winkel)", "2 jaar (fabrikant) op materiaal- en fabricagefouten.", "Onbekend", "Duitsland · gemaakt in Duitsland (volgens winkel)", "Vulpen.", "Zuigervulling: vult uit een inktfles.", "Bauhaus, tijdloos."] }
     ]},
   { id:'sokken', name:'Sokken', sub:'De basis onder alles',
     tagline:'Duitse merino of Amerikaanse lifetime garantie',
     L:'DE', Ll:'Schmallenberg, merino', R:'US', Rl:'Vermont, garantie',
-    specs:['Materiaal','Gewicht','Wasbaar','Garantie','Stijl'],
+    specs:["Materiaal", "Gewicht", "Afmetingen", "Garantie", "Onderhoud", "Herkomst", "Karakter"],
     items:[
       { brand:'Falke', origin:'Duitsland', model:'Falke Airport', founder:'Franz Falke-Rohen, 1895, Schmallenberg',
-        desc:'Merinowol binnen, katoen buiten. De sok die je vergeet dat je draagt. Al 130 jaar.',
-        bundle:'Wasadvieskaart', price:25, tags:['Duits','Merinowol','Katoen','Sinds 1895'], life:5,
+        desc:"Wollen sok met katoen, 60% scheerwol. Dun genoeg voor nette schoenen. Falke maakt sokken sinds 1895.",
+        bundle:"Wolwasmiddel", price:25, tags:["Duits", "Scheerwol en katoen", "Sinds 1895"], life:5,
         img:'img/falke-airport.png',
-        specVals:['Merinowol binnenin, katoen buitenkant. Warmte zonder kriebel, netjes genoeg voor op kantoor.','45 gram per paar. Dunner dan je verwacht van een wollen sok.','40°C machinewasbaar. Geen speciale behandeling nodig.','2 jaar fabrieksgarantie. Bij normaal gebruik gaan ze veel langer mee.','Zakelijk en subtiel. Onzichtbaar onder een pak, voelbaar comfortabel.'] },
+        specVals:["60% scheerwol, 23% katoen, 15% polyamide, 2% elastaan (volgens winkel).", "Onbekend", "Onbekend", "2 jaar wettelijke garantie (EU). Extra garantie van Falke niet bevestigd.", "Wolwas op 30 °C, niet in de droger (volgens winkel).", "Duitsland (Schmallenberg) · productieland onbekend", "Net en ingetogen."] },
       { brand:'Darn Tough', origin:'Amerika', model:'Darn Tough Hiker Micro Crew', founder:'Ric & Marc Cabot, 2004, Vermont',
-        desc:'Lifetime garantie. Gaat kapot? Nieuw paar. Geen vragen. Geen bon nodig.',
-        bundle:'Lifetime garantie-informatie', price:30, tags:['Amerikaans','Vermont merino','Lifetime garantie'], life:99,
+        desc:"Merinosok uit Vermont, versterkt met nylon. Versleten? Dan krijg je een nieuw paar, zonder bon. Dikker dan de Falke.",
+        bundle:"Wolwasmiddel", price:30, tags:["Amerikaans", "Merinowol", "Gemaakt in Vermont"], life:99,
         img:'img/darntough-hiker-micro-crew.png',
-        specVals:['Vermont merino, nylon versterkt op slijtpunten. Gemaakt voor bergen, werkt overal.','55 gram per paar. Iets dikker, meer demping op hiel en bal.','40°C machinewasbaar. Mag niet in de droger.','Lifetime garantie. Onvoorwaardelijk. Gaat kapot? Nieuw paar. Geen bon nodig.','Outdoor en robuust. Zichtbaar dikker, voelbaar steviger. Gemaakt om te presteren.'] }
+        specVals:["61% merinowol, 36% nylon, 3% lycra (volgens winkel).", "Onbekend", "Onbekend", "Levenslang en onvoorwaardelijk (fabrikant). Versleten? Nieuw paar, geen bon nodig.", "Onbekend", "VS · gemaakt in de VS (Vermont)", "Outdoor en stevig."] }
     ]},
   { id:'scheerapparaat', name:'Scheerapparaat', sub:'Eén keer goed scheren',
     tagline:'Nederlandse innovatie of Duitse precisie',
     L:'NL', Ll:'Eindhoven, nano-tech', R:'DE', Rl:'Frankfurt, Smart Sense',
-    specs:['Scheersysteem','Batterijduur','Waterdicht','Technologie','Reiniging'],
+    specs:["Materiaal", "Gewicht", "Afmetingen", "Garantie", "Onderhoud", "Herkomst", "Scheersysteem", "Batterijduur", "Karakter"],
     items:[
       { brand:'Philips', origin:'Nederland', model:'Philips S9000 Prestige', founder:'Gerard Philips, 1891, Eindhoven',
-        desc:'Nano-tech mesjes. Draadloos laden. Uit dezelfde stad als de gloeilamp.',
-        bundle:'Extra scheerkoppen (SH91)', price:280, tags:['Nederlands','Nano-tech','Draadloos laden'], life:10,
+        desc:"Scheerapparaat met drie draaiende koppen die je kaaklijn volgen. Nat en droog te gebruiken. De scheerkoppen zijn los te vervangen.",
+        bundle:"Vervangende scheerkoppen", price:280, tags:["Nederlands", "Draaiende koppen", "Vervangbare koppen"], life:10,
         img:'img/philips-s9000-prestige.png',
-        specVals:['3 roterende koppen die meebuigen met je kaak. Volgt elke contour.','60 minuten scheren op één lading. Draadloos laden via Qi-pad.','Ja — nat en droog. Onder de douche of met scheerschuim, beide werken.','Nano-tech mesjes. Zelfscherpend. Snijden haar af op huidniveau.','Quick Clean Pod. Reinigt, smeert en droogt automatisch.'] },
+        specVals:["Onbekend", "350 g (volgens winkel)", "15 × 7 × 4 cm (volgens winkel)", "2 jaar (fabrikant).", "Onbekend", "Nederland · gemaakt in Nederland", "Drie draaiende koppen.", "60 minuten scheren per lading.", "Glanzend en modern."] },
       { brand:'Braun', origin:'Duitsland', model:'Braun Series 9 Pro+', founder:'Max Braun, 1921, Frankfurt',
-        desc:'Smart Sense past zich aan aan je baard. Dieter Rams zou het goedkeuren.',
-        bundle:'Extra scheerkoppen', price:265, tags:['Duits','Smart Sense','Rams-erfgoed'], life:10,
+        desc:"Scheerapparaat met scheerblad, 207 g, gemaakt in Duitsland. Volledig waterdicht, dus je spoelt hem af onder de kraan.",
+        bundle:"Vervangende scheerkop", price:265, tags:["Duits", "Scheerblad", "Waterdicht"], life:10,
         img:'img/braun-series-9-pro-plus.png',
-        specVals:['Lineaire foil met 4 scheerelementen. Vangt meer haar in één beweging.','60 minuten scheren op één lading. 5 minuten snelladen voor één scheersessie.','Ja — nat en droog. Volledig waterdicht tot op de motor.','Smart Sense. Leest 13x per seconde je baarddichtheid en past de kracht aan.','Clean & Charge station. Reinigt met alcohol, laadt op, en droogt in één stap.'] }
+        specVals:["Onbekend", "207 g zonder station", "16,8 × 6,6 × 4,4 cm", "2 jaar wettelijke garantie (EU). Extra garantie van Braun niet bevestigd. Braun gaf een verlenging na registratie als actie (verlopen).", "100% waterdicht, af te spoelen onder de kraan. Bij sommige sets een Clean & Charge-station.", "Duitsland · gemaakt in Duitsland", "Scheerblad.", "60 minuten scheren per lading.", "Strak en zakelijk."] }
     ]},
   { id:'stanleymes', name:'Stanleymes', sub:'Het mes dat alles opent',
     tagline:'Amerikaans origineel of Japanse uitvinding',
     L:'US', Ll:'Connecticut, 1843', R:'JP', Rl:'Osaka, het afbreekmes',
-    specs:['Mestype','Meslengte','Materiaal','Vergrendeling','Meswisseling'],
+    specs:["Materiaal", "Gewicht", "Afmetingen", "Garantie", "Onderhoud", "Herkomst", "Mestype", "Karakter"],
     items:[
       { brand:'Stanley', origin:'Amerika', model:'Stanley Interlock 10-018', founder:'Frederick Stanley, 1843, Connecticut',
-        desc:'Het oer-retractable mes. Metalen behuizing, vast mechanisme. Je opa had er ook een.',
-        bundle:'10x reservemesjes', price:25, tags:['Amerikaans','Metaal','Sinds 1843'], life:20,
+        desc:"Afbreekmes van 18 mm met een metalen body van gegoten metaal, 180 g. Bestand tegen oplosmiddelen. Bot segment eraf en je snijdt weer scherp.",
+        bundle:"10 afbreekmesjes 18 mm", price:25, tags:["Amerikaans", "Metaal", "Afbreekmes 18 mm"], life:20,
         img:'img/stanley-interlock-10-018.png',
-        specVals:['Retractable met vast trapeziumlemmet. Intrekbaar, geen afbreeksegmenten.','19mm breed trapeziummes. Standaardmaat, overal verkrijgbaar.','Volledig metaal behuizing. Voelt onverwoestbaar, is het ook.','Schuifvergrendeling. Simpel, betrouwbaar, geen bewegende onderdelen die slijten.','Intern mesopslag in het handvat. Wisselen zonder gereedschap.'] },
+        specVals:["Gegoten metaal, bestand tegen oplosmiddelen.", "180 g (volgens winkel)", "16,5 × 2,2 × 2,5 cm; mes 18 mm", "2 jaar wettelijke garantie (EU). Extra garantie van Stanley niet bevestigd.", "Onbekend", "VS · productieland onbekend", "Afbreekmes, 18 mm.", "Een gereedschap. Zwaar en metaal."] },
       { brand:'OLFA', origin:'Japan', model:'OLFA MXP-AL (18mm)', founder:'Yoshio Okada, 1956, Osaka',
-        desc:'Yoshio Okada vond het afbreekmes uit. Dit is het beste model van zijn eigen merk.',
-        bundle:'10x reservemesjes (OLFA LB-10)', price:30, tags:['Japans','18mm','Aluminium'], life:20,
+        desc:"Afbreekmes van 18 mm van OLFA, het merk van Yoshio Okada. Aluminium handvat met rubber grip, gemaakt in Japan.",
+        bundle:"10 reservemesjes (OLFA LB-10)", price:30, tags:["Japans", "Aluminium", "Afbreekmes 18 mm"], life:20,
         img:'img/olfa-mxp-al.png',
-        specVals:['Afbreekmes met segmenten. Breek een stomp stuk af, daaronder zit een nieuw scherp lemmet.','18mm snap-off segmenten. Japanse staalkwaliteit, scherper dan de meeste vaste lemmeten.','Aluminium behuizing met rubber grip. Licht, stevig, roest niet.','Auto-lock ratchet. Het mes vergrendelt automatisch op elke uitgeklapte lengte.','Achterlader. Nieuw messenblok invoeren met één hand, zonder het mes neer te leggen.'] }
+        specVals:["Gegoten aluminium handvat, rubber grip, RVS mesgeleider (volgens winkel).", "136 g (volgens winkel)", "Mes 10 × 1,8 cm, 0,5 mm dik (volgens winkel)", "2 jaar wettelijke garantie (EU). Extra garantie van OLFA niet bevestigd. Levenslang geldt alleen in de VS.", "Onbekend", "Japan · gemaakt in Japan (volgens winkel)", "Afbreekmes, 18 mm.", "Licht en praktisch."] }
     ]},
   { id:'camera', name:'Camera-accessoire', sub:'Nooit meer fummelen',
     tagline:'Riem of clip. Altijd bereikbaar.',
     L:'US', Ll:'Schouderriem', R:'US', Rl:'Rugzakclip',
-    specs:['Type','Materiaal','Gewicht','Bevestiging','Garantie'],
+    specs:["Materiaal", "Gewicht", "Afmetingen", "Garantie", "Onderhoud", "Herkomst", "Type", "Bevestiging", "Karakter"],
     items:[
       { brand:'Peak Design', origin:'Amerika', model:'Peak Design Slide Lite', founder:'Peter Dering, 2011, San Francisco',
-        desc:'Camerariem. Eén hand verstellen. Aluminium ankers, Hypalon. Lifetime garantie.',
-        bundle:'Geen nodig — lifetime garantie', price:60, tags:['Amerikaans','Aluminium','Hypalon','Lifetime garantie'], life:15,
+        desc:"Camerariem van nylon webbing met aluminium verstellers, met één hand korter of langer te maken. Levenslange garantie van Peak Design na registratie.",
+        bundle:"Microvezeldoek", price:60, tags:["Amerikaans", "Nylon en aluminium", "Snelkoppeling"], life:15,
         img:'img/peakdesign-slide-lite.png',
-        specVals:['Schouderriem. Verstelbaar van schouder tot sling met één hand, zonder te stoppen.','Aluminium ankers met Hypalon riem. Slijtvast, waterbestendig, wordt zachter met gebruik.','85 gram. Je vergeet dat je hem draagt totdat je hem nodig hebt.','Quick-connector ankers. Klik je camera in seconden los of vast.','Lifetime garantie. Onvoorwaardelijk, geen bon of registratie nodig.'] },
+        specVals:["Nylon webbing (als een autogordel), geanodiseerd aluminium en glasvezelversterkte nylon verstellers (volgens winkel).", "104 g (volgens winkel)", "Lengte 99–145 cm, breedte 3,2 cm (volgens winkel)", "Levenslang (fabrikant) op defecten en breuk. Registreren bij Peak Design is nodig om te claimen.", "Onbekend", "VS · productieland onbekend", "Schouderriem, ook als sling te dragen.", "Anchor-snelkoppelingen.", "Sober en technisch."] },
       { brand:'Peak Design', origin:'Amerika', model:'Peak Design Capture V3', founder:'Peter Dering, 2011, San Francisco',
-        desc:'Klik je camera op je rugzak of riem. Handen vrij. Arca Swiss compatibel.',
-        bundle:'Geen nodig — lifetime garantie', price:75, tags:['Amerikaans','Aluminium','Arca Swiss','Lifetime garantie'], life:15,
+        desc:"Aluminium clip voor je camera op je rugzakband of riem. Handen vrij, camera binnen bereik. De plaat past op Arca-Swiss-statieven.",
+        bundle:"Microvezeldoek", price:75, tags:["Amerikaans", "Aluminium", "Arca-Swiss"], life:15,
         img:'img/peakdesign-capture-v3.png',
-        specVals:['Rugzak- of riemclip. Klik je camera op je schouderband. Handen vrij, camera bereikbaar.','Geanodiseerd aluminium. Krasvast, lichtgewicht, industriële uitstraling.','90 gram inclusief plaat. Nauwelijks merkbaar aan je rugzak.','Arca Swiss plaat. Past op vrijwel elk professioneel statief ter wereld.','Lifetime garantie. Onvoorwaardelijk, geen bon of registratie nodig.'] }
+        specVals:["Aluminium behuizing, achterplaat en knop, RVS borgpen, geanodiseerd.", "85 g (volgens winkel)", "Past op banden tot 6,4 cm breed en 2,2 cm dik", "Levenslang (fabrikant) op defecten en breuk. Registreren bij Peak Design is nodig om te claimen.", "Onbekend", "VS · productieland onbekend", "Clip voor rugzakband of riem.", "Arca-Swiss-plaat.", "Industrieel."] }
     ]},
   { id:'rugzak-stad', name:'Rugzak (stad)', sub:'Elke dag, elk weer',
     tagline:'Amerikaanse stoerheid of Zweeds vakmanschap',
     L:'US', Ll:'28L, technisch', R:'SE', Rl:'16L, waxbaar',
-    specs:['Inhoud','Materiaal','Gewicht','Laptopvak','Onderhoud'],
+    specs:["Materiaal", "Gewicht", "Afmetingen", "Garantie", "Onderhoud", "Herkomst", "Karakter"],
     items:[
       { brand:'The North Face', origin:'Amerika', model:'The North Face Borealis', founder:'Douglas & Susie Tompkins, 1966, San Francisco',
-        desc:'28 liter. Laptopvak, comfortabel rugpaneel. Elke woon-werkrit sinds 1966.',
-        bundle:'Impregneer spray + ritsensmeer', price:110, tags:['Amerikaans','28 liter','Laptopvak'], life:10,
+        desc:"Rugzak van 28 l met laptopvak en een stevig rugpaneel. Gemaakt voor elke dag naar werk of studie. In de EU 2 jaar garantie van The North Face.",
+        bundle:"Impregneerspray + ritsvet", price:110, tags:["Amerikaans", "Polyester", "Laptopvak"], life:10,
         img:'img/thenorthface-borealis.png',
-        specVals:['28 liter. Genoeg voor laptop, lunch, gymkleren en een extra laag.','600D polyester met ripstop versterking. Waterafstotend, krasvast.','1.160 gram. Stevig maar niet zwaar. Comfortabel rugpaneel voor dagelijks woon-werkverkeer.','15 inch laptopvak, gewatteerd en verhoogd. Je laptop raakt de grond niet als je de tas neerzet.','Impregneer elke 6 maanden. Wij sturen de spray mee.'] },
+        specVals:["Onbekend (winkels spreken elkaar tegen).", "1,05 kg (volgens winkel)", "28 l; 49,5 × 30,5 × 16,5 cm (volgens winkel)", "2 jaar (fabrikant) op materiaal- en fabricagefouten in de EU.", "Onbekend", "VS · productieland onbekend", "Sportief en praktisch."] },
       { brand:'Fjällräven', origin:'Zweden', model:'Fjällräven Kånken No.2', founder:'Åke Nordin, 1960, Örnsköldsvik',
-        desc:'16 liter. G-1000 stof, leren details. Waxbaar, repareerbaar. Zweeds en tijdloos.',
-        bundle:'Greenland Wax + impregneer', price:105, tags:['Zweeds','G-1000 stof','Waxbaar','Leer'], life:15,
+        desc:"Zweedse rugzak van 16 l met een rechthoekige vorm uit 1978. Compact, licht en voor dagelijks gebruik. In de EU 2 jaar garantie.",
+        bundle:"Ritsvet + microvezeldoek", price:105, tags:["Zweeds", "Vinylon F", "Sinds 1978"], life:15,
         img:'img/fjallraven-kanken-no2.png',
-        specVals:['16 liter. Compact genoeg voor dagelijks, groot genoeg voor een weekendtas.','G-1000 stof: mix van katoen en polyester. Wordt waterafstotend na waxen, mooier na jaren.','460 gram. Opvallend licht voor zijn stevigheid. Vouwt bijna plat als hij leeg is.','13 inch laptopvak via het zijvak. Niet gewatteerd — een sleeve erbij is slim.','Greenland Wax aanbrengen met een strijkijzer. Maakt de tas waterbestendig en donkerder.'] }
+        specVals:["Vinylon F, banden van polypropyleen (volgens winkel, voor de gewone Kånken).", "300 g (volgens winkel)", "16 l; 38 × 27 × 13 cm (volgens winkel)", "2 jaar (fabrikant) in de EU. Levenslang geldt alleen in Noord-Amerika.", "Onbekend", "Zweden · gemaakt in Vietnam (volgens winkel)", "Tijdloos en Zweeds."] }
     ]},
   { id:'rugzak-outdoor', name:'Rugzak (outdoor)', sub:'Berg of bos',
     tagline:'Amerikaans all mighty of Duits aircomfort',
     L:'US', Ll:'36L, alles gerepareerd', R:'DE', Rl:'27L, Augsburg',
-    specs:['Inhoud','Materiaal','Gewicht','Rugsysteem','Garantie'],
+    specs:["Materiaal", "Gewicht", "Afmetingen", "Garantie", "Onderhoud", "Herkomst", "Rugsysteem", "Karakter"],
     items:[
       { brand:'Osprey', origin:'Amerika', model:'Osprey Stratos 36', founder:'Mike Pfotenhauer, 1974, Santa Cruz',
-        desc:'36 liter. All Mighty Guarantee: Osprey repareert elke schade. Geen vragen.',
-        bundle:'Impregneer + ritsensmeer', price:145, tags:['Amerikaans','36 liter','All Mighty garantie'], life:15,
+        desc:"Wandelrugzak van 36 l met een geventileerd rugpaneel. Osprey repareert schade, wat de oorzaak ook is, 30 jaar lang.",
+        bundle:"Impregneermiddel + ritsvet", price:145, tags:["Amerikaans", "Gerecycled nylon", "All Mighty Guarantee"], life:15,
         img:'img/osprey-stratos-36.png',
-        specVals:['36 liter. Ideaal voor meerdaagse hikes of een lang weekend in de bergen.','500D Cordura nylon. Militaire kwaliteit stof. Bestand tegen rotsen, takken en regen.','1.480 gram. Middengewicht. De ruimte voor zijn gewicht is uitzonderlijk goed.','AirSpeed meshpaneel. Gecurved frame houdt de tas van je rug. Ventileert ook bij 30°C.','All Mighty Guarantee. Osprey repareert elke schade, ongeacht oorzaak. Geen kosten.'] },
+        specVals:["210D gerecycled nylon (volgens winkel).", "1,55 kg", "36 l; 70 × 34 × 28 cm", "30 jaar (fabrikant), All Mighty Guarantee: elke schade, elke oorzaak, gerepareerd. Bewaar je bon.", "Onbekend", "VS · productieland onbekend", "AirSpeed: gespannen gaas houdt de rugzak van je rug.", "Technisch en sportief."] },
       { brand:'Deuter', origin:'Duitsland', model:'Deuter Futura 27', founder:'Deuter, 1898, Augsburg',
-        desc:'27 liter. Aircomfort rugpaneel. 126 jaar vakmanschap uit Augsburg.',
-        bundle:'Impregneer + ritsensmeer', price:130, tags:['Duits','27 liter','Aircomfort'], life:12,
+        desc:"Dagrugzak van 27 l uit Augsburg, 1,33 kg, met het Aircomfort-rugsysteem. 2 jaar garantie, daarna betaalde reparatie bij Deuter.",
+        bundle:"Impregneermiddel + ritsvet", price:130, tags:["Duits", "Polyamide en polyester", "Aircomfort"], life:12,
         img:'img/deuter-futura-27.png',
-        specVals:['27 liter. Compacter, genoeg voor daghikes en korte overnachtingen.','Ripstop nylon 210D. Lichter dan Cordura, nog steeds scheurbestendig.','1.200 gram. Merkbaar lichter — fijn op lange afstanden.','Aircomfort ventilatie. Mesh rug met 3D-frame. Zweet wordt afgevoerd.','10 jaar fabrieksgarantie op materiaal- en constructiefouten.'] }
+        specVals:["210D gerecycled polyamide en 600D polyester, bluesign.", "1,33 kg", "27 l; 55 × 28 × 20 cm", "2 jaar (fabrikant) op defecten. Daarna betaalde reparatieservice van Deuter, levenslang.", "Onbekend", "Duitsland · productieland onbekend", "Aircomfort: gaas op een frame, met ruimte voor lucht.", "Degelijk en sportief."] }
     ]},
   { id:'haarborstel', name:'Haarborstel', sub:'Eén borstel, voor altijd',
     tagline:'Brits vakmanschap of Britse traditie',
     L:'UK', Ll:'Londen, 1885, handgemaakt', R:'UK', Rl:'Kent, 1777, oudste ter wereld',
-    specs:['Haartype','Materiaal','Kussen','Handgemaakt','Geschikt voor'],
+    specs:["Materiaal", "Gewicht", "Afmetingen", "Garantie", "Onderhoud", "Herkomst", "Karakter"],
     items:[
       { brand:'Mason Pearson', origin:'Engeland', model:'Mason Pearson BN3', founder:'Mason Pearson, 1885, Londen',
-        desc:'Handgemaakt. Everzwijnhaar en nylon. De borstel die kappers kiezen. 140 jaar onveranderd.',
-        bundle:'Reinigingsborstel + poetsdoek', price:120, tags:['Engels','Everzwijnhaar','Nylon','Handgemaakt'], life:40,
+        desc:"Borstel met plukjes zwijnenhaar en nylon in een rubberen kussen. Het ontwerp van Mason Pearson bestaat sinds 1885.",
+        bundle:"Reinigingsborsteltje + poetsdoek", price:120, tags:["Brits", "Zwijnenhaar en nylon", "Rubberen kussen"], life:40,
         img:'img/mason-pearson-bn3.png',
-        specVals:['Mix van everzwijnhaar en nylon. De haren verdelen talg van hoofdhuid naar punten — natuurlijke conditioner.','Rubber luchtkussen. Veert mee met je hoofd, voorkomt trekken aan klitten.','Pneumatisch kussen — veerkrachtig, past zich aan aan je schedelcontour.','Ja — handgemaakt in Londen. Elke borstel wordt individueel geassembleerd.','Alle haartypes. De mix van haar en nylon werkt bij fijn tot dik haar.'] },
+        specVals:["Zwijnenhaar en nylon in een rubberen kussen (volgens winkel).", "Onbekend", "21,6 × 6,4 cm (volgens winkel)", "2 jaar wettelijke garantie (EU). Extra garantie van Mason Pearson niet bevestigd.", "Met het meegeleverde reinigingsborsteltje (volgens winkel).", "Verenigd Koninkrijk · productieland onbekend", "Klassiek en ingetogen."] },
       { brand:'Kent', origin:'Engeland', model:'Kent OG1 Finest', founder:'Kent Brushes, 1777, Hertfordshire',
-        desc:'Het oudste borstelmerk ter wereld. Sinds 1777. Satijnhout en zuiver everzwijnhaar. Royaal hofleverancier sinds George III.',
-        bundle:'Reinigingsborstel', price:85, tags:['Engels','Satijnhout','Everzwijnhaar','Sinds 1777'], life:30,
+        desc:"Borstel van beukenhout met puur zwart natuurhaar, gemaakt in Engeland. Kent maakt borstels sinds 1777.",
+        bundle:"Reinigingsborsteltje", price:85, tags:["Brits", "Beukenhout", "Sinds 1777"], life:30,
         img:'img/kent-og1.png',
-        specVals:['Zuiver everzwijnhaar. Zachter dan de mix-variant, extra glans door natuurlijke oliën.','Satijnhout handvat. Glad, lichtgewicht, wordt mooier met de jaren.','Vast kussen — steviger borstelen, meer controle over dikker haar.','Ja — handgemaakt in Hertfordshire sinds 1777. Koninklijk hofleverancier.','Normaal tot dik haar. De stevigere haren geven meer grip op dik of krullend haar.'] }
+        specVals:["Beukenhout, puur zwart natuurhaar.", "Onbekend", "18,3 cm (volgens winkel)", "2 jaar wettelijke garantie (EU). Kent geeft daarbovenop 1 jaar eigen garantie (fabrikant).", "Onbekend", "Verenigd Koninkrijk · gemaakt in Engeland (volgens winkel)", "Warm hout, klassiek."] }
     ]},
   { id:'fohn', name:'Föhn', sub:'Dagelijks, professioneel',
     tagline:'Franse salontechniek of Britse motorgarantie',
     L:'FR', Ll:'Parijs, salonmotor', R:'UK', Rl:'Leeds, 2000 uur',
-    specs:['Vermogen','Gewicht','Technologie','Motorgarantie','Geluidsdruk'],
+    specs:["Materiaal", "Gewicht", "Afmetingen", "Garantie", "Onderhoud", "Herkomst", "Karakter"],
     items:[
       { brand:'BaBylissPRO', origin:'Frankrijk', model:'BaBylissPRO Nano Titanium', founder:'Babyliss, 1961, Parijs',
-        desc:'Professionele salonmotor. Licht en krachtig. Gebouwd voor dagelijks gebruik.',
-        bundle:'Schoonmaakadvies', price:75, tags:['Frans','Nano Titanium','Salonmotor'], life:8,
+        desc:"Professionele föhn van BaBylissPRO met nano-titanium. Een Amerikaans model van Conair. Gewicht, vermogen en EU-garantie hebben we niet kunnen bevestigen.",
+        bundle:"Microvezeldoek", price:75, tags:["Frans", "Nano-titanium", "Salonmodel"], life:8,
         img:'img/babylisspro-nano-titanium.png',
-        specVals:['2000 watt. Genoeg kracht voor dik haar, snel genoeg voor een ochtendhaast.','580 gram. Licht voor een professioneel model. Arm wordt niet moe bij lang drogen.','Nano Titanium ionisch. Vermindert pluis, versnelt droogtijd, beschermt tegen hitteschade.','2 jaar fabrieksgarantie. Bij professioneel salongebruik gaan ze gemiddeld 4-5 jaar mee.','75 dB — vergelijkbaar met een stofzuiger. Niet fluisterstil, wel ochtendvriendelijk.'] },
+        specVals:["Onbekend", "Onbekend", "Onbekend", "2 jaar wettelijke garantie (EU). Extra garantie van BaBylissPRO niet bevestigd. In de VS geeft Conair 4 jaar.", "Onbekend", "Frankrijk (merk van Conair, VS) · productieland onbekend", "Salon, zwart."] },
       { brand:'ghd', origin:'Engeland', model:'ghd Helios', founder:'Martin Penny e.a., 2001, Leeds',
-        desc:'2000 uur motorgarantie. Aeroprecis-technologie. Sneller drogen, minder hitte.',
-        bundle:'2000 uur motorgarantie', price:160, tags:['Engels','Aeroprecis','2000 uur garantie'], life:10,
+        desc:"Föhn van ghd met een borstelloze motor. 780 g volgens een winkel. 2 jaar garantie van ghd voor de consumentenversie.",
+        bundle:"Microvezeldoek", price:160, tags:["Brits", "Borstelloze motor", "Aeroprecis"], life:10,
         img:'img/ghd-helios.png',
-        specVals:['2200 watt. Meer kracht, kortere droogtijd. Minder hitteblootstelling voor je haar.','582 gram. Vergelijkbaar gewicht, iets meer power per gram.','Aeroprecis borstelloze motor. Geen slijtdelen, consistent vermogen over de hele levensduur.','2000 uur motorgarantie. Dat is circa 10 jaar dagelijks gebruik van 10 minuten.','70 dB — iets stiller dan gemiddeld. Merk je vooral bij vroeg opstaan.'] }
+        specVals:["Onbekend", "780 g (volgens winkel)", "Onbekend", "2 jaar (fabrikant), consumentenversie. Bewaar je bon.", "Onbekend", "Verenigd Koninkrijk · productieland onbekend", "Modern en strak."] }
     ]},
   { id:'koksmes', name:'Koksmes', sub:'Eén mes voor bijna alles',
     tagline:'Duits gesmeed of Japans uit één stuk',
     L:'DE', Ll:'Solingen, gesmeed', R:'JP', Rl:'Niigata, één stuk staal',
-    specs:['Materiaal','Garantie','Onderhoud','Stijl'],
+    specs:["Materiaal", "Gewicht", "Afmetingen", "Garantie", "Onderhoud", "Herkomst", "Karakter"],
     items:[
       { brand:'Wüsthof', origin:'Duitsland', model:'Wüsthof Classic 20 cm', founder:'Johann Abraham Wüsthof, 1814, Solingen',
-        desc:'Gesmeed RVS, volle angel, zwart heft met drie klinknagels. Zwaar en robuust, en met slijpen tientallen jaren bruikbaar.',
-        bundle:'Slijpsteen', price:95, tags:['Duits','Gesmeed','Sinds 1814'], life:30,
+        desc:"Gesmeed RVS, volle angel, zwart handvat met drie klinknagels. 268 g. Zwaar, stevig en met slijpen tientallen jaren bruikbaar.",
+        bundle:"Slijpsteen", price:95, tags:["Duits", "Gesmeed", "Sinds 1814"], life:30,
         img:'img/wusthof-classic-20.png',
-        specVals:['Gesmeed roestvrij staal met volle angel. Kunststof heft met drie klinknagels.','2 jaar volgens Wüsthof in de EU. De levenslange garantie van Wüsthof geldt alleen in de VS en Canada.','Met de hand afwassen en afdrogen. Regelmatig aanzetten, af en toe slijpen.','Klassiek en zwaar.'] },
+        specVals:["Gesmeed staal, volle angel. Kunststof handvat met drie klinknagels.", "268 g", "Lemmet 20 cm", "2 jaar (fabrikant) in de EU. Levenslang geldt alleen in de VS en Canada.", "Met de hand afwassen en drogen. Regelmatig aanzetten, af en toe slijpen.", "Duitsland (Solingen) · productieland onbekend", "Klassiek en zwaar."] },
       { brand:'Global', origin:'Japan', model:'Global G-2 20 cm', founder:'Global (Yoshikin), 1985, Niigata',
-        desc:'Lemmet en heft uit één stuk Cromova 18-staal. Geen naad waar vuil of vocht in kan komen. De serie bestaat sinds 1985.',
-        bundle:'Slijpsteen', price:131, tags:['Japans','Eén stuk staal','Sinds 1985'], life:30,
+        desc:"Lemmet en handvat uit één stuk Cromova 18-staal. Geen naad waar vuil of vocht in kan. De serie bestaat sinds 1985.",
+        bundle:"Slijpsteen", price:131, tags:["Japans", "Eén stuk staal", "Sinds 1985"], life:30,
         img:'img/global-g2.png',
-        specVals:['Cromova 18-staal. Heft en lemmet uit één stuk, het heft gestippeld voor grip.','2 jaar. Een langere garantie van Global geldt alleen in het Verenigd Koninkrijk.','Met de hand afwassen en afdrogen. Slijpen op een slijpsteen.','Strak, licht en helemaal van staal.'] }
+        specVals:["Cromova 18-staal (volgens winkel). Handvat en lemmet uit één stuk.", "172 g (volgens winkel)", "Lemmet 20 cm", "2 jaar wettelijke garantie (EU). Extra garantie van Global niet bevestigd. Langere garanties gelden alleen buiten de EU.", "Met de hand afwassen en drogen. Slijpen op een slijpsteen.", "Japan · productieland onbekend", "Strak, licht en helemaal staal."] }
     ]},
   { id:'knoflookpers', name:'Knoflookpers', sub:'Waar goedkope persen breken',
     tagline:'Duits RVS of Zwitsers aluminium',
     L:'DE', Ll:'Marktoberdorf, RVS', R:'CH', Rl:'Zwitserland, aluminium',
-    specs:['Materiaal','Garantie','Onderhoud','Stijl'],
+    specs:["Materiaal", "Gewicht", "Afmetingen", "Garantie", "Onderhoud", "Herkomst", "Karakter"],
     items:[
       { brand:'Rösle', origin:'Duitsland', model:'Rösle knoflookpers 12895', founder:'Rösle, 1888, Marktoberdorf',
-        desc:'Volledig RVS 18/10, met een uitklapbare zeef en een afstrijker. Je kunt ongepelde tenen persen.',
-        bundle:'Schoonmaakborsteltje', price:38, tags:['Duits','RVS 18/10','Sinds 1888'], life:20,
+        desc:"Helemaal RVS 18/10, met een uitklapbare zeef en een schraper. Perst ongepelde teentjes. Zwaar: 354 g volgens een winkel.",
+        bundle:"Schoonmaakborsteltje", price:38, tags:["Duits", "RVS 18/10", "Sinds 1888"], life:20,
         img:'img/rosle-12895.png',
-        specVals:['RVS 18/10. Uitklapbare zeef en afstrijker.','Voorwaarden van Rösle voor de EU niet bevestigd. De levenslange garantie staat alleen in de Amerikaanse voorwaarden.','Zeef uitklappen, afspoelen, klaar.','Lang, zwaar en industrieel. Met ophangoog.'] },
+        specVals:["RVS 18/10 (volgens winkel). Uitklapbare zeef en schraper.", "354 g (volgens winkel)", "20 cm (volgens winkel)", "2 jaar wettelijke garantie (EU). Extra garantie van Rösle niet bevestigd. Levenslang staat alleen in de Amerikaanse voorwaarden.", "Zeef helemaal openklappen, afspoelen of in de vaatwasser.", "Duitsland · productieland onbekend", "Lang, zwaar en industrieel. Met ophangring."] },
       { brand:'Zyliss', origin:'Zwitserland', model:'Zyliss Susi 4', founder:'Karl Zysset, 1951, Zwitserland',
-        desc:'Gegoten aluminium met een PFAS-vrije antiaanbaklaag. Opvolger van de Susi 3, een ontwerp dat al decennia meegaat.',
-        bundle:'Schoonmaakborsteltje', price:25, tags:['Zwitsers','Aluminium','Sinds 1951'], life:15,
+        desc:"Gegoten aluminium met een PFAS-vrije antiaanbaklaag. Opvolger van de Susi 3, een ontwerp dat al tientallen jaren bestaat.",
+        bundle:"Schoonmaakborsteltje", price:25, tags:["Zwitsers", "Aluminium", "Sinds 1951"], life:15,
         img:'img/zyliss-susi-4.png',
-        specVals:['Gegoten aluminium met RVS, PFAS-vrije antiaanbaklaag.','5 jaar van Zyliss (EU-shop).','Direct na gebruik afspoelen.','Rond en compact. Licht in de hand.'] }
+        specVals:["Gegoten aluminium met RVS-onderdelen, PFAS-vrije antiaanbaklaag.", "192 g (volgens winkel)", "18,6 × 3,6 × 6,5 cm (volgens winkel)", "5 jaar (fabrikant) op de meeste Zyliss-producten, met aankoopbewijs.", "Vaatwasserbestendig. Direct na gebruik afspoelen werkt het makkelijkst.", "Zwitserland · productieland onbekend", "Rond en compact. Licht in de hand."] }
     ]},
   { id:'rasp', name:'Rasp', sub:'Citroen, kaas, gember, nootmuskaat',
     tagline:'Het origineel of de Canadese uitdager',
     L:'US', Ll:'Arkansas, het origineel', R:'CA', Rl:'Canada, Surface Glide',
-    specs:['Materiaal','Garantie','Onderhoud','Stijl'],
+    specs:["Materiaal", "Gewicht", "Afmetingen", "Garantie", "Onderhoud", "Herkomst", "Karakter"],
     items:[
       { brand:'Microplane', origin:'Amerika', model:'Microplane Premium Classic 46020', founder:'Familie Grace, 1967, Russellville',
-        desc:'Geëtst RVS-blad met een kunststof greep. De rasp waar elke test naar verwijst. Eerlijk is eerlijk: het blad wordt na jaren botter.',
-        bundle:'Schoonmaakborsteltje', price:23, tags:['Amerikaans','Geëtst RVS','Sinds 1994'], life:10,
+        desc:"Geëtst RVS-blad met een kunststof handvat, 32,5 cm lang. Het blad wordt in de VS gemaakt. Eerlijk is eerlijk: het blad wordt met de jaren botter.",
+        bundle:"Schoonmaakborsteltje", price:23, tags:["Amerikaans", "Geëtst RVS", "Sinds 1994"], life:10,
         img:'img/microplane-46020.png',
-        specVals:['Geëtst roestvrij stalen blad, kunststof greep.','3 jaar van Microplane tegen fabricagefouten.','Afspoelen in de richting van het blad, niet met een spons ertegenin.','Gereedschap. Zwart en zonder franje.'] },
+        specVals:["Fotogeëtst RVS-blad, soft-touch handvat.", "Onbekend", "32,5 cm; raspvlak 20,3 × 2,5 cm", "3 jaar (fabrikant) op fabricagefouten.", "Vaatwasserbestendig, het beschermkapje niet. Spoel in de richting van het blad.", "VS · blad gemaakt in de VS", "Een gereedschap. Zwart, zonder franje."] },
       { brand:'Cuisipro', origin:'Canada', model:'Cuisipro Fine Rasp 747161', founder:'Browne & Co, 1949, Canada',
-        desc:'Geëtst RVS-blad met Surface Glide-groeven. Dezelfde lange vorm en dezelfde prijsklasse als de Microplane, van een ander merk.',
-        bundle:'Schoonmaakborsteltje', price:24, tags:['Canadees','Geëtst RVS','Surface Glide'], life:10,
+        desc:"Geëtst RVS-blad met Surface Glide-groeven. Zelfde lange vorm en zelfde prijsklasse als de Microplane, van een ander merk.",
+        bundle:"Schoonmaakborsteltje", price:24, tags:["Canadees", "Geëtst RVS", "Surface Glide"], life:10,
         img:'img/cuisipro-747161.png',
-        specVals:['Geëtst roestvrij stalen blad met Surface Glide-groeven, kunststof greep.','Beperkt levenslang volgens de Amerikaanse site van Cuisipro. Voor de EU niet bevestigd.','Afspoelen in de richting van het blad, niet met een spons ertegenin.','Gereedschap, met een groen kapje aan de punt.'] }
+        specVals:["Geëtst RVS-blad met Surface Glide-groeven (volgens winkel), kunststof handvat.", "Onbekend", "29 cm (volgens winkel)", "2 jaar wettelijke garantie (EU). Extra garantie van Cuisipro niet bevestigd. Levenslang geldt alleen in de VS.", "Spoel in de richting van het blad, nooit met een sponsje ertegenin.", "Canada · productieland onbekend", "Een gereedschap, met een groen kapje op de punt."] }
     ]},
   { id:'keukenschaar', name:'Keukenschaar', sub:'Van kip tot kruiden',
     tagline:'Uit elkaar te halen of uit één stuk staal',
     L:'JP', Ll:'Seki, uit elkaar', R:'JP', Rl:'Niigata, geheel staal',
-    specs:['Materiaal','Garantie','Onderhoud','Stijl'],
+    specs:["Materiaal", "Gewicht", "Afmetingen", "Garantie", "Onderhoud", "Herkomst", "Karakter"],
     items:[
       { brand:'Shun', origin:'Japan', model:'Shun DM-7300', founder:'Kai, 1908, Seki',
-        desc:"RVS-bladen met nylon grepen. Gaat uit elkaar, zodat je hem goed schoonmaakt en kunt slijpen. Testwinnaar bij America's Test Kitchen (2025).",
-        bundle:'Microvezeldoek', price:67, tags:['Japans','Uit elkaar','RVS'], life:20,
+        desc:"RVS bladen met kunststof grepen. Uit elkaar te halen, dus je kunt hem goed schoonmaken en slijpen. Testwinnaar bij America's Test Kitchen (2025).",
+        bundle:"Microvezeldoek", price:67, tags:["Japans", "RVS", "Uit elkaar te halen"], life:20,
         img:'img/shun-dm7300.png',
-        specVals:['Roestvrij stalen bladen, nylon grepen.','Levenslang volgens winkels en Kai USA. Voor de EU niet bevestigd.','Uit elkaar halen, afwassen, droog weer in elkaar zetten. De bladen zijn los te slijpen.','Praktisch en zwart.'] },
+        specVals:["420J2-RVS bladen, kunststof grepen (volgens winkel).", "146 g (volgens winkel)", "22,5 cm (volgens winkel)", "2 jaar wettelijke garantie (EU). Extra garantie van Shun niet bevestigd. Levenslang noemen alleen winkels en Kai USA.", "Uit elkaar halen, afwassen, droog weer in elkaar zetten. De bladen zijn los te slijpen.", "Japan · productieland onbekend", "Praktisch en zwart."] },
       { brand:'Global', origin:'Japan', model:'Global GKS-210', founder:'Global (Yoshikin), 1985, Niigata',
-        desc:'Helemaal Cromova 18-staal, ook de grepen. Geen kunststof dat kan barsten of losraken.',
-        bundle:'Microvezeldoek', price:109, tags:['Japans','Geheel staal','21 cm'], life:25,
+        desc:"Helemaal Cromova 18-staal, ook de grepen. Geen kunststof dat kan barsten of losraken. 21 cm, 210 g volgens een winkel.",
+        bundle:"Microvezeldoek", price:109, tags:["Japans", "Helemaal staal", "21 cm"], life:25,
         img:'img/global-gks210.png',
-        specVals:['Cromova 18-staal, grepen en bladen.','25 jaar volgens een winkel. Door Global zelf niet bevestigd.','Met de hand afwassen en goed afdrogen, ook rond het scharnier.','Strak en zilver, past bij de Global-messen.'] }
+        specVals:["Cromova 18-staal (volgens winkel), grepen en bladen.", "210 g (volgens winkel)", "21 cm (volgens winkel)", "2 jaar wettelijke garantie (EU). Extra garantie van Global niet bevestigd.", "Met de hand afwassen en goed drogen, ook rond het scharnier.", "Japan · productieland onbekend", "Strak en zilver, past bij de Global-messen."] }
     ]},
   { id:'dunschiller', name:'Dunschiller', sub:'Het gereedschap dat iedereen heeft',
     tagline:'Licht Zwitsers aluminium of zwaar Duits RVS',
     L:'CH', Ll:'Zwitserland, 1947', R:'DE', Rl:'Marktoberdorf, RVS',
-    specs:['Materiaal','Garantie','Onderhoud','Stijl'],
+    specs:["Materiaal", "Gewicht", "Afmetingen", "Garantie", "Onderhoud", "Herkomst", "Karakter"],
     items:[
       { brand:'Victorinox', origin:'Zwitserland', model:'Victorinox REX 6.0900', founder:'Karl Elsener, 1884, Ibach',
-        desc:'Aluminium greep, RVS-mes, 14 gram. Ontworpen in 1947, levenslange garantie van Victorinox.',
-        bundle:'Microvezeldoek', price:6, tags:['Zwitsers','Aluminium','Sinds 1947'], life:30,
+        desc:"Aluminium handvat, RVS mesje, 14 g. Ontworpen in 1947, gemaakt in Zwitserland, met levenslange garantie van Victorinox.",
+        bundle:"Microvezeldoek", price:6, tags:["Zwitsers", "Aluminium", "Sinds 1947"], life:30,
         img:'img/victorinox-rex.png',
-        specVals:['Aluminium greep, roestvrij stalen mes. 14 gram.','Levenslang, volgens Victorinox op de productpagina.','Afspoelen en laten drogen.','Een Zwitsers icoon dat bijna niets weegt.'] },
+        specVals:["Aluminium handvat, RVS mesje.", "14 g", "11 × 6,5 × 1,2 cm", "Levenslang (fabrikant) op materiaal- en fabricagefouten.", "Niet in de vaatwasser. Afspoelen en laten drogen.", "Zwitserland · gemaakt in Zwitserland", "Een Zwitsers icoon dat bijna niets weegt."] },
       { brand:'Rösle', origin:'Duitsland', model:'Rösle Pendelschäler 12732', founder:'Rösle, 1888, Marktoberdorf',
-        desc:'Zware schiller in RVS 18/10 met een pendelmes. Het mes is los te vervangen, dus bot betekent niet weg.',
-        bundle:'Reservemesje (95979)', price:27, tags:['Duits','RVS 18/10','Vervangbaar mes'], life:20,
+        desc:"Zware dunschiller van RVS 18/10 met een pendelmes. Het mesje is te vervangen, dus bot betekent niet weggooien.",
+        bundle:"Reservemesje (95979)", price:27, tags:["Duits", "RVS 18/10", "Vervangbaar mesje"], life:20,
         img:'img/rosle-12732.png',
-        specVals:['RVS 18/10, mes los te vervangen (vervangmes 95979). Rechtshandig model.','Voorwaarden van Rösle voor de EU niet bevestigd. De levenslange garantie staat alleen in de Amerikaanse voorwaarden.','Afspoelen. Is het mes bot, dan vervang je alleen het mes.','Lang en zwaar, met ophangoog.'] }
+        specVals:["RVS 18/10, vervangbaar mesje (volgens winkel). Rechtshandig model.", "110 g (volgens winkel)", "19 cm (volgens winkel)", "2 jaar wettelijke garantie (EU). Extra garantie van Rösle niet bevestigd. Levenslang staat alleen in de Amerikaanse voorwaarden.", "Afspoelen. Wordt het mesje bot, dan vervang je alleen het mesje (95979).", "Duitsland · productieland onbekend", "Lang en zwaar, met ophangring."] }
     ]},
   { id:'peper-zout', name:'Peper & zout', sub:'Elke dag op tafel',
     tagline:'Warm hout of strak staal',
     L:'FR', Ll:'Frankrijk, beukenhout', R:'UK', Rl:'Londen, staal en acryl',
-    specs:['Materiaal','Garantie','Onderhoud','Stijl'],
+    specs:["Materiaal", "Gewicht", "Afmetingen", "Garantie", "Onderhoud", "Herkomst", "Karakter"],
     items:[
       { brand:'Peugeot', origin:'Frankrijk', model:"Peugeot Paris u'Select 18 cm (set)", founder:'Peugeot, 1810, Frankrijk',
-        desc:"Peper- en zoutmolen in beukenhout, elk met een eigen maalwerk. Met de u'Select-ring stel je de maalgrootte in. Peugeot maakt sinds 1840 molens. De prijs is voor de set (2 × €46,90).",
-        bundle:'Microvezeldoek', price:94, tags:['Frans','Beukenhout','Set van 2'], life:30,
+        desc:"Peper- en zoutmolen van beukenhout, elk met een eigen maalwerk. Met de u'Select-ring stel je de maling in. De prijs is voor de set van 2.",
+        bundle:"Microvezeldoek", price:94, tags:["Frans", "Beukenhout", "Set van 2"], life:30,
         img:'img/peugeot-paris-uselect.png',
-        specVals:['Beukenhout. Stalen maalwerk voor peper, apart maalwerk voor zout.','Levenslang op het maalwerk, 5 jaar op de behuizing (Peugeot). Openschroeven maakt de garantie ongeldig.','Droog houden, niet onder de kraan. Afnemen met een droge doek.','Warm en klassiek.'] },
+        specVals:["Beukenhout (volgens winkel). Stalen maalwerk voor peper, apart maalwerk voor zout.", "270 g per molen (volgens winkel)", "18 cm hoog", "Levenslang op het maalwerk, 5 jaar op de molen (fabrikant). Bewaar je bon. Openschroeven laat de garantie vervallen.", "Droog houden, niet onder de kraan. Afnemen met een droge doek.", "Frankrijk · productieland onbekend", "Warm en klassiek."] },
       { brand:'Cole & Mason', origin:'Engeland', model:'Cole & Mason Derwent (set)', founder:'Cole & Mason, 1919, Londen',
-        desc:'Peper- en zoutmolen in RVS en acryl, elk met een eigen maalwerk. De maalgrootte stel je in standen in. De prijs is voor de set (2 × €49,95).',
-        bundle:'Microvezeldoek', price:100, tags:['Engels','RVS en acryl','Set van 2'], life:30,
+        desc:"Peper- en zoutmolen van RVS en acryl, elk met een eigen maalwerk. De maling stel je in stappen in. De prijs is voor de set van 2.",
+        bundle:"Microvezeldoek", price:100, tags:["Engels", "Staal en acryl", "Set van 2"], life:30,
         img:'img/cole-mason-derwent.png',
-        specVals:['RVS en acryl. Aparte maalwerken voor peper en zout.','Levenslang op het maalwerk, 2 jaar op de rest (Cole & Mason).','Afnemen met een vochtige doek. Door het acryl zie je wanneer hij bijna leeg is.','Strak en modern.'] }
+        specVals:["RVS en acryl (volgens winkel). Aparte maalwerken voor peper en zout.", "Onbekend", "19 cm hoog, Ø 6 cm (volgens winkel)", "2 jaar wettelijke garantie (EU). Extra garantie van Cole & Mason niet bevestigd. Levenslang op het maalwerk geldt voor de Precision-lijnen; of de Derwent daaronder valt, is niet bevestigd.", "Afnemen met een vochtige doek. Door het acryl zie je wanneer hij bijna leeg is.", "Verenigd Koninkrijk · productieland onbekend", "Strak en modern."] }
     ]},
   { id:'ijsschep', name:'IJsschep', sub:'Ook door hard bevroren ijs',
     tagline:'Amerikaans retro-aluminium of Frans RVS',
     L:'US', Ll:'Toledo, 1935', R:'FR', Rl:'Fesches-le-Châtel, RVS',
-    specs:['Materiaal','Garantie','Onderhoud','Stijl'],
+    specs:["Materiaal", "Gewicht", "Afmetingen", "Garantie", "Onderhoud", "Herkomst", "Karakter"],
     items:[
       { brand:'Zeroll', origin:'Amerika', model:'Zeroll 1020 Original', founder:'Sherman L. Kelly, 1935, Toledo',
-        desc:'Massief aluminium uit één stuk, met een warmtegeleidende vloeistof in de steel. Geen bewegende delen. Sinds 1935 vrijwel hetzelfde ontwerp.',
-        bundle:'Microvezeldoek', price:29, tags:['Amerikaans','Aluminium','Sinds 1935'], life:30,
+        desc:"Massief aluminium uit één stuk, met warmtegeleidende vloeistof in het handvat. Geen bewegende delen. Vrijwel hetzelfde ontwerp sinds 1935.",
+        bundle:"Microvezeldoek", price:29, tags:["Amerikaans", "Aluminium", "Sinds 1935"], life:30,
         img:'img/zeroll-1020.png',
-        specVals:['Massief aluminium uit één stuk, vloeistof in de steel. Maat 20 (2 oz).','Zeroll vermeldt geen garantie.','Met de hand afwassen. Niet in de vaatwasser.','Retro en zwaar in de hand.'] },
+        specVals:["Aluminiumlegering, handvat met vloeistof (volgens winkel).", "Onbekend", "Maat 20 (59 ml)", "2 jaar wettelijke garantie (EU). Extra garantie van Zeroll niet bevestigd.", "Met de hand afwassen, niet in de vaatwasser (volgens winkel).", "VS · productieland onbekend", "Retro en zwaar in de hand."] },
       { brand:'Cristel', origin:'Frankrijk', model:'Cristel ijsschep RVS', founder:'Frédéric Japy, 1826, Fesches-le-Châtel',
-        desc:'Geheel RVS, zonder veer of rubber, dus niets dat slijt. Gemaakt in de eigen fabriek in Frankrijk.',
-        bundle:'Microvezeldoek', price:25, tags:['Frans','RVS','Eigen fabriek'], life:30,
+        desc:"Helemaal RVS, zonder veer of rubber, dus er slijt niets. 80 g en mag in de vaatwasser. Levenslange garantie van Cristel.",
+        bundle:"Microvezeldoek", price:25, tags:["Frans", "RVS", "Geen mechaniek"], life:30,
         img:'img/cristel-tcacg.png',
-        specVals:['RVS schep en geborstelde RVS steel. Geen mechaniek.','Levenslang tegen fabricagefouten, volgens Cristel op de productpagina.','Afwassen en afdrogen.','Strak en Frans.'] }
+        specVals:["RVS schep, geborsteld RVS handvat. Geen mechaniek.", "80 g", "Ø 5 cm, 20 cm lang", "Levenslang (fabrikant) op fabricagefouten.", "Vaatwasserbestendig.", "Frankrijk · niet in Frankrijk gemaakt (land niet vermeld)", "Strak en Frans."] }
     ]},
   { id:'kookpan', name:'Kookpan', sub:'Soep, stoof en pasta',
     tagline:'Warm gietijzer of strak RVS',
     L:'FR', Ll:'Fresnaye, gietijzer', R:'BE', Rl:'Antwerpen, RVS',
-    specs:['Materiaal','Garantie','Onderhoud','Stijl'],
+    specs:["Materiaal", "Gewicht", "Afmetingen", "Garantie", "Onderhoud", "Herkomst", "Karakter"],
     items:[
       { brand:'Le Creuset', origin:'Frankrijk', model:'Le Creuset Signature 24 cm', founder:'Le Creuset, 1925, Fresnaye-sur-Chédouet',
-        desc:'Geëmailleerd gietijzer, 4,2 liter. Zwaar en warm van kleur. Gietijzer slijt niet.',
-        bundle:'Zachte afwasborstel', price:204, tags:['Frans','Gietijzer','Sinds 1925'], life:40,
+        desc:"Geëmailleerd gietijzer, 4,2 l, 4,3 kg. Zwaar en warm van kleur. Le Creuset geeft levenslange garantie op het gietijzer.",
+        bundle:"Zachte afwasborstel", price:204, tags:["Frans", "Gietijzer", "Sinds 1925"], life:40,
         img:'img/le-creuset-signature-24.png',
-        specVals:['Geëmailleerd gietijzer, 24 cm, 4,2 liter.','Levenslang volgens een winkel. Bij Le Creuset zelf nog niet nagekeken.','Emaille niet droog verhitten. Geen metalen schuursponsje.','Kleurrijk en Frans.'] },
+        specVals:["Geëmailleerd gietijzer.", "4,3 kg (volgens winkel)", "Ø 24 cm, 4,2 l", "Levenslang (fabrikant) op het gietijzer. Niet bij verkeerd gebruik of normale slijtage.", "Emaille niet droog verhitten. Geen metalen schuursponsje.", "Frankrijk · productieland onbekend", "Kleurrijk en Frans."] },
       { brand:'Demeyere', origin:'België', model:'Demeyere Industry 5 24 cm', founder:'Demeyere, 1908, Antwerpen',
-        desc:'5-laags RVS, 5,2 liter, met deksel. RVS kan tegen een stootje, ook tegen schuren.',
-        bundle:'RVS-reiniger', price:189, tags:['Belgisch','5-laags RVS','Sinds 1908'], life:40,
+        desc:"5-laags RVS 18/10 met deksel. Inhoud 5,2 l, gemaakt in België. RVS kan tegen een stootje en mag in de vaatwasser.",
+        bundle:"RVS-reiniger", price:189, tags:["Belgisch", "5-laags RVS", "Sinds 1908"], life:40,
         img:'img/demeyere-industry5-24.png',
-        specVals:['5-laags roestvrij staal, 24 cm, 5,2 liter, met deksel.','30 jaar op productiefouten bij huishoudelijk gebruik (Demeyere).','Mag alles. Verkleuring haal je weg met azijn of RVS-reiniger.','Strak en zilver.'] }
+        specVals:["5-laags RVS 18/10, Silvinox-afwerking, met deksel.", "2,55 kg", "Ø 24 cm, 5,2 l", "30 jaar (fabrikant) op productiefouten bij huishoudelijk gebruik.", "Vaatwasserbestendig. Verkleuring haal je weg met azijn of RVS-reiniger.", "België · gemaakt in België", "Strak en zilver."] }
     ]},
   { id:'waterpomptang', name:'Waterpomptang', sub:'Voor elke buis en moer in huis',
     tagline:'Grijs en zelfklemmend of verchroomd',
     L:'DE', Ll:'Wuppertal, zelfklemmend', R:'DE', Rl:'Remscheid, verchroomd',
-    specs:['Materiaal','Garantie','Onderhoud','Stijl'],
+    specs:["Materiaal", "Gewicht", "Afmetingen", "Garantie", "Onderhoud", "Herkomst", "Karakter"],
     items:[
       { brand:'Knipex', origin:'Duitsland', model:'Knipex Cobra 87 01 250', founder:'C. Gustav Putsch, 1882, Wuppertal',
-        desc:'Grijs geatramenteerd staal, 250 mm, rode grepen. Klemt zichzelf vast op buis en moer, zonder door te slippen. 1e van 12 in de waterpomptangtest van Project Farm (okt 2021). Gemaakt in Duitsland.',
-        bundle:'Microvezeldoek', price:26, tags:['Duits','Zelfklemmend','Sinds 1882'], life:30,
+        desc:"Grijs geatramenteerd chroomvanadiumstaal, 250 mm, rode grepen. Klemt zichzelf vast op buis en moer. 1e van 12 in de test van Project Farm (okt 2021).",
+        bundle:"Microvezeldoek", price:26, tags:["Duits", "Chroomvanadiumstaal", "Sinds 1882"], life:30,
         img:'img/tang-knipex-cobra-8701250.png',
-        specVals:['Grijs geatramenteerd staal, grepen met antislip-kunststof. 250 mm.','Fabrieksgarantie van Knipex niet bevestigd.','Af en toe een druppel olie op het scharnier. Droog opbergen.','Gereedschap. Grijs met rode grepen.'] },
+        specVals:["Chroomvanadiumstaal, grijs geatramenteerd (volgens winkel). Grepen met antislip-kunststof.", "Onbekend", "250 mm", "2 jaar wettelijke garantie (EU). Extra garantie van Knipex niet bevestigd. Levenslang geldt alleen in de VS en Canada.", "Af en toe een druppel olie op het scharnier. Droog opbergen.", "Duitsland (Wuppertal) · productieland onbekend", "Een gereedschap. Grijs met rode grepen."] },
       { brand:'Gedore', origin:'Duitsland', model:'Gedore 142 10 JC', founder:'Gedore, 1919, Remscheid',
-        desc:'Verchroomd staal, 250 mm, tweecomponenten-grepen. Een klassieke werkplaatstang. 2e van 12 in dezelfde test van Project Farm (okt 2021).',
-        bundle:'Microvezeldoek', price:33, tags:['Duits','Verchroomd','Sinds 1919'], life:30,
+        desc:"Verchroomd chroomvanadiumstaal, 250 mm, 370 g, tweecomponenten-grepen. Een klassieke werkplaatstang. 2e van 12 in dezelfde test van Project Farm (okt 2021).",
+        bundle:"Microvezeldoek", price:33, tags:["Duits", "Verchroomd", "Sinds 1919"], life:30,
         img:'img/tang-gedore-14210jc.png',
-        specVals:['Verchroomd staal, tweecomponenten-grepen. 250 mm.','Fabrieksgarantie van Gedore niet bevestigd.','Af en toe een druppel olie op het scharnier. Droog afvegen.','Glanzend chroom met blauwe grepen.'] }
+        specVals:["Chroomvanadiumstaal, verchroomd, tweecomponenten-grepen.", "370 g", "250 mm", "2 jaar wettelijke garantie (EU). Extra garantie van Gedore niet bevestigd.", "Af en toe een druppel olie op het scharnier. Droog afvegen.", "Duitsland · productieland onbekend", "Glanzend chroom met blauwe grepen."] }
     ]}
 ];
 // Voorlopig verborgen tot de foto's per paar hetzelfde aanzicht hebben; leegmaken om terug te zetten.
