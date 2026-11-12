@@ -1335,6 +1335,10 @@ var catTrans = {
   kookpan:{name:'Stockpot',sub:'Soup, stew and pasta',tagline:'Warm cast iron or sleek steel',Ll:'Fresnaye, cast iron',Rl:'Antwerp, stainless steel',items:[
     {desc:'Enamelled cast iron, 4.2 litres. Heavy and warm in colour. Cast iron doesn’t wear out.',bundle:'Soft dish brush',tags:['French','Cast iron','Since 1925'],specVals:['Enamelled cast iron, 24 cm, 4.2 litres.','Lifetime according to a retailer. Not yet checked with Le Creuset itself.','Don’t heat the enamel empty. No metal scourers.','Colourful and French.']},
     {desc:'5-ply stainless steel, 5.2 litres, with lid. Stainless steel can take a beating, scouring included.',bundle:'Stainless steel cleaner',tags:['Belgian','5-ply stainless steel','Since 1908'],specVals:['5-ply stainless steel, 24 cm, 5.2 litres, with lid.','30 years on manufacturing defects for household use (Demeyere).','Anything goes. Remove discolouration with vinegar or steel cleaner.','Sleek and silver.']}
+  ]},
+  waterpomptang:{name:'Water Pump Pliers',sub:'For every pipe and nut in the house',tagline:'Grey and self-locking or chrome-plated',Ll:'Wuppertal, self-locking',Rl:'Remscheid, chrome-plated',items:[
+    {desc:'Grey atramentised steel, 250 mm, red handles. Locks onto pipe and nut by itself, without slipping. First of 12 in the Project Farm water pump pliers test (Oct 2021). Made in Germany.',bundle:'Microfibre cloth',tags:['German','Self-locking','Since 1882'],specVals:['Grey atramentised steel, handles with a non-slip plastic coating. 250 mm.','Knipex’s manufacturer warranty not confirmed.','A drop of oil on the joint now and then. Store dry.','A tool. Grey with red handles.']},
+    {desc:'Chrome-plated steel, 250 mm, two-component handles. A classic workshop plier. Second of 12 in the same Project Farm test (Oct 2021).',bundle:'Microfibre cloth',tags:['German','Chrome-plated','Since 1919'],specVals:['Chrome-plated steel, two-component handles. 250 mm.','Gedore’s manufacturer warranty not confirmed.','A drop of oil on the joint now and then. Wipe dry.','Shiny chrome with blue handles.']}
   ]}
 };
 var catTransNo = {
@@ -1369,6 +1373,10 @@ var catTransNo = {
   kookpan:{name:'Gryte',sub:'Suppe, gryterett og pasta',tagline:'Varmt støpejern eller stramt stål',Ll:'Fresnaye, støpejern',Rl:'Antwerpen, rustfritt stål',items:[
     {desc:'Emaljert støpejern, 4,2 liter. Tung og varm i fargen. Støpejern slites ikke.',bundle:'Myk oppvaskbørste',tags:['Fransk','Støpejern','Siden 1925'],specVals:['Emaljert støpejern, 24 cm, 4,2 liter.','Livstid ifølge en forhandler. Ikke sjekket hos Le Creuset selv.','Ikke varm opp emaljen tom. Ingen skuresvamp i metall.','Fargerik og fransk.']},
     {desc:'5-lags rustfritt stål, 5,2 liter, med lokk. Rustfritt stål tåler en støyt, også skuring.',bundle:'Rengjøringsmiddel for rustfritt stål',tags:['Belgisk','5-lags rustfritt stål','Siden 1908'],specVals:['5-lags rustfritt stål, 24 cm, 5,2 liter, med lokk.','30 år på produksjonsfeil ved bruk i husholdningen (Demeyere).','Alt er lov. Misfarging fjerner du med eddik eller stålrens.','Stram og sølvfarget.']}
+  ]},
+  waterpomptang:{name:'Vannpumpetang',sub:'For hvert rør og hver mutter i huset',tagline:'Grå og selvlåsende eller forkrommet',Ll:'Wuppertal, selvlåsende',Rl:'Remscheid, forkrommet',items:[
+    {desc:'Grå atramentert stål, 250 mm, røde håndtak. Låser seg selv fast på rør og mutter, uten å skli. Nummer 1 av 12 i Project Farms test av vannpumpetenger (okt. 2021). Laget i Tyskland.',bundle:'Mikrofiberklut',tags:['Tysk','Selvlåsende','Siden 1882'],specVals:['Grå atramentert stål, håndtak med sklisikkert plastbelegg. 250 mm.','Knipex’ produsentgaranti er ikke bekreftet.','En dråpe olje på leddet av og til. Oppbevares tørt.','Et verktøy. Grå med røde håndtak.']},
+    {desc:'Forkrommet stål, 250 mm, tokomponent-håndtak. En klassisk verkstedtang. Nummer 2 av 12 i samme test fra Project Farm (okt. 2021).',bundle:'Mikrofiberklut',tags:['Tysk','Forkrommet','Siden 1919'],specVals:['Forkrommet stål, tokomponent-håndtak. 250 mm.','Gedores produsentgaranti er ikke bekreftet.','En dråpe olje på leddet av og til. Tørk av.','Blank krom med blå håndtak.']}
   ]}
 };
 function tc(c,f){ var tr=(curLang==='no'&&catTransNo[c.id])||catTrans[c.id]; var useTr=(curLang==='en'||curLang==='no'); return useTr&&tr&&tr[f]!==undefined?tr[f]:c[f]; }
@@ -1960,6 +1968,22 @@ var cats = [
         bundle:'RVS-reiniger', price:189, tags:['Belgisch','5-laags RVS','Sinds 1908'], life:40,
         img:'img/demeyere-industry5-24.png',
         specVals:['5-laags roestvrij staal, 24 cm, 5,2 liter, met deksel.','30 jaar op productiefouten bij huishoudelijk gebruik (Demeyere).','Mag alles. Verkleuring haal je weg met azijn of RVS-reiniger.','Strak en zilver.'] }
+    ]},
+  { id:'waterpomptang', name:'Waterpomptang', sub:'Voor elke buis en moer in huis',
+    tagline:'Grijs en zelfklemmend of verchroomd',
+    L:'DE', Ll:'Wuppertal, zelfklemmend', R:'DE', Rl:'Remscheid, verchroomd',
+    specs:['Materiaal','Garantie','Onderhoud','Stijl'],
+    items:[
+      { brand:'Knipex', origin:'Duitsland', model:'Knipex Cobra 87 01 250', founder:'C. Gustav Putsch, 1882, Wuppertal',
+        desc:'Grijs geatramenteerd staal, 250 mm, rode grepen. Klemt zichzelf vast op buis en moer, zonder door te slippen. 1e van 12 in de waterpomptangtest van Project Farm (okt 2021). Gemaakt in Duitsland.',
+        bundle:'Microvezeldoek', price:26, tags:['Duits','Zelfklemmend','Sinds 1882'], life:30,
+        img:'img/tang-knipex-cobra-8701250.png',
+        specVals:['Grijs geatramenteerd staal, grepen met antislip-kunststof. 250 mm.','Fabrieksgarantie van Knipex niet bevestigd.','Af en toe een druppel olie op het scharnier. Droog opbergen.','Gereedschap. Grijs met rode grepen.'] },
+      { brand:'Gedore', origin:'Duitsland', model:'Gedore 142 10 JC', founder:'Gedore, 1919, Remscheid',
+        desc:'Verchroomd staal, 250 mm, tweecomponenten-grepen. Een klassieke werkplaatstang. 2e van 12 in dezelfde test van Project Farm (okt 2021).',
+        bundle:'Microvezeldoek', price:33, tags:['Duits','Verchroomd','Sinds 1919'], life:30,
+        img:'img/tang-gedore-14210jc.png',
+        specVals:['Verchroomd staal, tweecomponenten-grepen. 250 mm.','Fabrieksgarantie van Gedore niet bevestigd.','Af en toe een druppel olie op het scharnier. Droog afvegen.','Glanzend chroom met blauwe grepen.'] }
     ]}
 ];
 // Voorlopig verborgen tot de foto's per paar hetzelfde aanzicht hebben; leegmaken om terug te zetten.
