@@ -790,6 +790,24 @@ a { color: inherit; text-decoration: none; }
   .founder-avatar { width: 48px; height: 48px; font-size: 18px; }
   .optout-tooltip { width: 220px; left: 0; transform: none; }
 }
+.footer-links { display: flex; gap: 18px; justify-content: center; margin-top: 12px; flex-wrap: wrap; }
+.footer-links a, .kist-retour, .pp-confirm a, .info-page a { color: var(--dark); font-size: 11px; text-decoration: underline; text-underline-offset: 2px; }
+.kist-retour { display: inline-block; margin: -10px 0 14px; color: var(--dim); }
+.kist-notice { display: none; margin: 0 24px; padding: 10px 14px; background: var(--bg2); border-radius: 8px; font-size: 13px; color: var(--dark); }
+.kist-notice.show { display: block; }
+.pp-confirm { margin-top: 10px; padding: 12px 16px; background: var(--bg2); border-radius: 8px; font-size: 13px; color: var(--dark); text-align: center; line-height: 1.5; }
+.pp-confirm a { font-size: 13px; font-weight: 700; margin-left: 6px; }
+.care-what { font-size: 13px; color: var(--dim); line-height: 1.6; margin-bottom: 4px; }
+.info-page section { padding: 8px 0 32px; border-bottom: 1px solid var(--border); margin-bottom: 24px; scroll-margin-top: 80px; }
+.info-page section:last-child { border-bottom: 0; }
+.info-page h2 { font-family: var(--serif); font-weight: 400; font-size: 26px; margin-bottom: 12px; }
+.info-page h4 { font-size: 14px; font-weight: 700; margin: 20px 0 6px; }
+.info-page p, .info-page li { font-size: 14px; color: var(--dim); line-height: 1.7; }
+.info-page p + p, .info-page ol + p, .info-page ul + p { margin-top: 10px; }
+.info-page ul, .info-page ol { padding-left: 20px; }
+.info-page a { font-size: 14px; }
+.info-concept { display: inline-block; font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); border: 1px solid var(--border); border-radius: 6px; padding: 3px 8px; margin-bottom: 14px; }
+.split-wrap.nudging .split-slash-svg, .split-wrap.nudging .split-photo { transition: transform .9s ease-in-out, clip-path .9s ease-in-out; }
 </style>
 </head>
 <body>
@@ -928,6 +946,7 @@ a { color: inherit; text-decoration: none; }
   <div style="text-align:center;">
     <div class="logo logo-sm"><span class="logo-was">was</span><span class="logo-slash"></span><span class="logo-dom">dom</span></div>
     <div style="font-size:10px;color:var(--muted);margin-top:6px;line-height:1.5;max-width:280px;margin-left:auto;margin-right:auto;">Gecureerd huisraad dat generaties meegaat, met de zorg om dat ook echt waar te maken.</div>
+    <div class="footer-links"><a href="#bezorging" onclick="openInfo('bezorging');return false;" data-i="fBezorging"></a><a href="#retour" onclick="openInfo('retour');return false;" data-i="fRetour"></a><a href="#contact" onclick="openInfo('contact');return false;" data-i="fContact"></a></div>
   </div>
   <div class="footer-flags" id="footerFlags">
     <button class="footer-flag" data-lang="nl" onclick="setLang('nl')"><div class="flag-wrap" data-flag="nl"></div></button>
@@ -985,6 +1004,16 @@ a { color: inherit; text-decoration: none; }
   </div>
 </div>
 
+<!-- ==================== INFO PAGE (bezorging / retour / contact) ==================== -->
+<div class="product-page" id="infoPage">
+  <div class="section info-page" style="max-width:680px;">
+    <button class="back-btn" onclick="goHome()">← Terug</button>
+    <section id="info-bezorging"><h2 data-i="fBezorging"></h2><div data-ih="infoBezP"></div></section>
+    <section id="info-retour"><h2 data-i="fRetour"></h2><div class="info-concept" data-i="concept"></div><div data-ih="infoRetP"></div></section>
+    <section id="info-contact"><h2 data-i="fContact"></h2><div data-ih="infoConP"></div></section>
+  </div>
+</div>
+
 <!-- ==================== KIST DRAWER ==================== -->
 <div class="kist-overlay" id="kistOverlay" onclick="toggleKist()"></div>
 <div class="kist-drawer" id="kistDrawer">
@@ -992,10 +1021,12 @@ a { color: inherit; text-decoration: none; }
     <h3><svg><use href="#ic-kist"/></svg> Mijn kist</h3>
     <button class="kist-close" onclick="toggleKist()">×</button>
   </div>
+  <div class="kist-notice" id="kistNotice" role="status" data-i="mandNog"></div>
   <div class="kist-items" id="kistItems"><div class="kist-empty">Je kist is nog leeg.<br>Met welke producten ga jij door het leven?</div></div>
   <div class="kist-footer">
     <div class="kist-total"><span>Totaal</span><span id="kistTotal">€0</span></div>
     <div class="kist-ship">Verzending €4,95 · PostNL · binnen 3 werkdagen · track & trace</div>
+    <a class="kist-retour" href="#retour" onclick="toggleKist();openInfo('retour');return false;" data-i="fRetour"></a>
     <button class="kist-pay" id="checkoutBtn" onclick="openCheckout()" disabled>Keuze definitief</button>
   </div>
 </div>
@@ -1022,7 +1053,7 @@ a { color: inherit; text-decoration: none; }
         </div>
         <div style="font-size:11px;color:var(--muted);padding:8px 0 4px;line-height:1.5;">Verzendkosten: €4,95 · Alles in één keer bezorgd · Altijd met track & trace</div>
         <button class="modal-pay-btn" id="shipBtn" onclick="goToPayment()">Verder naar betalen</button>
-        <button class="modal-close-btn" onclick="closeCheckout()">Annuleren</button>
+        <button class="modal-close-btn" onclick="cancelCheckout()">Annuleren</button>
       </div>
     </div>
     <div class="step" id="step1">
@@ -1058,7 +1089,7 @@ a { color: inherit; text-decoration: none; }
           <div class="modal-ideal-check">●</div>
         </div>
         <button class="modal-pay-btn" id="payBtn" onclick="showSignup()" disabled>Betaal <span id="payAmount"></span></button>
-        <button class="modal-close-btn" onclick="closeCheckout()">Annuleren</button>
+        <button class="modal-close-btn" onclick="cancelCheckout()">Annuleren</button>
       </div>
     </div>
     <div class="step" id="step2">
@@ -1116,7 +1147,9 @@ var ui = {
     voegToe:'Voeg toe aan mijn kist', goedeKeuze:'Goede keuze.',
     onderhoudLabel:'Onderhoud inbegrepen',
     onderhoudLT:'Dit product heeft lifetime garantie. Onderhoud is niet nodig — als er iets kapot gaat, wordt het vervangen.',
-    inclusief:'Inclusief: ', optOut:'Ik heb al eigen onderhoudsspullen',
+    inclusief:'Inclusief: ',
+    careKitIs:'De care kit is het onderhoudssetje dat we bij dit product in de doos doen, zodat het lang meegaat.', geenPrijsverschil:'geen prijsverschil', totaalIncl:'Totaal incl. verzending', toegevoegd:'Toegevoegd aan je kist: ', bekijkKist:'Bekijk je kist', mandNog:'Betaling geannuleerd. Je kist staat er nog.', fBezorging:'Bezorging', fRetour:'Retour & garantie', fContact:'Contact', concept:'Concept, nog niet definitief', infoBezP:'<ul><li>Verzendkosten: €4,95 per bestelling</li><li>PostNL, thuisbezorgd of naar een afhaalpunt</li><li>Binnen 3 werkdagen</li><li>Alles in één keer bezorgd</li><li>Altijd met track & trace</li></ul>', infoRetP:'<p><b>Wat was/dom zelf dekt.</b> 14 dagen bedenktijd, de wettelijke garantie van minstens 2 jaar (wij zijn je aanspreekpunt), en daarna hulp bij de garantie van de fabrikant. We hebben zorgvuldig gekozen, dus hopelijk heb je deze pagina niet nodig.</p><h4>14 dagen bedenktijd</h4><p>Je hebt 14 dagen vanaf de dag dat je je bestelling ontvangt om hem terug te sturen, zonder opgave van reden.</p><h4>Zo werkt een retour</h4><ol><li>Mail binnen die 14 dagen naar wasdom.forlife@gmail.com wat je wilt terugsturen.</li><li>Je krijgt van ons het retouradres en de instructies.</li><li>Stuur het product binnen 14 dagen na je mail terug. De retourkosten zijn voor jou.</li><li>Als we het hebben ontvangen en gecontroleerd, betalen we het aankoopbedrag terug, inclusief de oorspronkelijke verzendkosten, binnen 14 dagen na je mail.</li></ol><p>De care kit al geopend? Die mag je houden. Is een product meer gebruikt dan nodig om het te proberen, dan kunnen we de waardevermindering inhouden.</p><h4>Garantie</h4><p><b>Wettelijke garantie, minstens 2 jaar.</b> Een product moet doen wat je er redelijkerwijs van mag verwachten. Gaat er in die tijd iets mis dat niet door gebruik of slijtage komt, dan regelen wij herstel of vervanging. Je hebt met ons te maken, niet met het merk.</p><p><b>Garantie van de fabrikant.</b> Veel merken geven daarbovenop hun eigen garantie, soms levenslang. Die staat per product op de productpagina. Dat is een belofte van de fabrikant, niet van ons; na de wettelijke termijn helpen we je die te claimen.</p>', infoConP:'<p>Vragen over een bestelling, een retour of een product: <a href="mailto:wasdom.forlife@gmail.com">wasdom.forlife@gmail.com</a></p>',
+    optOut:'Ik heb al eigen onderhoudsspullen',
     levensduur:'Levensduur', lifetime:'lifetime',
     postLine:'PostNL · binnen 3 werkdagen · thuis of afhaalpunt · track & trace',
     zonderOnderhoud:'Zonder onderhoudset',
@@ -1160,7 +1193,9 @@ var ui = {
     voegToe:'Add to my chest', goedeKeuze:'Good choice.',
     onderhoudLabel:'Care included',
     onderhoudLT:'This product has a lifetime warranty. No maintenance needed — if something breaks, it gets replaced.',
-    inclusief:'In the box: ', optOut:'I already have my own care products',
+    inclusief:'In the box: ',
+    careKitIs:'The care kit is the small maintenance set we pack in the box with this product, so it lasts.', geenPrijsverschil:'no price difference', totaalIncl:'Total incl. shipping', toegevoegd:'Added to your chest: ', bekijkKist:'View chest', mandNog:'Payment cancelled. Your chest is still here.', fBezorging:'Delivery', fRetour:'Returns & warranty', fContact:'Contact', concept:'Draft, not final yet', infoBezP:'<ul><li>Shipping: €4.95 per order</li><li>PostNL, delivered at home or to a pickup point</li><li>Within 3 business days</li><li>Everything in one delivery</li><li>Always with track & trace</li></ul>', infoRetP:'<p><b>What was/dom covers.</b> 14 days to change your mind, the legal guarantee of at least 2 years (we are your point of contact), and after that, help with the manufacturer’s warranty. We chose carefully, so we hope you never need this page.</p><h4>14 days to change your mind</h4><p>You have 14 days from the day you receive your order to send it back, without giving a reason.</p><h4>How a return works</h4><ol><li>Within those 14 days, email wasdom.forlife@gmail.com and tell us what you want to return.</li><li>We reply with the return address and instructions.</li><li>Send the product back within 14 days of your email. Return shipping is paid by you.</li><li>Once we have received and checked it, we refund the purchase price, including the original shipping cost, within 14 days of your email.</li></ol><p>Opened the care kit? You can keep it. If a product has been used more than needed to try it, we may deduct the loss in value.</p><h4>Warranty</h4><p><b>Legal guarantee, at least 2 years.</b> A product has to do what you can reasonably expect of it. If something goes wrong in that time that is not caused by use or wear, we arrange repair or replacement. You deal with us, not the brand.</p><p><b>Manufacturer’s warranty.</b> Many brands add their own warranty on top, sometimes for life. It is listed per product on the product page. That is the manufacturer’s promise, not ours; after the legal period we help you claim it.</p>', infoConP:'<p>Questions about an order, a return or a product: <a href="mailto:wasdom.forlife@gmail.com">wasdom.forlife@gmail.com</a></p>',
+    optOut:'I already have my own care products',
     levensduur:'Lifespan', lifetime:'lifetime',
     postLine:'PostNL · within 3 business days · home or pickup · track & trace',
     zonderOnderhoud:'Without care kit',
@@ -1204,7 +1239,9 @@ var ui = {
     voegToe:'Legg til i kisten min', goedeKeuze:'Godt valg.',
     onderhoudLabel:'Vedlikehold inkludert',
     onderhoudLT:'Dette produktet har livstidsgaranti. Vedlikehold er ikke nødvendig — hvis noe går i stykker, blir det erstattet.',
-    inclusief:'Inkluderer: ', optOut:'Jeg har allerede eget vedlikeholdsutstyr',
+    inclusief:'Inkluderer: ',
+    careKitIs:'Vedlikeholdssettet er det lille settet vi legger i esken med dette produktet, slik at det varer.', geenPrijsverschil:'ingen prisforskjell', totaalIncl:'Totalt inkl. frakt', toegevoegd:'Lagt i kisten din: ', bekijkKist:'Se kisten', mandNog:'Betalingen ble avbrutt. Kisten din er der fortsatt.', fBezorging:'Levering', fRetour:'Retur og garanti', fContact:'Kontakt', concept:'Utkast, ikke endelig', infoBezP:'<ul><li>Frakt: €4,95 per bestilling</li><li>PostNL, levert hjem eller til et hentepunkt</li><li>Innen 3 virkedager</li><li>Alt i én levering</li><li>Alltid med sporing</li></ul>', infoRetP:'<p><b>Hva was/dom dekker.</b> 14 dagers angrerett, den lovfestede reklamasjonsretten på minst 2 år (vi er kontaktpunktet ditt), og deretter hjelp med produsentens garanti. Vi har valgt med omhu, så forhåpentligvis trenger du aldri denne siden.</p><h4>14 dagers angrerett</h4><p>Du har 14 dager fra dagen du mottar bestillingen til å sende den tilbake, uten å oppgi grunn.</p><h4>Slik fungerer en retur</h4><ol><li>Send en e-post til wasdom.forlife@gmail.com innen de 14 dagene og fortell hva du vil returnere.</li><li>Vi svarer med returadresse og instruksjoner.</li><li>Send produktet tilbake innen 14 dager etter e-posten din. Returfrakten betaler du selv.</li><li>Når vi har mottatt og sjekket det, betaler vi tilbake kjøpesummen, inkludert den opprinnelige frakten, innen 14 dager etter e-posten din.</li></ol><p>Har du åpnet vedlikeholdssettet? Det kan du beholde. Er et produkt brukt mer enn nødvendig for å prøve det, kan vi trekke fra verditapet.</p><h4>Garanti</h4><p><b>Reklamasjonsrett, minst 2 år.</b> Et produkt skal gjøre det du med rimelighet kan forvente. Går noe galt i den perioden som ikke skyldes bruk eller slitasje, ordner vi reparasjon eller erstatning. Du har med oss å gjøre, ikke merket.</p><p><b>Produsentens garanti.</b> Mange merker gir i tillegg sin egen garanti, noen ganger livslang. Den står per produkt på produktsiden. Det er produsentens løfte, ikke vårt; etter reklamasjonsperioden hjelper vi deg å bruke den.</p>', infoConP:'<p>Spørsmål om en bestilling, en retur eller et produkt: <a href="mailto:wasdom.forlife@gmail.com">wasdom.forlife@gmail.com</a></p>',
+    optOut:'Jeg har allerede eget vedlikeholdsutstyr',
     levensduur:'Levetid', lifetime:'livstid',
     postLine:'PostNL · innen 3 virkedager · hjem eller hentepunkt · sporing',
     zonderOnderhoud:'Uten vedlikeholdssett',
@@ -1264,7 +1301,7 @@ var catTrans = {
   ]},
   multitool:{name:"Multitool",sub:"21 tools in your pocket",tagline:"American ruggedness or Swiss precision",Ll:"Portland, rugged",Rl:"Ibach, precise",items:[
     {desc:"Leatherman’s heaviest model, with 21 tools and replaceable wire cutters. 25 years warranty from Leatherman. For hands that work.",bundle:"Pivot oil + sharpening kit + polishing cloth",tags:["American", "Stainless steel", "Replaceable cutters"],specVals:["420HC stainless steel (according to retailer).", "335 g (according to retailer)", "11.4 cm closed (according to retailer)", "25 years (manufacturer) on material and workmanship defects. Original owner, bought from an authorised dealer.", "Unknown", "USA · made in the USA (Portland), with US and global parts", "21 tools, including replaceable wire cutters.", "Rugged and heavy."]},
-    {desc:"Swiss steel, 24 functions, 209 g. Lighter than the Surge and easier to carry every day. Lifetime warranty from Victorinox.",bundle:"Pivot oil + sharpening kit + polishing cloth",tags:["Swiss", "Stainless steel", "24 functions"],specVals:["Stainless steel.", "209 g", "10.5 × 3.5 × 1.8 cm", "Lifetime (manufacturer) on material and manufacturing defects. Keep your receipt.", "Unknown", "Switzerland · made in Switzerland", "24 functions.", "Sleek and precise."]}
+    {desc:"Swiss steel, 24 functions, 209 g. Lighter than the Leatherman Surge and easier to carry every day. Lifetime warranty from Victorinox.",bundle:"Pivot oil + sharpening kit + polishing cloth",tags:["Swiss", "Stainless steel", "24 functions"],specVals:["Stainless steel.", "209 g", "10.5 × 3.5 × 1.8 cm", "Lifetime (manufacturer) on material and manufacturing defects. Keep your receipt.", "Unknown", "Switzerland · made in Switzerland", "24 functions.", "Sleek and precise."]}
   ]},
   koptelefoon:{name:"Headphones",sub:"Studio quality, at home",tagline:"Block everything out or let everything in",Ll:"Closed-back, isolating",Rl:"Open-back, spacious",items:[
     {desc:"Closed-back studio headphones, 80 ohms, handcrafted in Germany. Ear pads, headband, cable and drivers can all be replaced.",bundle:"Spare set of velour ear pads",tags:["German", "Spring steel and velour", "Replaceable parts"],specVals:["Spring-steel headband, replaceable velour ear pads.", "270 g without cable, 375 g with cable", "Unknown", "2 years (manufacturer) on defects. Ear pads are wear parts and not covered.", "Ear pads, headband, cable and drivers available as spare parts.", "Germany · made in Germany", "Closed-back. Keeps ambient noise out.", "80 ohms. Works on a laptop or phone without an amplifier.", "Studio, black, no frills."]},
@@ -1350,7 +1387,7 @@ var catTransNo = {
   ]},
   multitool:{name:"Multiverktøy",sub:"21 verktøy i lomma",tagline:"Amerikansk robusthet eller sveitsisk presisjon",Ll:"Portland, robust",Rl:"Ibach, presis",items:[
     {desc:"Leathermans tyngste modell, med 21 verktøy og utskiftbare avbitere. 25 års garanti fra Leatherman. For hender som jobber.",bundle:"Leddolje + slipesett + pussklut",tags:["Amerikansk", "Rustfritt stål", "Utskiftbare avbitere"],specVals:["420HC rustfritt stål (ifølge forhandler).", "335 g (ifølge forhandler)", "11,4 cm sammenslått (ifølge forhandler)", "25 år (produsent) på material- og produksjonsfeil. Første eier, kjøpt hos autorisert forhandler.", "Ukjent", "USA · laget i USA (Portland), med amerikanske og utenlandske deler", "21 verktøy, inkludert utskiftbare avbitere.", "Robust og tung."]},
-    {desc:"Sveitsisk stål, 24 funksjoner, 209 g. Lettere enn Surge og enklere å ha med hver dag. Livstidsgaranti fra Victorinox.",bundle:"Leddolje + slipesett + pussklut",tags:["Sveitsisk", "Rustfritt stål", "24 funksjoner"],specVals:["Rustfritt stål.", "209 g", "10,5 × 3,5 × 1,8 cm", "Livstid (produsent) på material- og produksjonsfeil. Ta vare på kvitteringen.", "Ukjent", "Sveits · laget i Sveits", "24 funksjoner.", "Stram og presis."]}
+    {desc:"Sveitsisk stål, 24 funksjoner, 209 g. Lettere enn Leatherman Surge og enklere å ha med hver dag. Livstidsgaranti fra Victorinox.",bundle:"Leddolje + slipesett + pussklut",tags:["Sveitsisk", "Rustfritt stål", "24 funksjoner"],specVals:["Rustfritt stål.", "209 g", "10,5 × 3,5 × 1,8 cm", "Livstid (produsent) på material- og produksjonsfeil. Ta vare på kvitteringen.", "Ukjent", "Sveits · laget i Sveits", "24 funksjoner.", "Stram og presis."]}
   ]},
   koptelefoon:{name:"Hodetelefoner",sub:"Studiokvalitet, hjemme",tagline:"Steng alt ute eller slipp alt inn",Ll:"Lukket, isolerende",Rl:"Åpen, romslig",items:[
     {desc:"Lukkede studiohodetelefoner på 80 ohm, håndlaget i Tyskland. Øreputer, hodebøyle, kabel og drivere kan byttes.",bundle:"Ekstra sett velurøreputer",tags:["Tysk", "Fjærstål og velur", "Utskiftbare deler"],specVals:["Hodebøyle i fjærstål, utskiftbare velurøreputer.", "270 g uten kabel, 375 g med kabel", "Ukjent", "2 år (produsent) på feil. Øreputer er slitedeler og dekkes ikke.", "Øreputer, hodebøyle, kabel og drivere fås som reservedeler.", "Tyskland · laget i Tyskland", "Lukket. Holder omgivelseslyd ute.", "80 ohm. Fungerer på laptop og telefon uten forsterker.", "Studio, svart, uten dikkedarer."]},
@@ -1727,7 +1764,7 @@ var cats = [
         img:'img/leatherman.png',
         specVals:["420HC-roestvrij staal (volgens winkel).", "335 g (volgens winkel)", "11,4 cm dichtgeklapt (volgens winkel)", "25 jaar (fabrikant) op materiaal- en fabricagefouten. Eerste eigenaar, gekocht bij een erkende dealer.", "Onbekend", "VS · gemaakt in de VS (Portland), met Amerikaanse en buitenlandse onderdelen", "21 tools, inclusief vervangbare draadknippers.", "Robuust en zwaar."] },
       { brand:'Victorinox', origin:'Zwitserland', model:'Victorinox SwissTool Spirit X', founder:'Karl Elsener, 1884, Ibach',
-        desc:"Zwitsers staal, 24 functies, 209 g. Lichter dan de Surge en makkelijker om elke dag mee te nemen. Levenslange garantie van Victorinox.",
+        desc:"Zwitsers staal, 24 functies, 209 g. Lichter dan de Leatherman Surge en makkelijker om elke dag mee te nemen. Levenslange garantie van Victorinox.",
         bundle:"Scharnierolie + slijpset + poetsdoek", price:135, tags:["Zwitsers", "RVS", "24 functies"], life:30,
         img:'img/victorinox.png',
         specVals:["Roestvrij staal.", "209 g", "10,5 × 3,5 × 1,8 cm", "Levenslang (fabrikant) op materiaal- en fabricagefouten. Bewaar je bon.", "Onbekend", "Zwitserland · gemaakt in Zwitserland", "24 functies.", "Strak en precies."] }
@@ -2048,7 +2085,7 @@ function renderCards(){
   cgTop.innerHTML = ''; cgBottom.innerHTML = '';
   var catIdx = 0;
   cats.forEach(function(c){
-    var mp = Math.min.apply(null, c.items.map(function(i){return i.price}));
+    var mp = Math.max.apply(null, c.items.map(function(i){return i.price})); // duurste van het paar: na kiezen kan het alleen meevallen
     var two = c.items.length > 1;
     var imgL = c.items[0].img || '';
     var imgR = two ? (c.items[1].img || '') : '';
@@ -2089,6 +2126,7 @@ function renderCards(){
     if(catIdx < 9){ cgTop.innerHTML += h; } else { cgBottom.innerHTML += h; }
     catIdx++;
   });
+  armSlashHint();
 }
 renderCards();
 
@@ -2204,7 +2242,7 @@ function renderPP(){
     h += '<div class="pp-cat-label">'+tc(c,'name')+'</div>';
     h += '<div style="font-family:var(--serif);font-size:24px;margin-bottom:8px;">'+tc(c,'tagline')+'</div>';
     h += '<div style="font-size:14px;color:var(--dim);line-height:1.7;margin-bottom:16px;">'+t('kiesVersie')+'</div>';
-    h += '<div style="font-weight:700;font-size:20px;">€'+Math.min.apply(null,c.items.map(function(x){return x.price}))+'</div>';
+    h += '<div style="font-weight:700;font-size:20px;">€'+Math.max.apply(null,c.items.map(function(x){return x.price}))+'</div>';
     h += '</div>';
 
     if(c.specs){
@@ -2364,6 +2402,7 @@ function renderPP(){
     if(isLifetime){
       h += '<div style="font-size:13px;color:var(--dim);line-height:1.6;">'+t('onderhoudLT')+'</div>';
     } else {
+      h += '<div class="care-what">'+t('careKitIs')+'</div>';
       h += '<div style="font-size:13px;color:var(--dim);line-height:1.6;">'+t('inclusief')+bundleParts.join(', ')+'</div>';
     }
     h += '</div>';
@@ -2371,7 +2410,7 @@ function renderPP(){
     h += '<div style="border-top:0.5px solid var(--border);margin:0 12px;"></div>';
     h += '<div id="optLabel" style="display:flex;align-items:center;gap:6px;padding:6px 0;font-size:11px;color:var(--muted);">';
     h += '<input type="checkbox" id="optC" onchange="toggleOptout()" style="width:12px;height:12px;cursor:pointer;accent-color:var(--dark);">';
-    h += '<span>'+t('optOut')+'</span>';
+    h += '<label for="optC" style="cursor:pointer;">'+t('optOut')+' <b style="color:var(--dim);font-weight:500;">('+t('geenPrijsverschil')+')</b></label>';
     h += '<span class="optout-info"><i class="ti ti-info-circle"></i>';
     h += '<div class="optout-tooltip">'+t('maintAdvies')+bundleParts.join(', ')+t('maintWaarom')+'</div>';
     h += '</span>';
@@ -2382,12 +2421,14 @@ function renderPP(){
     h += '<button class="pp-add'+(inK?' in':'')+'" id="ppAdd" onclick="addPP()">'+
       '<svg style="width:16px;height:16px;vertical-align:-2px;margin-right:6px;"><use href="#ic-kist"/></svg>'+
       (inK?t('goedeKeuze'):t('voegToe'))+'</button>';
+    if(inK) h += '<div class="pp-confirm" role="status">'+t('toegevoegd')+'<b>'+selItem.model+'</b>, €'+selItem.price+'.<a href="#" onclick="openKist();return false;">'+t('bekijkKist')+'</a></div>';
     h += '<div class="pp-del" style="display:flex;align-items:center;gap:6px;justify-content:center;"><svg width="16" height="12" viewBox="0 0 26 18" style="flex-shrink:0;"><rect width="26" height="18" rx="3" fill="#ff6600"/><path d="M6 13V6h8v7M14 6l4 3v4h2V9l-4-3" fill="none" stroke="#fff" stroke-width="1.2" stroke-linejoin="round"/><circle cx="9" cy="13" r="1.5" fill="#fff"/><circle cx="18" cy="13" r="1.5" fill="#fff"/></svg> '+t('postLine')+'</div>';
 
     h += '</div>';
   }
 
   document.getElementById('ppContent').innerHTML = h;
+  armSlashHint();
 }
 
 // === KIST ===
@@ -2427,19 +2468,33 @@ function updK(){
     h+='</div><div class="ki-price">€'+k.price+'</div>';
     h+='<button class="ki-remove" onclick="rmK('+i+')">×</button></div>';
   });
-  ie.innerHTML=h; te.textContent='€'+tot; cb.disabled=false;
+  ie.innerHTML=h; te.textContent=eur(tot+4.95); cb.disabled=false;
 }
 
+function eur(n){ return '€'+(n%1 ? (curLang==='en'?n.toFixed(2):n.toFixed(2).replace('.',',')) : n); }
 function toggleKist(){
   document.getElementById('kistOverlay').classList.toggle('open');
   document.getElementById('kistDrawer').classList.toggle('open');
+  if(!document.getElementById('kistDrawer').classList.contains('open')) document.getElementById('kistNotice').classList.remove('show');
+}
+function openKist(){ if(!document.getElementById('kistDrawer').classList.contains('open')) toggleKist(); }
+// 8. cancelled payment: back to the chest with a short notice
+function cancelCheckout(){
+  closeCheckout(); openKist();
+  document.getElementById('kistNotice').classList.add('show');
+}
+function openInfo(sec){
+  document.getElementById('homePage').classList.add('hidden');
+  document.getElementById('productPage').classList.remove('active');
+  document.getElementById('duurzaamPage').classList.remove('active');
+  document.getElementById('infoPage').classList.add('active');
+  document.getElementById('info-'+sec).scrollIntoView();
 }
 
 // === CHECKOUT ===
 function openCheckout(){
   toggleKist();
-  var t=kist.reduce(function(s,i){return s+i.price;},0)+4.95;
-  document.getElementById('payAmount').textContent='€'+(curLang==='en'?t.toFixed(2):t.toFixed(2).replace('.',','));
+  document.getElementById('payAmount').textContent=eur(kist.reduce(function(s,i){return s+i.price;},0)+4.95);
   document.getElementById('stepShip').classList.add('active');
   document.getElementById('step1').classList.remove('active');
   document.getElementById('step2').classList.remove('active');
@@ -2493,6 +2548,7 @@ function openDuurzaam(){
 var _goHome = goHome;
 goHome = function(){
   document.getElementById('duurzaamPage').classList.remove('active');
+  document.getElementById('infoPage').classList.remove('active');
   _goHome();
 };
 
@@ -2709,7 +2765,10 @@ function mobileNav(target){
 
 // === SLASH + CLIP-PATH FOLLOWS POINTER (mouse + touch) ===
 function moveSlash(clientX, clientY){
-  document.querySelectorAll('.split-wrap').forEach(function(wrap){
+  document.querySelectorAll('.split-wrap').forEach(function(wrap){ moveSlashIn(wrap, clientX, clientY); });
+}
+function moveSlashIn(wrap, clientX, clientY){
+  {
     var svg = wrap.querySelector('.split-slash-svg');
     if(!svg) return;
     var left = wrap.querySelector('.split-photo.left');
@@ -2727,7 +2786,7 @@ function moveSlash(clientX, clientY){
       anchors.forEach(function(a){ a.style.opacity = 0; });
       return;
     }
-    wrap.classList.remove('returning');
+    wrap.classList.remove('returning','nudging');
     var xPct = (clientX - rect.left) / rect.width;
     xPct = Math.max(0.1, Math.min(0.9, xPct));
     var offset = (xPct - 0.5) * rect.width;
@@ -2739,9 +2798,41 @@ function moveSlash(clientX, clientY){
     // Anchor year fade
     var anchorL = wrap.querySelector('.anchor-year.left');
     var anchorR = wrap.querySelector('.anchor-year.right');
-    if(anchorL) anchorL.style.opacity = xPct > 0.5 ? (xPct - 0.5) * 2 : 0;
-    if(anchorR) anchorR.style.opacity = xPct < 0.5 ? (0.5 - xPct) * 2 : 0;
-  });
+    if(anchorL) anchorL.style.opacity = Math.min(1, Math.max(0, (xPct - 0.5) * 4));
+    if(anchorR) anchorR.style.opacity = Math.min(1, Math.max(0, (0.5 - xPct) * 4));
+  }
+}
+
+// 6b. Touch only: one calm hint of the divider, once per session, on the first split that scrolls into view
+var hintObs = null;
+function armSlashHint(){
+  if(hintObs) hintObs.disconnect();
+  if(!window.IntersectionObserver || !matchMedia('(hover: none)').matches || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  try { if(sessionStorage.getItem('wdHint')) return; } catch(e){}
+  hintObs = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(!en.isIntersecting || !hintObs) return;
+      hintObs.disconnect(); hintObs = null;
+      try { sessionStorage.setItem('wdHint','1'); } catch(e){}
+      playSlashHint(en.target);
+    });
+  }, {threshold: 0.9});
+  document.querySelectorAll('.split-wrap').forEach(function(w){ if(w.querySelector('.split-slash-svg')) hintObs.observe(w); });
+}
+function playSlashHint(wrap){ // ontwerp C (business/keuzes/slider-greep.html): na 600 ms naar 36%, na 1 s terug, .9s ease-in-out
+  var svg = wrap.querySelector('.split-slash-svg'), L = wrap.querySelector('.split-photo.left'), R = wrap.querySelector('.split-photo.right');
+  function setPos(x){
+    svg.style.transform = 'translateX(' + ((x - .5) * wrap.getBoundingClientRect().width) + 'px)';
+    var t = (x*100+4).toFixed(1), b = (x*100-4).toFixed(1);
+    if(L) L.style.clipPath = 'polygon(0 0, '+t+'% 0, '+b+'% 100%, 0 100%)';
+    if(R) R.style.clipPath = 'polygon('+t+'% 0, 100% 0, 100% 100%, '+b+'% 100%)';
+  }
+  setTimeout(function(){
+    wrap.classList.remove('returning'); wrap.classList.add('nudging'); wrap.setAttribute('data-hint','running');
+    setPos(.36);
+    setTimeout(function(){ if(wrap.classList.contains('nudging')) setPos(.5); }, 1000);
+    setTimeout(function(){ wrap.classList.remove('nudging'); wrap.setAttribute('data-hint','done'); }, 2000);
+  }, 600);
 }
 function resetSlash(){
   document.querySelectorAll('.split-wrap').forEach(function(wrap){
@@ -2820,7 +2911,8 @@ function setLang(lang){
   var hp = document.querySelector('.hero-pre'); if(hp) hp.textContent = t('heroPre');
   var hh = document.querySelector('.hero h1'); if(hh) hh.textContent = t('heroH1');
   var hs = document.querySelector('.hero-sub'); if(hs) hs.textContent = t('heroSub');
-  document.querySelectorAll('.hero-steps [data-i]').forEach(function(el){ el.textContent = t(el.getAttribute('data-i')); });
+  document.querySelectorAll('[data-i]').forEach(function(el){ el.textContent = t(el.getAttribute('data-i')); });
+  document.querySelectorAll('[data-ih]').forEach(function(el){ el.innerHTML = t(el.getAttribute('data-ih')); });
   var hc = document.querySelector('.hero-cta'); if(hc) hc.textContent = t('heroCta');
   // Section label
   var sl = document.querySelector('#collectie .section-label'); if(sl) sl.textContent = t('sectionLabel');
@@ -2841,7 +2933,7 @@ function setLang(lang){
   var kh = document.querySelector('.kist-header h3');
   if(kh) kh.innerHTML = '<svg><use href="#ic-kist"/></svg> '+t('mijnKist');
   var kt = document.querySelector('.kist-total span:first-child');
-  if(kt) kt.textContent = t('totaal');
+  if(kt) kt.textContent = t('totaalIncl');
   var ks = document.querySelector('.kist-ship'); if(ks) ks.textContent = t('shipping');
   var kb = document.getElementById('checkoutBtn'); if(kb) kb.textContent = t('keuzeDefinitief');
   // Checkout modal — shipping step
