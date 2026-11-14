@@ -161,7 +161,7 @@ a { color: inherit; text-decoration: none; }
 }
 .quote-slide.active { opacity: 1; pointer-events: auto; }
 .quote-text {
-  font-family: var(--serif); font-style: italic; font-size: 20px;
+  font-family: var(--serif); font-style: normal; font-size: 20px;
   color: var(--light); line-height: 1.5; margin-bottom: 12px;
 }
 .quote-attr { font-size: 12px; color: #f5f5f0; letter-spacing: 1px; opacity: 0.75; }
@@ -262,7 +262,7 @@ a { color: inherit; text-decoration: none; }
   font-size: 10px; letter-spacing: 2.5px; color: var(--muted);
   text-transform: uppercase; margin-bottom: 2px;
 }
-.pp-cat-sub { font-size: 11px; color: var(--dim); margin-bottom: 16px; font-style: italic; }
+.pp-cat-sub { font-size: 11px; color: var(--dim); margin-bottom: 16px; font-style: normal; }
 .pp-model { font-family: var(--serif); font-size: 28px; margin-bottom: 4px; line-height: 1.2; }
 .pp-founder { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
 .pp-bundle-tag {
@@ -673,7 +673,7 @@ a { color: inherit; text-decoration: none; }
 /* === ANCHOR YEAR (founding year on split slider) === */
 .anchor-year {
   position: absolute; bottom: 12px; left: 0; width: 100%; text-align: center;
-  font-family: var(--serif); font-style: italic; font-size: 14px;
+  font-family: var(--serif); font-style: normal; font-size: 14px;
   color: var(--dark); opacity: 0; pointer-events: none;
   transition: opacity 0.2s; z-index: 3;
 }
@@ -704,7 +704,7 @@ a { color: inherit; text-decoration: none; }
 
 /* === REVIEWS === */
 .review-section { margin-top: 20px; margin-bottom: 20px; }
-.review-header { font-family: var(--serif); font-style: italic; font-size: 16px; margin-bottom: 12px; }
+.review-header { font-family: var(--serif); font-style: normal; font-size: 16px; margin-bottom: 12px; }
 .review-entry { margin-bottom: 10px; }
 .review-text { font-size: 13px; color: var(--dim); line-height: 1.6; margin-bottom: 2px; }
 .review-meta { font-size: 12px; color: var(--muted); }
@@ -721,7 +721,10 @@ a { color: inherit; text-decoration: none; }
   padding: 12px 14px; width: 260px; font-size: 12px; color: var(--dim);
   line-height: 1.55; box-shadow: 0 4px 16px rgba(0,0,0,0.08); z-index: 10;
 }
-.optout-info:hover .optout-tooltip { display: block; }
+@media (hover: hover) { .optout-info:hover .optout-tooltip { display: block; } }
+.opt-info-inline { display: none; font-size: 12px; color: var(--dim); line-height: 1.55; padding: 4px 0 8px 18px; }
+.opt-info-inline.open { display: block; }
+@media (hover: hover) and (min-width: 701px) { .opt-info-inline.open { display: none; } .optout-info[aria-expanded="true"] .optout-tooltip { display: block; } }
 
 /* === FOUNDER BLOCK === */
 .founder-block {
@@ -736,7 +739,7 @@ a { color: inherit; text-decoration: none; }
 .founder-name { font-weight: 700; font-size: 14px; margin-bottom: 2px; }
 .founder-detail { font-size: 12px; color: var(--muted); margin-bottom: 6px; }
 .founder-quote-text {
-  font-family: var(--serif); font-style: italic; font-size: 13px;
+  font-family: var(--serif); font-style: normal; font-size: 13px;
   color: var(--dim); line-height: 1.5;
 }
 
@@ -808,6 +811,15 @@ a { color: inherit; text-decoration: none; }
 .info-page a { font-size: 14px; }
 .info-concept { display: inline-block; font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); border: 1px solid var(--border); border-radius: 6px; padding: 3px 8px; margin-bottom: 14px; }
 .split-wrap.nudging .split-slash-svg, .split-wrap.nudging .split-photo { transition: transform .9s ease-in-out, clip-path .9s ease-in-out; }
+
+/* === TOETSENBORD-FOCUS (huisstijl: Ink-rand, op donker Paper-rand) === */
+:focus { outline: none; }
+:focus-visible { outline: 2px solid var(--dark); outline-offset: 2px; border-radius: 4px; }
+.modal-top :focus-visible, .modal-pay-btn:focus-visible, .kist-pay:focus-visible, .modal-email-btn:focus-visible, .pp-add:focus-visible { outline: 2px solid var(--dark); outline-offset: 3px; box-shadow: 0 0 0 3px var(--bg) inset; }
+.cat-card:focus-visible { outline-offset: 4px; }
+.modal-consent { display: flex; gap: 8px; align-items: flex-start; max-width: 340px; margin: 12px auto 0; font-size: 12px; color: var(--dim); line-height: 1.5; text-align: left; cursor: pointer; }
+.modal-consent input { margin-top: 2px; accent-color: var(--dark); flex-shrink: 0; }
+.modal-email-err { display: none; font-size: 12px; color: #993333; margin-top: 10px; line-height: 1.5; }
 </style>
 </head>
 <body>
@@ -832,7 +844,7 @@ a { color: inherit; text-decoration: none; }
   <div class="nav-links">
     <a href="#" onclick="goHome();return false;">Collectie</a>
     <a href="#hoe" onclick="goHoe();return false;">Hoe het werkt</a>
-    <a href="#" onclick="openDuurzaam();return false;">Duurzaam</a>
+    <a href="#/duurzaam" onclick="openDuurzaam();return false;">Duurzaam</a>
   </div>
   <div style="display:flex;align-items:center;gap:8px;">
     <div class="lang-selector" id="langSelector">
@@ -851,7 +863,7 @@ a { color: inherit; text-decoration: none; }
       <span class="kist-label" id="kistLabel">Mijn kist</span>
       <span class="kist-count hidden" id="kistCount">0</span>
     </button>
-    <button class="hamburger" onclick="toggleMobileMenu()" aria-label="Menu">
+    <button class="hamburger" onclick="toggleMobileMenu()" aria-label="Menu" aria-expanded="false">
       <span></span>
     </button>
   </div>
@@ -859,9 +871,9 @@ a { color: inherit; text-decoration: none; }
 
 <!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
-  <a href="#" onclick="mobileNav('home')">Collectie</a>
-  <a href="#hoe" onclick="mobileNav('hoe')">Hoe het werkt</a>
-  <a href="#" onclick="mobileNav('duurzaam')">Duurzaam</a>
+  <a href="#" onclick="mobileNav('home');return false;">Collectie</a>
+  <a href="#hoe" onclick="mobileNav('hoe');return false;">Hoe het werkt</a>
+  <a href="#" onclick="mobileNav('duurzaam');return false;">Duurzaam</a>
 </div>
 
 <!-- ==================== HOME ==================== -->
@@ -909,9 +921,9 @@ a { color: inherit; text-decoration: none; }
     <div class="quote-attr">William Morris, 1880</div>
   </div>
   <div class="quote-dots">
-    <div class="quote-dot active" onclick="goToQuote(0)"></div>
-    <div class="quote-dot" onclick="goToQuote(1)"></div>
-    <div class="quote-dot" onclick="goToQuote(2)"></div>
+    <div class="quote-dot active" aria-label="Quote 1" onclick="goToQuote(0)"></div>
+    <div class="quote-dot" aria-label="Quote 2" onclick="goToQuote(1)"></div>
+    <div class="quote-dot" aria-label="Quote 3" onclick="goToQuote(2)"></div>
   </div>
 </section>
 
@@ -946,7 +958,7 @@ a { color: inherit; text-decoration: none; }
   <div style="text-align:center;">
     <div class="logo logo-sm"><span class="logo-was">was</span><span class="logo-slash"></span><span class="logo-dom">dom</span></div>
     <div style="font-size:10px;color:var(--muted);margin-top:6px;line-height:1.5;max-width:280px;margin-left:auto;margin-right:auto;">Gecureerd huisraad dat generaties meegaat, met de zorg om dat ook echt waar te maken.</div>
-    <div class="footer-links"><a href="#bezorging" onclick="openInfo('bezorging');return false;" data-i="fBezorging"></a><a href="#retour" onclick="openInfo('retour');return false;" data-i="fRetour"></a><a href="#contact" onclick="openInfo('contact');return false;" data-i="fContact"></a></div>
+    <div class="footer-links"><a href="#/info/bezorging" onclick="openInfo('bezorging');return false;" data-i="fBezorging"></a><a href="#/info/retour" onclick="openInfo('retour');return false;" data-i="fRetour"></a><a href="#/info/contact" onclick="openInfo('contact');return false;" data-i="fContact"></a></div>
   </div>
   <div class="footer-flags" id="footerFlags">
     <button class="footer-flag" data-lang="nl" onclick="setLang('nl')"><div class="flag-wrap" data-flag="nl"></div></button>
@@ -1016,37 +1028,37 @@ a { color: inherit; text-decoration: none; }
 
 <!-- ==================== KIST DRAWER ==================== -->
 <div class="kist-overlay" id="kistOverlay" onclick="toggleKist()"></div>
-<div class="kist-drawer" id="kistDrawer">
+<div class="kist-drawer" id="kistDrawer" role="dialog" aria-modal="true" aria-labelledby="kistTitle" inert>
   <div class="kist-header">
-    <h3><svg><use href="#ic-kist"/></svg> Mijn kist</h3>
-    <button class="kist-close" onclick="toggleKist()">×</button>
+    <h3 id="kistTitle"><svg><use href="#ic-kist"/></svg> Mijn kist</h3>
+    <button class="kist-close" onclick="toggleKist()" aria-label="Close">×</button>
   </div>
   <div class="kist-notice" id="kistNotice" role="status" data-i="mandNog"></div>
   <div class="kist-items" id="kistItems"><div class="kist-empty">Je kist is nog leeg.<br>Met welke producten ga jij door het leven?</div></div>
   <div class="kist-footer">
     <div class="kist-total"><span>Totaal</span><span id="kistTotal">€0</span></div>
     <div class="kist-ship">Verzending €4,95 · PostNL · binnen 3 werkdagen · track & trace</div>
-    <a class="kist-retour" href="#retour" onclick="toggleKist();openInfo('retour');return false;" data-i="fRetour"></a>
+    <a class="kist-retour" href="#/info/retour" onclick="openInfo('retour');return false;" data-i="fRetour"></a>
     <button class="kist-pay" id="checkoutBtn" onclick="openCheckout()" disabled>Keuze definitief</button>
   </div>
 </div>
 
 <!-- ==================== CHECKOUT ==================== -->
 <div class="modal-overlay" id="checkoutModal">
-  <div class="modal">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="ckTitle">
     <div class="step active" id="stepShip">
       <div class="modal-top">
         <div class="logo logo-sm logo-on-dark"><span class="logo-was">was</span><span class="logo-slash"></span><span class="logo-dom">dom</span></div>
-        <h3>Bezorging</h3>
+        <h3 id="ckTitle">Bezorging</h3>
         <p>Hoe wil je je bestelling ontvangen?</p>
       </div>
       <div class="modal-body">
-        <div class="modal-ideal sel" data-ship="thuis" onclick="selectShip(this)">
+        <div class="modal-ideal sel" data-ship="thuis" role="radio" tabindex="0" aria-checked="true" onclick="selectShip(this)">
           <div class="modal-ideal-logo"><svg width="26" height="18" viewBox="0 0 26 18"><rect width="26" height="18" rx="3" fill="#ff6600"/><path d="M6 13V6h8v7M14 6l4 3v4h2V9l-4-3" fill="none" stroke="#fff" stroke-width="1.2" stroke-linejoin="round"/><circle cx="9" cy="13" r="1.5" fill="#fff"/><circle cx="18" cy="13" r="1.5" fill="#fff"/></svg></div>
           <div class="modal-ideal-text"><b>PostNL — thuisbezorgd</b><br><span style="font-size:11px;color:var(--muted);">Binnen 3 werkdagen aan je deur</span></div>
           <div class="modal-ideal-check">●</div>
         </div>
-        <div class="modal-ideal" data-ship="afhaalpunt" onclick="selectShip(this)">
+        <div class="modal-ideal" data-ship="afhaalpunt" role="radio" tabindex="0" aria-checked="false" onclick="selectShip(this)">
           <div class="modal-ideal-logo"><svg width="26" height="18" viewBox="0 0 26 18"><rect width="26" height="18" rx="3" fill="#ff6600"/><path d="M13 3C9.5 3 7 6 7 9c0 4 6 7 6 7s6-3 6-7c0-3-2.5-6-6-6z" fill="none" stroke="#fff" stroke-width="1.2"/><circle cx="13" cy="8.5" r="2" fill="#fff"/></svg></div>
           <div class="modal-ideal-text"><b>PostNL — afhaalpunt</b><br><span style="font-size:11px;color:var(--muted);">Kies een punt bij jou in de buurt</span></div>
           <div class="modal-ideal-check">●</div>
@@ -1063,27 +1075,27 @@ a { color: inherit; text-decoration: none; }
         <p>Kies je betaalmethode</p>
       </div>
       <div class="modal-body">
-        <div class="modal-ideal" data-method="ideal" onclick="selectPayment(this)">
+        <div class="modal-ideal" data-method="ideal" role="radio" tabindex="0" aria-checked="false" onclick="selectPayment(this)">
           <div class="modal-ideal-logo"><svg width="26" height="18" viewBox="0 0 26 18"><rect width="26" height="18" rx="3" fill="#CC0066"/><circle cx="10" cy="9" r="4" fill="none" stroke="#fff" stroke-width="1.5"/><path d="M14 5 L20 5 M14 9 L20 9 M14 13 L18 13" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/></svg></div>
           <div class="modal-ideal-text"><b>iDEAL</b><br><span style="font-size:11px;color:var(--muted);">Betaal via je eigen bank</span></div>
           <div class="modal-ideal-check">●</div>
         </div>
-        <div class="modal-ideal" data-method="creditcard" onclick="selectPayment(this)">
+        <div class="modal-ideal" data-method="creditcard" role="radio" tabindex="0" aria-checked="false" onclick="selectPayment(this)">
           <div class="modal-ideal-logo"><svg width="26" height="18" viewBox="0 0 26 18"><rect width="26" height="18" rx="3" fill="#1a1f71"/><circle cx="10" cy="9" r="5" fill="#eb001b" opacity="0.9"/><circle cx="16" cy="9" r="5" fill="#f79e1b" opacity="0.9"/><path d="M13 5.5a5 5 0 0 1 0 7" fill="#ff5f00"/></svg></div>
           <div class="modal-ideal-text"><b>Creditcard</b><br><span style="font-size:11px;color:var(--muted);">Visa, Mastercard, Amex</span></div>
           <div class="modal-ideal-check">●</div>
         </div>
-        <div class="modal-ideal" data-method="debit" onclick="selectPayment(this)">
+        <div class="modal-ideal" data-method="debit" role="radio" tabindex="0" aria-checked="false" onclick="selectPayment(this)">
           <div class="modal-ideal-logo"><svg width="26" height="18" viewBox="0 0 26 18"><rect width="26" height="18" rx="3" fill="#0061a8"/><rect x="3" y="4" width="20" height="2.5" rx="1" fill="#fff" opacity="0.9"/><rect x="3" y="8" width="12" height="2" rx="0.5" fill="#fff" opacity="0.5"/><rect x="3" y="12" width="8" height="2" rx="0.5" fill="#fff" opacity="0.5"/></svg></div>
-          <div class="modal-ideal-text"><b>Debit card</b><br><span style="font-size:11px;color:var(--muted);">Maestro, V Pay, Bancontact</span></div>
+          <div class="modal-ideal-text"><b>Pinpas / debitcard</b><br><span style="font-size:11px;color:var(--muted);">Maestro, V Pay, Bancontact</span></div>
           <div class="modal-ideal-check">●</div>
         </div>
-        <div class="modal-ideal" data-method="paypal" onclick="selectPayment(this)">
+        <div class="modal-ideal" data-method="paypal" role="radio" tabindex="0" aria-checked="false" onclick="selectPayment(this)">
           <div class="modal-ideal-logo"><svg width="26" height="18" viewBox="0 0 26 18"><rect width="26" height="18" rx="3" fill="#003087"/><text x="13" y="12.5" text-anchor="middle" fill="#fff" font-family="Arial,sans-serif" font-size="8" font-weight="700" font-style="italic">P</text><text x="16.5" y="12.5" text-anchor="middle" fill="#009cde" font-family="Arial,sans-serif" font-size="8" font-weight="700" font-style="italic">P</text></svg></div>
           <div class="modal-ideal-text"><b>PayPal</b><br><span style="font-size:11px;color:var(--muted);">Betaal met je PayPal-account</span></div>
           <div class="modal-ideal-check">●</div>
         </div>
-        <div class="modal-ideal" data-method="applepay" onclick="selectPayment(this)">
+        <div class="modal-ideal" data-method="applepay" role="radio" tabindex="0" aria-checked="false" onclick="selectPayment(this)">
           <div class="modal-ideal-logo"><svg width="26" height="18" viewBox="0 0 26 18"><rect width="26" height="18" rx="3" fill="#000"/><text x="13" y="12.5" text-anchor="middle" fill="#fff" font-family="system-ui,-apple-system,sans-serif" font-size="9" font-weight="500"> Pay</text></svg></div>
           <div class="modal-ideal-text"><b>Apple Pay</b><br><span style="font-size:11px;color:var(--muted);">Betaal met Face ID of Touch ID</span></div>
           <div class="modal-ideal-check">●</div>
@@ -1095,20 +1107,22 @@ a { color: inherit; text-decoration: none; }
     <div class="step" id="step2">
       <div class="modal-top">
         <div class="logo logo-sm logo-on-dark"><span class="logo-was">was</span><span class="logo-slash"></span><span class="logo-dom">dom</span></div>
-        <h3>We zijn er bijna.</h3>
-        <p>was/dom is nog niet live. Jouw interesse betekent alles.</p>
+        <h3 data-i="soonH">Bestellen kan binnenkort.</h3>
+        <p data-i="soonP">Laat je e-mail achter, dan hoor je het als eerste.</p>
       </div>
       <div class="modal-body">
         <div class="modal-signup">
-          <div class="modal-signup-title">Houd me op de hoogte.</div>
-          <p>Laat je e-mail achter. Wanneer we live gaan ben jij de eerste die er van hoort.</p>
           <form class="modal-email-form" id="signupForm" onsubmit="submitEmail(event)">
-            <input type="email" class="modal-email-input" id="emailInput" placeholder="je@email.nl" required>
-            <button type="submit" class="modal-email-btn">Aanmelden</button>
+            <input type="email" class="modal-email-input" id="emailInput" placeholder="je@email.nl" required autocomplete="email" aria-labelledby="emailLbl">
+            <span id="emailLbl" hidden data-i="emailLbl">E-mailadres</span>
+            <button type="submit" class="modal-email-btn" id="emailBtn" data-i="aanmelden">Aanmelden</button>
           </form>
-          <div class="modal-email-thanks" id="emailThanks">Je staat op de lijst.</div>
+          <label class="modal-consent" id="consentWrap"><input type="checkbox" id="consentC" required form="signupForm"> <span data-i="consent">Ja, jullie mogen me mailen over was/dom. Afmelden kan altijd.</span></label>
+          <div class="modal-email-thanks" id="emailThanks" role="status" data-i="opDeLijst">Dank je. We mailen je zodra bestellen kan.</div>
+          <div class="modal-email-err" id="emailErr" role="alert" data-i="mailFout"></div>
         </div>
-        <button class="modal-close-btn" onclick="closeCheckout()">Sluiten</button>
+        <button class="modal-close-btn" id="soonBack" onclick="ckBack('pay')" data-i="terugStap">Terug</button>
+        <button class="modal-close-btn" id="soonCancel" onclick="cancelCheckout()" data-i="annuleren">Annuleren</button>
       </div>
     </div>
   </div>
@@ -1138,10 +1152,10 @@ var ui = {
     betalen:'Betalen', kiesBetaal:'Kies je betaalmethode',
     betaalIdeal:'Betaal via je eigen bank', betaalCC:'Visa, Mastercard, Amex', creditcard:'Creditcard',
     betaalDebit:'Maestro, V Pay, Bancontact', betaalPaypal:'Betaal met je PayPal-account',
-    betaalApple:'Betaal met Face ID of Touch ID', betaalBtn:'Betaal',
+    betaalApple:'Betaal met Face ID of Touch ID', betaalBtn:'Betaal', debitcard:'Pinpas / debitcard', verwijder:'Verwijder', soonH:'Bestellen kan binnenkort.', soonP:'Laat je e-mail achter, dan hoor je het als eerste.', emailLbl:'E-mailadres', consent:'Ja, jullie mogen me mailen over was/dom. Afmelden kan altijd.', mailFout:'Dat ging niet goed. Controleer je verbinding en probeer het nog eens, of mail naar wasdom.forlife@gmail.com.', terugStap:'Terug', versturen:'Versturen…', infoToggle:'Uitleg over onderhoud',
     bijna:'We zijn er bijna.', nietLive:'was/dom is nog niet live. Jouw interesse betekent alles.',
     houdOp:'Houd me op de hoogte.', laatEmail:'Laat je e-mail achter. Wanneer we live gaan ben jij de eerste die er van hoort.',
-    emailPh:'je@email.nl', aanmelden:'Aanmelden', opDeLijst:'Je staat op de lijst.', sluiten:'Sluiten',
+    emailPh:'je@email.nl', aanmelden:'Aanmelden', opDeLijst:'Dank je. We mailen je zodra bestellen kan.', sluiten:'Sluiten',
     footerTag:'Gecureerd huisraad dat generaties meegaat, met de zorg om dat ook echt waar te maken.',
     kiesVersie:'Kies een versie om het product te bekijken en toe te voegen aan je kist.',
     voegToe:'Voeg toe aan mijn kist', goedeKeuze:'Goede keuze.',
@@ -1184,10 +1198,10 @@ var ui = {
     betalen:'Payment', kiesBetaal:'Choose your payment method',
     betaalIdeal:'Pay with your own bank', betaalCC:'Visa, Mastercard, Amex', creditcard:'Credit card',
     betaalDebit:'Maestro, V Pay, Bancontact', betaalPaypal:'Pay with your PayPal account',
-    betaalApple:'Pay with Face ID or Touch ID', betaalBtn:'Pay',
+    betaalApple:'Pay with Face ID or Touch ID', betaalBtn:'Pay', debitcard:'Debit card', verwijder:'Remove', soonH:'Ordering opens soon.', soonP:'Leave your email and you’ll be the first to know.', emailLbl:'Email address', consent:'Yes, you can email me about was/dom. I can unsubscribe anytime.', mailFout:'That didn’t go through. Check your connection and try again, or email wasdom.forlife@gmail.com.', terugStap:'Back', versturen:'Sending…', infoToggle:'About the care kit',
     bijna:'Almost there.', nietLive:'was/dom hasn’t launched yet. Your interest means the world to us.',
     houdOp:'Keep me posted.', laatEmail:'Leave your email and you’ll be the first to know when we launch.',
-    emailPh:'you@example.com', aanmelden:'Sign up', opDeLijst:'You’re on the list.', sluiten:'Close',
+    emailPh:'you@example.com', aanmelden:'Sign up', opDeLijst:'Thanks. We’ll email you as soon as you can order.', sluiten:'Close',
     footerTag:'Curated essentials built to last for generations — and the care to make sure they do.',
     kiesVersie:'Choose one to see the details and add it to your chest.',
     voegToe:'Add to my chest', goedeKeuze:'Good choice.',
@@ -1220,30 +1234,30 @@ var ui = {
     howT2:'Vedlikehold inkludert', howD2:'Hvert produkt kommer med nøyaktig den pleien det trenger. Du trenger ikke tenke på det. Levert innen 3 dager.',
     howT3:'Vi følger deg', howD3:'En telefon etter 6 måneder, et kort hvert år. Vi feirer at det varer.',
     terug:'← Tilbake', kistLeeg:'Kisten din er tom.<br>Hvilke produkter vil du bære gjennom livet?',
-    totaal:'Totalt', shipping:'Frakt €4,95 · PostNL · innen 3 virkedager · sporing',
+    totaal:'Totalt', shipping:'Frakt 99 kr · Posten/Bring · sporing',
     keuzeDefinitief:'Bekreft valg',
     bezorging:'Levering', bezorgingP:'Hvordan vil du motta bestillingen?',
-    postThuis:'PostNL — hjemlevering', postThuisSub:'Ved døren din innen 3 virkedager',
-    postAfhaal:'PostNL — hentepunkt', postAfhaalSub:'Velg et sted nær deg',
-    shipNote:'Frakt: €4,95 · Alt i én levering · Alltid med sporing',
+    postThuis:'Posten/Bring — hjemlevering', postThuisSub:'Levert hjem til deg',
+    postAfhaal:'Posten/Bring — hentested', postAfhaalSub:'Hent pakken på et hentested nær deg',
+    shipNote:'Frakt: 99 kr · Alt i én levering · Alltid med sporing',
     verderBetalen:'Videre til betaling', annuleren:'Avbryt',
     betalen:'Betaling', kiesBetaal:'Velg betalingsmåte',
     betaalIdeal:'Betal via banken din', betaalCC:'Visa, Mastercard, Amex', creditcard:'Kredittkort',
     betaalDebit:'Maestro, V Pay, Bancontact', betaalPaypal:'Betal med PayPal-kontoen din',
-    betaalApple:'Betal med Face ID eller Touch ID', betaalBtn:'Betal',
+    betaalApple:'Betal med Face ID eller Touch ID', betaalBtn:'Betal', debitcard:'Debetkort', verwijder:'Fjern', soonH:'Snart kan du bestille.', soonP:'Legg igjen e-posten din, så får du vite det først.', emailLbl:'E-postadresse', consent:'Ja, dere kan sende meg e-post om was/dom. Jeg kan melde meg av når som helst.', mailFout:'Det gikk ikke. Sjekk tilkoblingen og prøv igjen, eller send e-post til wasdom.forlife@gmail.com.', terugStap:'Tilbake', versturen:'Sender…', infoToggle:'Om vedlikeholdssettet',
     bijna:'Nesten der.', nietLive:'was/dom er ikke live ennå. Din interesse betyr alt.',
     houdOp:'Hold meg oppdatert.', laatEmail:'Legg igjen e-posten din. Når vi lanserer, er du den første som får vite det.',
-    emailPh:'deg@epost.no', aanmelden:'Registrer', opDeLijst:'Du er på listen.', sluiten:'Lukk',
+    emailPh:'deg@epost.no', aanmelden:'Registrer', opDeLijst:'Takk. Vi sender deg en e-post så snart du kan bestille.', sluiten:'Lukk',
     footerTag:'Kuraterte husholdningsartikler bygget for å vare generasjoner, med omsorgen for å gjøre det til virkelighet.',
     kiesVersie:'Velg en versjon for å se produktet og legge det til i kisten.',
     voegToe:'Legg til i kisten min', goedeKeuze:'Godt valg.',
     onderhoudLabel:'Vedlikehold inkludert',
     onderhoudLT:'Dette produktet har livstidsgaranti. Vedlikehold er ikke nødvendig — hvis noe går i stykker, blir det erstattet.',
     inclusief:'Inkluderer: ',
-    careKitIs:'Vedlikeholdssettet er det lille settet vi legger i esken med dette produktet, slik at det varer.', geenPrijsverschil:'ingen prisforskjell', totaalIncl:'Totalt inkl. frakt', toegevoegd:'Lagt i kisten din: ', bekijkKist:'Se kisten', mandNog:'Betalingen ble avbrutt. Kisten din er der fortsatt.', fBezorging:'Levering', fRetour:'Retur og garanti', fContact:'Kontakt', concept:'Utkast, ikke endelig', infoBezP:'<ul><li>Frakt: €4,95 per bestilling</li><li>PostNL, levert hjem eller til et hentepunkt</li><li>Innen 3 virkedager</li><li>Alt i én levering</li><li>Alltid med sporing</li></ul>', infoRetP:'<p><b>Hva was/dom dekker.</b> 14 dagers angrerett, den lovfestede reklamasjonsretten på minst 2 år (vi er kontaktpunktet ditt), og deretter hjelp med produsentens garanti. Vi har valgt med omhu, så forhåpentligvis trenger du aldri denne siden.</p><h4>14 dagers angrerett</h4><p>Du har 14 dager fra dagen du mottar bestillingen til å sende den tilbake, uten å oppgi grunn.</p><h4>Slik fungerer en retur</h4><ol><li>Send en e-post til wasdom.forlife@gmail.com innen de 14 dagene og fortell hva du vil returnere.</li><li>Vi svarer med returadresse og instruksjoner.</li><li>Send produktet tilbake innen 14 dager etter e-posten din. Returfrakten betaler du selv.</li><li>Når vi har mottatt og sjekket det, betaler vi tilbake kjøpesummen, inkludert den opprinnelige frakten, innen 14 dager etter e-posten din.</li></ol><p>Har du åpnet vedlikeholdssettet? Det kan du beholde. Er et produkt brukt mer enn nødvendig for å prøve det, kan vi trekke fra verditapet.</p><h4>Garanti</h4><p><b>Reklamasjonsrett, minst 2 år.</b> Et produkt skal gjøre det du med rimelighet kan forvente. Går noe galt i den perioden som ikke skyldes bruk eller slitasje, ordner vi reparasjon eller erstatning. Du har med oss å gjøre, ikke merket.</p><p><b>Produsentens garanti.</b> Mange merker gir i tillegg sin egen garanti, noen ganger livslang. Den står per produkt på produktsiden. Det er produsentens løfte, ikke vårt; etter reklamasjonsperioden hjelper vi deg å bruke den.</p>', infoConP:'<p>Spørsmål om en bestilling, en retur eller et produkt: <a href="mailto:wasdom.forlife@gmail.com">wasdom.forlife@gmail.com</a></p>',
+    careKitIs:'Vedlikeholdssettet er det lille settet vi legger i esken med dette produktet, slik at det varer.', geenPrijsverschil:'ingen prisforskjell', totaalIncl:'Totalt inkl. frakt', toegevoegd:'Lagt i kisten din: ', bekijkKist:'Se kisten', mandNog:'Betalingen ble avbrutt. Kisten din er der fortsatt.', fBezorging:'Levering', fRetour:'Retur og garanti', fContact:'Kontakt', concept:'Utkast, ikke endelig', infoBezP:'<ul><li>Frakt: 99 kr per bestilling</li><li>Posten/Bring, levert hjem eller til et hentested</li><li>Alt i én levering</li><li>Alltid med sporing</li></ul>', infoRetP:'<p><b>Hva was/dom dekker.</b> 14 dagers angrerett, den lovfestede reklamasjonsretten på minst 2 år (vi er kontaktpunktet ditt), og deretter hjelp med produsentens garanti. Vi har valgt med omhu, så forhåpentligvis trenger du aldri denne siden.</p><h4>14 dagers angrerett</h4><p>Du har 14 dager fra dagen du mottar bestillingen til å sende den tilbake, uten å oppgi grunn.</p><h4>Slik fungerer en retur</h4><ol><li>Send en e-post til wasdom.forlife@gmail.com innen de 14 dagene og fortell hva du vil returnere.</li><li>Vi svarer med returadresse og instruksjoner.</li><li>Send produktet tilbake innen 14 dager etter e-posten din. Returfrakten betaler du selv.</li><li>Når vi har mottatt og sjekket det, betaler vi tilbake kjøpesummen, inkludert den opprinnelige frakten, innen 14 dager etter e-posten din.</li></ol><p>Har du åpnet vedlikeholdssettet? Det kan du beholde. Er et produkt brukt mer enn nødvendig for å prøve det, kan vi trekke fra verditapet.</p><h4>Garanti</h4><p><b>Reklamasjonsrett, minst 2 år.</b> Et produkt skal gjøre det du med rimelighet kan forvente. Går noe galt i den perioden som ikke skyldes bruk eller slitasje, ordner vi reparasjon eller erstatning. Du har med oss å gjøre, ikke merket.</p><p><b>Produsentens garanti.</b> Mange merker gir i tillegg sin egen garanti, noen ganger livslang. Den står per produkt på produktsiden. Det er produsentens løfte, ikke vårt; etter reklamasjonsperioden hjelper vi deg å bruke den.</p>', infoConP:'<p>Spørsmål om en bestilling, en retur eller et produkt: <a href="mailto:wasdom.forlife@gmail.com">wasdom.forlife@gmail.com</a></p>',
     optOut:'Jeg har allerede eget vedlikeholdsutstyr',
     levensduur:'Levetid', lifetime:'livstid',
-    postLine:'PostNL · innen 3 virkedager · hjem eller hentepunkt · sporing',
+    postLine:'Posten/Bring · hjem eller hentested · sporing',
     zonderOnderhoud:'Uten vedlikeholdssett',
     lifeYears:'+ år med vedlikehold dekket', lifeForever:'Livstid med vedlikehold dekket',
     duurPre:'Ikke billig — et godt kjøp', duurH2:'To tidslinjer. Ett valg.',
@@ -2121,7 +2135,7 @@ function renderCards(){
     h += '<div class="cat-card-tagline">'+tc(c,'tagline')+'</div>';
     h += '<div class="cat-card-meta">';
     h += '<div class="cat-card-bundle">'+lifeLabel+'</div>';
-    h += '<div class="cat-card-price">€'+mp+'</div>';
+    h += '<div class="cat-card-price">'+money(px(mp))+'</div>';
     h += '</div></div></div>';
     if(catIdx < 9){ cgTop.innerHTML += h; } else { cgBottom.innerHTML += h; }
     catIdx++;
@@ -2141,16 +2155,13 @@ cats.forEach(function(c){
   });
 });
 function openBrand(catId, idx){
-  curCat = cats.find(function(c){return c.id===catId;});
-  selIdx = idx; activePhoto = 0; renderPP();
-  document.getElementById('homePage').classList.add('hidden');
-  document.getElementById('productPage').classList.add('active');
-  window.scrollTo(0,0);
+  var c = cats.find(function(x){return x.id===catId;});
+  nav('#/p/'+catId+'/'+slug(c.items[idx].model));
 }
 var bn = Object.keys(brandMap);
 var th = '';
 for(var r=0;r<2;r++) bn.forEach(function(b){
-  th+='<span class="brand-name" style="cursor:pointer;" onclick="openBrand(\''+brandMap[b].catId+'\','+brandMap[b].idx+')">'+b+'</span>';
+  th+='<span class="brand-name" style="cursor:pointer;"'+(r?' tabindex="-1" aria-hidden="true"':'')+' onclick="openBrand(\''+brandMap[b].catId+'\','+brandMap[b].idx+')">'+b+'</span>';
 });
 document.getElementById('brandTrack').innerHTML = th;
 
@@ -2168,36 +2179,44 @@ startQt();
 // === PRODUCT PAGE ===
 var curCat = null, selIdx = -1, activePhoto = 0;
 
-function openProduct(id){
-  curCat = cats.find(function(c){return c.id===id;});
-  selIdx = -1; activePhoto = 0; renderPP();
-  document.getElementById('homePage').classList.add('hidden');
-  document.getElementById('productPage').classList.add('active');
-  window.scrollTo(0,0);
-}
-function goHome(){
-  document.getElementById('homePage').classList.remove('hidden');
-  document.getElementById('productPage').classList.remove('active');
-  document.getElementById('duurzaamPage').classList.remove('active');
-  window.scrollTo(0,0);
-}
+function openProduct(id){ nav('#/c/'+id); }
+function goHome(){ nav('#/'); }
 function goHoe(){
-  document.getElementById('homePage').classList.remove('hidden');
-  document.getElementById('productPage').classList.remove('active');
-  document.getElementById('duurzaamPage').classList.remove('active');
+  nav('#/');
   setTimeout(function(){ document.getElementById('hoe').scrollIntoView({behavior:'smooth'}); }, 50);
 }
+function showPage(id){
+  document.getElementById('homePage').classList.toggle('hidden', id!=='homePage');
+  ['productPage','duurzaamPage','infoPage'].forEach(function(p){ document.getElementById(p).classList.toggle('active', p===id); });
+}
+function showProduct(id, idx){
+  var same = curCat && curCat.id===id && document.getElementById('productPage').classList.contains('active');
+  curCat = cats.find(function(c){return c.id===id;});
+  selIdx = idx; activePhoto = 0; renderPP();
+  showPage('productPage');
+  if(!same) window.scrollTo(0,0);
+}
 function selectP(i){
-  if(selIdx === i) { selIdx = -1; } // toggle terug naar split
-  else { selIdx = i; }
-  activePhoto = 0;
-  renderPP();
+  var n = selIdx === i ? -1 : i; // toggle terug naar split
+  nav(n<0 ? '#/c/'+curCat.id : '#/p/'+curCat.id+'/'+slug(curCat.items[n].model), {replace:true});
 }
 function setPhoto(i){ activePhoto = i; renderPP(); }
+// Vinkje-stand per product; zit het product in de kist, dan loopt de kist direct mee (#7)
+var optState = {};
+function optOn(model){ var k=kist.find(function(x){return x.model===model;}); return k ? !!k.optout : !!optState[model]; }
 function toggleOptout(){
   var checked = document.getElementById('optC').checked;
+  var model = curCat.items[selIdx === -1 ? 0 : selIdx].model;
+  optState[model] = checked;
+  var k = kist.find(function(x){return x.model===model;});
+  if(k){ k.optout = checked; updK(); }
   var warn = document.getElementById('optWarn');
   if(warn) warn.style.display = checked ? 'block' : 'none';
+}
+function toggleOptInfo(el){
+  var open = el.getAttribute('aria-expanded')!=='true';
+  el.setAttribute('aria-expanded', open);
+  document.getElementById('optInfo').classList.toggle('open', open);
 }
 
 function renderPP(){
@@ -2242,7 +2261,7 @@ function renderPP(){
     h += '<div class="pp-cat-label">'+tc(c,'name')+'</div>';
     h += '<div style="font-family:var(--serif);font-size:24px;margin-bottom:8px;">'+tc(c,'tagline')+'</div>';
     h += '<div style="font-size:14px;color:var(--dim);line-height:1.7;margin-bottom:16px;">'+t('kiesVersie')+'</div>';
-    h += '<div style="font-weight:700;font-size:20px;">€'+Math.max.apply(null,c.items.map(function(x){return x.price}))+'</div>';
+    h += '<div style="font-weight:700;font-size:20px;">'+money(px(Math.max.apply(null,c.items.map(function(x){return x.price}))))+'</div>';
     h += '</div>';
 
     if(c.specs){
@@ -2339,7 +2358,7 @@ function renderPP(){
       h += '</div>';
     }
     h += '</div>';
-    h += '<div class="pp-price">€'+selItem.price+'</div>';
+    h += '<div class="pp-price">'+money(px(selItem.price))+'</div>';
     h += '<div class="pp-desc">'+ti(c,si,'desc')+'</div>';
     h += '<div class="pp-tags">';
     var tags = ti(c,si,'tags');
@@ -2406,22 +2425,24 @@ function renderPP(){
       h += '<div style="font-size:13px;color:var(--dim);line-height:1.6;">'+t('inclusief')+bundleParts.join(', ')+'</div>';
     }
     h += '</div>';
-    h += '<div style="background:var(--bg2);border-radius:0 0 8px 8px;padding:6px 20px 8px;">';
+    var oo = optOn(selItem.model);
+    h += '<div class="opt-wrap" style="background:var(--bg2);border-radius:0 0 8px 8px;padding:6px 20px 8px;">';
     h += '<div style="border-top:0.5px solid var(--border);margin:0 12px;"></div>';
     h += '<div id="optLabel" style="display:flex;align-items:center;gap:6px;padding:6px 0;font-size:11px;color:var(--muted);">';
-    h += '<input type="checkbox" id="optC" onchange="toggleOptout()" style="width:12px;height:12px;cursor:pointer;accent-color:var(--dark);">';
+    h += '<input type="checkbox" id="optC"'+(oo?' checked':'')+' onchange="toggleOptout()" style="width:12px;height:12px;cursor:pointer;accent-color:var(--dark);">';
     h += '<label for="optC" style="cursor:pointer;">'+t('optOut')+' <b style="color:var(--dim);font-weight:500;">('+t('geenPrijsverschil')+')</b></label>';
-    h += '<span class="optout-info"><i class="ti ti-info-circle"></i>';
+    h += '<span class="optout-info" role="button" tabindex="0" aria-expanded="false" aria-controls="optInfo" aria-label="'+t('infoToggle')+'" onclick="toggleOptInfo(this)"><i class="ti ti-info-circle" aria-hidden="true"></i>';
     h += '<div class="optout-tooltip">'+t('maintAdvies')+bundleParts.join(', ')+t('maintWaarom')+'</div>';
     h += '</span>';
     h += '</div>';
-    h += '<div id="optWarn" style="display:none;font-size:11px;color:var(--muted);font-style:italic;padding:0 0 4px 18px;">'+t('levensduurKorter')+'</div>';
+    h += '<div id="optInfo" class="opt-info-inline">'+t('maintAdvies')+bundleParts.join(', ')+t('maintWaarom')+'</div>';
+    h += '<div id="optWarn" style="display:'+(oo?'block':'none')+';font-size:11px;color:var(--muted);padding:0 0 4px 18px;">'+t('levensduurKorter')+'</div>';
     h += '</div>';
 
     h += '<button class="pp-add'+(inK?' in':'')+'" id="ppAdd" onclick="addPP()">'+
       '<svg style="width:16px;height:16px;vertical-align:-2px;margin-right:6px;"><use href="#ic-kist"/></svg>'+
       (inK?t('goedeKeuze'):t('voegToe'))+'</button>';
-    if(inK) h += '<div class="pp-confirm" role="status">'+t('toegevoegd')+'<b>'+selItem.model+'</b>, €'+selItem.price+'.<a href="#" onclick="openKist();return false;">'+t('bekijkKist')+'</a></div>';
+    if(inK) h += '<div class="pp-confirm" role="status">'+t('toegevoegd')+'<b>'+selItem.model+'</b>, '+money(px(selItem.price))+'.<a href="#/chest" onclick="openKist();return false;">'+t('bekijkKist')+'</a></div>';
     h += '<div class="pp-del" style="display:flex;align-items:center;gap:6px;justify-content:center;"><svg width="16" height="12" viewBox="0 0 26 18" style="flex-shrink:0;"><rect width="26" height="18" rx="3" fill="#ff6600"/><path d="M6 13V6h8v7M14 6l4 3v4h2V9l-4-3" fill="none" stroke="#fff" stroke-width="1.2" stroke-linejoin="round"/><circle cx="9" cy="13" r="1.5" fill="#fff"/><circle cx="18" cy="13" r="1.5" fill="#fff"/></svg> '+t('postLine')+'</div>';
 
     h += '</div>';
@@ -2433,29 +2454,38 @@ function renderPP(){
 
 // === KIST ===
 var kist = [];
+try { // mand bewaren op dit apparaat (#3); alleen producten die nog bestaan, met de actuele prijs
+  (JSON.parse(localStorage.getItem('wasdomKist'))||[]).forEach(function(k){
+    var c = cats.find(function(x){return x.id===k.catId;}); var it = c && c.items.find(function(x){return x.model===k.model;});
+    if(it) kist.push({model:it.model,brand:it.brand,catId:c.id,cat:c.name,itemIdx:c.items.indexOf(it),price:it.price,bundle:it.bundle,optout:!!k.optout});
+  });
+} catch(e){}
 
 function addPP(){
   var si = selIdx === -1 ? 0 : selIdx;
   var it = curCat.items[si];
-  var ex=kist.findIndex(function(k){return k.model===it.model;});
-  var oo=document.getElementById('optC')&&document.getElementById('optC').checked;
-  if(ex>-1) kist.splice(ex,1);
-  else kist.push({model:it.model,brand:it.brand,catId:curCat.id,cat:curCat.name,itemIdx:si,price:it.price,bundle:it.bundle,optout:oo});
+  if(kist.some(function(k){return k.model===it.model;})){ openKist(); return; } // tweede klik opent de kist, verwijderen gebeurt daar (#8)
+  kist.push({model:it.model,brand:it.brand,catId:curCat.id,cat:curCat.name,itemIdx:si,price:it.price,bundle:it.bundle,optout:optOn(it.model)});
   updK(); renderPP();
+  var b=document.getElementById('ppAdd'); if(b) b.focus();
 }
-function rmK(i){kist.splice(i,1);updK();}
+function rmK(i){
+  kist.splice(i,1); updK(); if(curCat) renderPP();
+  var f=document.querySelector('#kistItems .ki-remove')||document.querySelector('#kistDrawer .kist-close'); if(f) f.focus();
+}
 
 function updK(){
   var ce=document.getElementById('kistCount'),ie=document.getElementById('kistItems');
   var te=document.getElementById('kistTotal'),cb=document.getElementById('checkoutBtn');
+  try { localStorage.setItem('wasdomKist', JSON.stringify(kist)); } catch(e){}
   ce.textContent=kist.length; ce.classList.toggle('hidden',kist.length===0);
   if(!kist.length){
     ie.innerHTML='<div class="kist-empty">'+t('kistLeeg')+'</div>';
-    te.textContent='€0'; cb.disabled=true; return;
+    te.textContent=money(0); cb.disabled=true; return;
   }
   var tot=0,h='';
   kist.forEach(function(k,i){
-    tot+=k.price;
+    tot+=px(k.price);
     var catObj=cats.find(function(c){return c.id===k.catId;});
     var catName=catObj?tc(catObj,'name'):k.cat;
     var bndl=catObj?ti(catObj,k.itemIdx||0,'bundle'):k.bundle;
@@ -2465,92 +2495,174 @@ function updK(){
     } else if(bndl){
       h+='<div style="font-size:10px;color:var(--muted);margin-top:2px;">✓ '+bndl+'</div>';
     }
-    h+='</div><div class="ki-price">€'+k.price+'</div>';
-    h+='<button class="ki-remove" onclick="rmK('+i+')">×</button></div>';
+    h+='</div><div class="ki-price">'+money(px(k.price))+'</div>';
+    h+='<button class="ki-remove" onclick="rmK('+i+')" aria-label="'+t('verwijder')+' '+k.brand+'">×</button></div>';
   });
-  ie.innerHTML=h; te.textContent=eur(tot+4.95); cb.disabled=false;
+  ie.innerHTML=h; te.textContent=money(tot+SHIP()); cb.disabled=false;
 }
 
 function eur(n){ return '€'+(n%1 ? (curLang==='en'?n.toFixed(2):n.toFixed(2).replace('.',',')) : n); }
-function toggleKist(){
-  document.getElementById('kistOverlay').classList.toggle('open');
-  document.getElementById('kistDrawer').classList.toggle('open');
-  if(!document.getElementById('kistDrawer').classList.contains('open')) document.getElementById('kistNotice').classList.remove('show');
-}
-function openKist(){ if(!document.getElementById('kistDrawer').classList.contains('open')) toggleKist(); }
+// NOK voor de Noorse versie. Koers ECB 13-11-2026: 1 EUR = 10,5695 NOK. Afgerond op een nette prijs (op 9 eindigend).
+var EURNOK = 10.5695;
+function px(e){ return curLang==='no' ? Math.round(e*EURNOK/10)*10-1 : e; }
+function SHIP(){ return curLang==='no' ? 99 : 4.95; } // NO: Posten/Bring, vast bedrag 99 kr (aanname, nog niet met Bring afgestemd)
+function money(n){ return curLang==='no' ? (n>=1000 ? Math.floor(n/1000)+' '+String(n%1000).padStart(3,'0') : n)+' kr' : eur(n); }
+function kistTotal(){ return kist.reduce(function(s,k){return s+px(k.price);},0)+SHIP(); }
+
+function toggleKist(){ if(document.getElementById('kistDrawer').classList.contains('open')) closeAll(); else openKist(); }
+function openKist(){ if(!document.getElementById('kistDrawer').classList.contains('open')) nav('#/chest',{overlay:true}); }
 // 8. cancelled payment: back to the chest with a short notice
+var pendingNotice = false;
 function cancelCheckout(){
-  closeCheckout(); openKist();
-  document.getElementById('kistNotice').classList.add('show');
+  pendingNotice = true;
+  var d = (history.state && history.state.d) || 0;
+  if(d >= 2) history.go(-(d-1)); else nav('#/chest',{overlay:true, replace:true});
 }
-function openInfo(sec){
-  document.getElementById('homePage').classList.add('hidden');
-  document.getElementById('productPage').classList.remove('active');
-  document.getElementById('duurzaamPage').classList.remove('active');
-  document.getElementById('infoPage').classList.add('active');
-  document.getElementById('info-'+sec).scrollIntoView();
+function closeCheckout(){ cancelCheckout(); }
+function ckBack(step){ var d=(history.state&&history.state.d)||0; if(d>=2) history.back(); else nav('#/checkout/'+step,{overlay:true, replace:true}); }
+function closeAll(){ var d=(history.state&&history.state.d)||0; if(d>0) history.go(-d); else nav(curBase,{replace:true}); }
+function openInfo(sec){ nav('#/info/'+sec); }
+function showInfo(sec){
+  showPage('infoPage');
+  var el=document.getElementById('info-'+sec); if(el) el.scrollIntoView(); else window.scrollTo(0,0);
 }
 
+// === ROUTING: elke view een eigen adres (#2, #3, #6) ===
+// #/ · #/c/<cat> · #/p/<cat>/<product> · #/info/<sec> · #/duurzaam · #/chest · #/checkout/<ship|pay|soon>
+// history.state: d = aantal lagen (kist/checkout) boven de pagina, base = de pagina eronder
+function slug(m){ return m.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/ø/g,'o').replace(/æ/g,'ae').replace(/ß/g,'ss').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,''); }
+var lastHash = null, curBase = '#/', renderedBase = null;
+function nav(hash, o){
+  o = o || {};
+  if(hash === location.hash && !o.replace) return;
+  var st = history.state || {};
+  var ns = o.overlay ? {d:(st.d||0)+(o.replace?0:1), base: st.base || curBase} : {d:0};
+  history[o.replace ? 'replaceState' : 'pushState'](ns, '', hash);
+  route();
+}
+function renderBase(base){
+  var p = base.replace(/^#\/?/,'').split('/').map(decodeURIComponent);
+  var c = cats.find(function(x){return x.id===p[1];});
+  if((p[0]==='c' || p[0]==='p') && c){
+    var idx = p[0]==='p' ? c.items.findIndex(function(x){return slug(x.model)===p[2];}) : -1;
+    showProduct(c.id, idx);
+  } else if(p[0]==='info') showInfo(p[1]);
+  else if(p[0]==='duurzaam') showDuurzaam();
+  else { showPage('homePage'); if(renderedBase!==null) window.scrollTo(0,0); }
+  renderedBase = curBase = base;
+}
+function route(){
+  var h = location.hash || '#/';
+  if(h === lastHash) return;
+  if(h==='#'){ history.replaceState(history.state,'',lastHash||'#/'); return; } // lege link (href="#"): blijf waar je bent
+  if(h.indexOf('#/')!==0 && h!=='#'){ // gewoon anker op de home (bv. #collectie)
+    lastHash = h; if(renderedBase!=='#/') renderBase('#/'); setDrawer(false); setCheckout(null);
+    var el=document.getElementById(h.slice(1)); if(el) el.scrollIntoView();
+    return;
+  }
+  var p = h.replace(/^#\/?/,'').split('/');
+  if(p[0]==='checkout' && !kist.length){ history.replaceState({d:0},'','#/'); return route(); }
+  lastHash = h;
+  var ov = p[0]==='chest' || p[0]==='checkout';
+  var base = ov ? ((history.state && history.state.base) || curBase) : h;
+  if(base !== renderedBase) renderBase(base);
+  setDrawer(p[0]==='chest');
+  setCheckout(p[0]==='checkout' ? ({ship:'stepShip',pay:'step1',soon:'step2'}[p[1]] || 'stepShip') : null);
+}
+var returnFocus = null;
+function lockScroll(){
+  var on = document.getElementById('checkoutModal').classList.contains('open') || document.getElementById('kistDrawer').classList.contains('open') || document.getElementById('mobileMenu').classList.contains('open');
+  document.body.style.overflow = on ? 'hidden' : '';
+}
+function setDrawer(open){
+  var dr = document.getElementById('kistDrawer'), was = dr.classList.contains('open');
+  dr.classList.toggle('open', open); dr.inert = !open;
+  document.getElementById('kistOverlay').classList.toggle('open', open);
+  var n = document.getElementById('kistNotice');
+  if(open && pendingNotice) n.classList.add('show');
+  if(!open) n.classList.remove('show');
+  pendingNotice = false;
+  lockScroll();
+  if(open && !was){ if(!document.getElementById('checkoutModal').contains(document.activeElement)) returnFocus = document.activeElement; dr.querySelector('.kist-close').focus(); }
+  if(!open && was && !document.getElementById('checkoutModal').classList.contains('open')) restoreFocus();
+}
+function restoreFocus(){
+  var f = returnFocus && document.contains(returnFocus) && returnFocus.getClientRects().length ? returnFocus : document.querySelector('.kist-btn');
+  f.focus(); returnFocus = null;
+}
 // === CHECKOUT ===
-function openCheckout(){
-  toggleKist();
-  document.getElementById('payAmount').textContent=eur(kist.reduce(function(s,i){return s+i.price;},0)+4.95);
-  document.getElementById('stepShip').classList.add('active');
-  document.getElementById('step1').classList.remove('active');
-  document.getElementById('step2').classList.remove('active');
-  document.querySelectorAll('#step1 .modal-ideal').forEach(function(m){ m.classList.remove('sel'); });
-  document.getElementById('payBtn').disabled=true;
-  document.getElementById('checkoutModal').classList.add('open');
+function openCheckout(){ nav('#/checkout/ship',{overlay:true}); }
+function setCheckout(stepId){
+  var m = document.getElementById('checkoutModal'), was = m.classList.contains('open');
+  if(!stepId){ m.classList.remove('open'); lockScroll(); if(was && !document.getElementById('kistDrawer').classList.contains('open')) restoreFocus(); return; }
+  if(!was){ // vers geopend: betaalkeuze en aanmeldformulier leeg
+    document.querySelectorAll('#step1 .modal-ideal').forEach(function(x){ x.classList.remove('sel'); x.setAttribute('aria-checked','false'); });
+    document.getElementById('payBtn').disabled=true;
+    resetSignup();
+  }
+  document.getElementById('payAmount').textContent=money(kistTotal());
+  ['stepShip','step1','step2'].forEach(function(id){ document.getElementById(id).classList.toggle('active', id===stepId); });
+  m.classList.add('open'); lockScroll();
+  var f = document.querySelector('#'+stepId+' .modal-ideal.sel') || document.querySelector('#'+stepId+' input:not([type=checkbox])') || document.querySelector('#'+stepId+' .modal-ideal') || document.querySelector('#'+stepId+' button:not([disabled])');
+  if(f) f.focus();
 }
 function selectShip(el){
-  document.querySelectorAll('#stepShip .modal-ideal').forEach(function(m){ m.classList.remove('sel'); });
-  el.classList.add('sel');
+  document.querySelectorAll('#stepShip .modal-ideal').forEach(function(m){ m.classList.remove('sel'); m.setAttribute('aria-checked','false'); });
+  el.classList.add('sel'); el.setAttribute('aria-checked','true');
 }
-function goToPayment(){
-  document.getElementById('stepShip').classList.remove('active');
-  document.getElementById('step1').classList.add('active');
-}
+function goToPayment(){ nav('#/checkout/pay',{overlay:true}); }
 function selectPayment(el){
-  document.querySelectorAll('#step1 .modal-ideal').forEach(function(m){ m.classList.remove('sel'); });
-  el.classList.add('sel');
+  document.querySelectorAll('#step1 .modal-ideal').forEach(function(m){ m.classList.remove('sel'); m.setAttribute('aria-checked','false'); });
+  el.classList.add('sel'); el.setAttribute('aria-checked','true');
   document.getElementById('payBtn').disabled=false;
 }
-function showSignup(){
-  document.getElementById('step1').classList.remove('active');
-  document.getElementById('step2').classList.add('active');
-}
-function closeCheckout(){document.getElementById('checkoutModal').classList.remove('open');}
+function showSignup(){ nav('#/checkout/soon',{overlay:true}); }
 
+// Aanmelding gaat naar het Google Form "Things that actually last" (#1, #5).
+// Verplicht daar: 'most useful' (entry.1680637755) en toestemming (entry.589144151); bron = 'site' (entry.2002757003).
+var GFORM = 'https://docs.google.com/forms/d/e/1FAIpQLSeyDsv8yoiC3svaCBxMZ5DC1dTxJhlweRsMbECcmWzKsqjefw/formResponse';
+function resetSignup(){
+  document.getElementById('signupForm').style.display='';
+  document.getElementById('consentWrap').style.display='';
+  document.getElementById('emailThanks').style.display='none';
+  document.getElementById('emailErr').style.display='none';
+  var b=document.getElementById('emailBtn'); b.disabled=false; b.textContent=t('aanmelden');
+  var c=document.getElementById('soonCancel'); c.textContent=t('annuleren'); c.onclick=cancelCheckout;
+  document.getElementById('soonBack').style.display='';
+}
 function submitEmail(e){
   e.preventDefault();
-  var em=document.getElementById('emailInput').value;
-  var items=kist.map(function(k){return k.brand+' '+k.cat+' (€'+k.price+')'+(k.optout?' [zonder onderhoud]':'');}).join(', ');
-  // Formspree — vervang YOUR_FORM_ID
-  fetch('https://formspree.io/f/YOUR_FORM_ID',{
-    method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({email:em,interesse:items})
-  }).then(function(){}).catch(function(){});
-  document.getElementById('signupForm').style.display='none';
-  document.getElementById('emailThanks').style.display='block';
+  if(!document.getElementById('consentC').checked) return; // toestemming alleen met expliciet vinkje
+  var b=document.getElementById('emailBtn'); b.disabled=true; b.textContent=t('versturen');
+  document.getElementById('emailErr').style.display='none';
+  var fd=new FormData();
+  fd.append('emailAddress', document.getElementById('emailInput').value.trim());
+  fd.append('entry.1680637755', 'A place where I can buy them directly');
+  fd.append('entry.589144151', 'Yes, you can send me updates about this idea. I can unsubscribe anytime.');
+  fd.append('entry.2002757003', 'site');
+  fd.append('entry.2049575189', '[site, checkout '+curLang+'] '+kist.map(function(k){return k.brand+' '+k.model+(k.optout?' (zonder onderhoud)':'');}).join(', '));
+  // no-cors: het antwoord is niet leesbaar; een netwerkfout wordt wel gemeld. Alleen bij aankomst bedanken.
+  fetch(GFORM,{method:'POST',mode:'no-cors',body:fd}).then(function(){
+    document.getElementById('signupForm').style.display='none';
+    document.getElementById('consentWrap').style.display='none';
+    document.getElementById('emailThanks').style.display='block';
+    document.getElementById('soonBack').style.display='none';
+    var c=document.getElementById('soonCancel'); c.textContent=t('sluiten'); c.onclick=closeAll; c.focus();
+  }).catch(function(){
+    b.disabled=false; b.textContent=t('aanmelden');
+    document.getElementById('emailErr').style.display='block';
+  });
 }
 
-document.getElementById('checkoutModal').addEventListener('click',function(e){if(e.target===this)closeCheckout();});
+document.getElementById('checkoutModal').addEventListener('click',function(e){if(e.target===this)cancelCheckout();});
 
 // === DUURZAAM PAGE ===
-function openDuurzaam(){
-  document.getElementById('homePage').classList.add('hidden');
-  document.getElementById('productPage').classList.remove('active');
-  document.getElementById('duurzaamPage').classList.add('active');
+function openDuurzaam(){ nav('#/duurzaam'); }
+function showDuurzaam(){
+  showPage('duurzaamPage');
   renderTimeline();
   window.scrollTo(0,0);
 }
-// Override goHome to also close duurzaam
-var _goHome = goHome;
-goHome = function(){
-  document.getElementById('duurzaamPage').classList.remove('active');
-  document.getElementById('infoPage').classList.remove('active');
-  _goHome();
-};
 
 function fmtDate(d){
   var maanden = curLang==='en'
@@ -2754,7 +2866,8 @@ function toggleMobileMenu(){
   var btn = document.querySelector('.hamburger');
   menu.classList.toggle('open');
   btn.classList.toggle('open');
-  document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
+  btn.setAttribute('aria-expanded', menu.classList.contains('open'));
+  lockScroll();
 }
 function mobileNav(target){
   toggleMobileMenu();
@@ -2881,6 +2994,7 @@ document.addEventListener('touchend', function(){
 // === LANGUAGE SWITCH ===
 function setLang(lang){
   curLang = lang;
+  try { localStorage.setItem('wasdomLang', lang); } catch(e){}
   // Update language selector
   var trigger = document.getElementById('langTriggerFlag');
   if(trigger) trigger.innerHTML = flagSvg(lang);
@@ -2957,25 +3071,16 @@ function setLang(lang){
     var pi = s1.querySelectorAll('.modal-ideal');
     if(pi[0]) pi[0].querySelector('span[style]').textContent = t('betaalIdeal');
     if(pi[1]) pi[1].querySelector('b').textContent = t('creditcard');
-    if(pi[2]) pi[2].querySelector('span[style]').textContent = t('betaalDebit');
+    if(pi[2]){ pi[2].querySelector('b').textContent = t('debitcard'); pi[2].querySelector('span[style]').textContent = t('betaalDebit'); }
     if(pi[3]) pi[3].querySelector('span[style]').textContent = t('betaalPaypal');
     if(pi[4]) pi[4].querySelector('span[style]').textContent = t('betaalApple');
     var pb = document.getElementById('payBtn');
     if(pb){ var pa=document.getElementById('payAmount'); pb.firstChild.textContent=t('betaalBtn')+' '; }
     s1.querySelector('.modal-close-btn').textContent = t('annuleren');
   }
-  // Signup step
-  var s2 = document.getElementById('step2');
-  if(s2){
-    s2.querySelector('.modal-top h3').textContent = t('bijna');
-    s2.querySelector('.modal-top p').textContent = t('nietLive');
-    s2.querySelector('.modal-signup-title').textContent = t('houdOp');
-    s2.querySelector('.modal-signup p').textContent = t('laatEmail');
-    document.getElementById('emailInput').placeholder = t('emailPh');
-    var eb = s2.querySelector('.modal-email-btn'); if(eb) eb.textContent = t('aanmelden');
-    document.getElementById('emailThanks').textContent = t('opDeLijst');
-    s2.querySelector('.modal-close-btn').textContent = t('sluiten');
-  }
+  document.getElementById('emailInput').placeholder = t('emailPh');
+  var sc=document.getElementById('soonCancel'); if(sc) sc.textContent = document.getElementById('emailThanks').style.display==='block' ? t('sluiten') : t('annuleren');
+  if(!document.getElementById('emailBtn').disabled) document.getElementById('emailBtn').textContent = t('aanmelden');
   // Duurzaam page headers
   var dp = document.getElementById('duurzaamPage');
   if(dp){
@@ -3003,8 +3108,45 @@ function initFlags(){
   if(trigger) trigger.innerHTML = flagSvg(curLang);
 }
 initFlags();
-// Start in English; ?lang=nl or ?lang=no overrides
-setLang(['nl','en','no'].indexOf(new URLSearchParams(location.search).get('lang'))>=0 ? new URLSearchParams(location.search).get('lang') : 'en');
+// Start in English; ?lang=nl or ?lang=no overrides, otherwise the last chosen language on this device
+var qLang = new URLSearchParams(location.search).get('lang'), sLang = null;
+try { sLang = localStorage.getItem('wasdomLang'); } catch(e){}
+setLang(['nl','en','no'].indexOf(qLang)>=0 ? qLang : ['nl','en','no'].indexOf(sLang)>=0 ? sLang : 'en');
+
+// === TOETSENBORD (#4, #10, #14) ===
+// Alles met onclick dat geen knop of link is, krijgt role=button + tabindex; Enter/Spatie klikt.
+function a11y(){
+  document.querySelectorAll('[onclick]:not(button):not(a):not(input):not(label):not(#kistOverlay)').forEach(function(el){
+    if(!el.hasAttribute('role')) el.setAttribute('role','button');
+    if(!el.hasAttribute('tabindex')) el.tabIndex = 0;
+  });
+}
+a11y();
+new MutationObserver(a11y).observe(document.body, {childList:true, subtree:true});
+document.addEventListener('keydown', function(e){
+  var r = e.target.getAttribute && e.target.getAttribute('role');
+  if((e.key==='Enter' || e.key===' ') && (r==='button' || r==='radio') && e.target.tagName!=='BUTTON'){ e.preventDefault(); e.target.click(); return; }
+  if(e.key==='Escape'){
+    if(document.getElementById('checkoutModal').classList.contains('open')) cancelCheckout();
+    else if(document.getElementById('kistDrawer').classList.contains('open')) closeAll();
+    else if(document.getElementById('mobileMenu').classList.contains('open')) toggleMobileMenu();
+    else document.getElementById('langDropdown').classList.remove('open');
+    return;
+  }
+  if(e.key==='Tab'){ // focus blijft binnen de open popup
+    var m = document.querySelector('#checkoutModal.open .modal') || document.querySelector('#kistDrawer.open');
+    if(!m) return;
+    var f = Array.prototype.filter.call(m.querySelectorAll('button,a[href],input,[tabindex="0"]'), function(el){ return !el.disabled && el.getClientRects().length; });
+    if(!f.length) return;
+    var first = f[0], last = f[f.length-1], a = document.activeElement;
+    if(!m.contains(a)){ e.preventDefault(); first.focus(); }
+    else if(e.shiftKey && a===first){ e.preventDefault(); last.focus(); }
+    else if(!e.shiftKey && a===last){ e.preventDefault(); first.focus(); }
+  }
+});
+window.addEventListener('popstate', route);
+window.addEventListener('hashchange', route);
+route();
 </script>
 </body>
 </html>
